@@ -867,7 +867,19 @@
 	"begin_code.h"
 	"close_code.h"
 
-1741337861 c:\code\ninjastrike\ninjastrike\include\renderwindow.h
+1741395059 c:\code\ninjastrike\ninjastrike\include\renderwindow.h
+	<SDL.h>
+	<SDL_image.h>
+
+1741689488 source:c:\code\ninjastrike\ninjastrike\src\main.cpp
+	<SDL.h>
+	<iostream>
+
+1741693315 source:c:\code\ninjastrike\ninjastrike\src\texture.cpp
+	"Texture.h"
+
+1741693384 c:\code\ninjastrike\ninjastrike\src\texture.h
+	<iostream>
 	<SDL.h>
 	<SDL_image.h>
 
