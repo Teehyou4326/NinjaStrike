@@ -885,20 +885,20 @@
 	<SDL.h>
 	<SDL_image.h>
 
-1741927376 source:c:\code\ninjastrike\ninjastrike\src\game.cpp
+1741954963 source:c:\code\ninjastrike\ninjastrike\src\game.cpp
 	"Game.h"
 	"Texture.h"
 
-1741927376 c:\code\ninjastrike\ninjastrike\src\game.h
+1741952249 c:\code\ninjastrike\ninjastrike\src\game.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
 	"Player.h"
 
-1741928418 c:\code\ninjastrike\ninjastrike\src\player.h
+1741954963 c:\code\ninjastrike\ninjastrike\src\player.h
 	"Texture.h"
 	<SDL.h>
 
-1741932709 source:c:\code\ninjastrike\ninjastrike\src\player.cpp
+1741954839 source:c:\code\ninjastrike\ninjastrike\src\player.cpp
 	"Player.h"
 

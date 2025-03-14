@@ -45,12 +45,13 @@ bool Game::init(const char* title)
         return false;
         }
 
-    if(!player.init("res/Ninja/idle_0.png", renderer, 100, 100))
+    if(!player.init("res/Ninja/idle_0.png", renderer, startX, startY))
     {
         return false;
     }
 
     running = true;
+    lastTime = SDL_GetTicks();
 
     return true;
 }
@@ -68,7 +69,22 @@ void Game::handleEvent()
 
 void Game::update()
 {
-    player.update();
+    const int frameDelay = 1000/60;
+
+    Uint32 currentTime = SDL_GetTicks();
+    deltaTime = (currentTime - lastTime) / 1000.0;
+    lastTime = currentTime;
+
+    if(deltaTime > 0.1) deltaTime = 0.1;
+
+    player.update(deltaTime);
+
+    Uint32 frameTime = SDL_GetTicks() - currentTime;
+    if(frameDelay > frameTime)
+    {
+        SDL_Delay(frameDelay - frameTime);
+    }
+
 }
 
 void Game::render()
@@ -88,4 +104,9 @@ void Game::clean()
     SDL_DestroyWindow(window);
     IMG_Quit();
     SDL_Quit();
+}
+
+bool Game::isRunning()
+{
+    return running;
 }

@@ -1,7 +1,8 @@
 #include "Player.h"
 
-const double gravity = 0.009;   //Trọng lực.
+const float gravity = 2200.0f;   //Trọng lực.
 const int groundY = 500; // Giả lập mặt đất.
+
 
 Player::Player()
 {
@@ -9,7 +10,8 @@ Player::Player()
     y = 0;
     dx = 0;
     dy = 0;
-    speed = 1.5;
+    speed = 450.0f;
+    jump = 850.0f;
     isJumping = false;
     doubleJump = false;
 }
@@ -19,7 +21,7 @@ Player::~Player()
     clean();
 }
 
-bool Player::init(const char* fileName, SDL_Renderer* renderer, int startX, int startY)
+bool Player::init(const char* fileName, SDL_Renderer* renderer, int startX, int startY )
 {
     if(!texture.load(fileName, renderer)) return false;
     x = startX;
@@ -42,13 +44,13 @@ void Player::handleInput(const SDL_Event& event)
             case SDLK_UP:
                 if(!isJumping)
                 {
-                    dy = -4;
+                    dy = -jump;
                     isJumping = true;
                     doubleJump = true;
                 }
                 else if (doubleJump)
                 {
-                    dy = -4;
+                    dy = -jump * 0.8f;
                     doubleJump = false;
                 }
                 break;
@@ -66,13 +68,13 @@ void Player::handleInput(const SDL_Event& event)
     }
 }
 
-void Player::update()
+void Player::update(double dt)
 {
-    x += dx * 0.15;
-    y += dy * 0.15;
+    x += dx * dt ;
+    y += dy * dt ;
 
-    if( y < groundY ) dy += gravity;
-    else
+    if( y < groundY ) dy += gravity * dt * 1.5f ;
+    else if(y >= groundY)
     {
         y = groundY;
         dy = 0;

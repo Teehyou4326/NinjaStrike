@@ -22,7 +22,7 @@ public:
     void render();
     void clean();
 
-    bool isRunning(){return running;}
+    bool isRunning();
 
 private:
     SDL_Window* window;
@@ -30,6 +30,8 @@ private:
     bool running;
 
     Player player;
+    Uint32 lastTime;
+    double deltaTime;
 };
 
 #endif
