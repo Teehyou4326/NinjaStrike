@@ -5,7 +5,6 @@
 #include "Game.h"
 
 
-Texture ninja;
 Game game;
 
 int main(int argc, char* argv[])

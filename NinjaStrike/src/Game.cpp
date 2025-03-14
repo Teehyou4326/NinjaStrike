@@ -45,7 +45,7 @@ bool Game::init(const char* title)
         return false;
         }
 
-    if(!ninja.load("res/Ninja/idle_0.png", renderer))
+    if(!player.init("res/Ninja/idle_0.png", renderer, 100, 100))
     {
         return false;
     }
@@ -61,25 +61,29 @@ void Game::handleEvent()
     while (SDL_PollEvent(&event))
     {
         if (event.type == SDL_QUIT) running = false;
+
+        player.handleInput(event);
     }
 }
 
 void Game::update()
 {
-
+    player.update();
 }
 
 void Game::render()
 {
     SDL_SetRenderDrawColor(renderer , 255, 255, 255, 255);
     SDL_RenderClear(renderer);
-    ninja.draw(renderer, 100, 100, 100, 64);
+
+    player.draw(renderer);
+
     SDL_RenderPresent(renderer);
 }
 
 void Game::clean()
 {
-    ninja.clean();
+    player.clean();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     IMG_Quit();

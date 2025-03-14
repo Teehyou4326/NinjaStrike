@@ -44,6 +44,8 @@
 		</Linker>
 		<Unit filename="src/Game.cpp" />
 		<Unit filename="src/Game.h" />
+		<Unit filename="src/Player.cpp" />
+		<Unit filename="src/Player.h" />
 		<Unit filename="src/Texture.cpp" />
 		<Unit filename="src/Texture.h" />
 		<Unit filename="src/main.cpp" />

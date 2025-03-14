@@ -5,7 +5,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
-#include "Texture.h"
+#include "Player.h"
 
 const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 720;
@@ -29,7 +29,7 @@ private:
     SDL_Renderer* renderer;
     bool running;
 
-    Texture ninja;
+    Player player;
 };
 
 #endif
