@@ -46,8 +46,11 @@
 		<Unit filename="src/Game.h" />
 		<Unit filename="src/Player.cpp" />
 		<Unit filename="src/Player.h" />
+		<Unit filename="src/SpriteSheet.cpp" />
+		<Unit filename="src/SpriteSheet.h" />
 		<Unit filename="src/Texture.cpp" />
 		<Unit filename="src/Texture.h" />
+		<Unit filename="src/json.hpp" />
 		<Unit filename="src/main.cpp" />
 		<Extensions />
 	</Project>

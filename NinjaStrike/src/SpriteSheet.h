@@ -1,0 +1,45 @@
+#ifndef SPRITESHEET_H
+#define SPRITESHEET_H
+
+#include <SDL.h>
+#include <vector>
+#include <string>
+
+#include "Texture.h"
+
+struct Frame
+{
+    int x, y, w, h;
+};
+
+class SpriteSheet
+{
+public:
+    SpriteSheet();
+    ~SpriteSheet();
+
+    bool load(SDL_Renderer* renderer, const char* imagePath, const char* jsonPath);
+    void update(float dt);
+    void draw(SDL_Renderer* renderer, int x, int y, SDL_RendererFlip flip = SDL_FLIP_NONE);
+    void clean();
+
+    int getFrameCount() const;
+
+private:
+    Texture texture;
+    std::vector<Frame> frames;
+
+    /*int idleFrame = 0;
+    int runFrame = 0;
+    int jumpFrame = 0;
+    int attackFrame = 0;
+    int throwFrame = 0;
+    */
+
+    int frameIndex = 0;
+    float frameTimer = 0.0f;
+    float frameSpeed = 0.2f;
+
+};
+
+#endif // SPRITESHEET_H

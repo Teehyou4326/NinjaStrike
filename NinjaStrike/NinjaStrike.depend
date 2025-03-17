@@ -871,34 +871,239 @@
 	<SDL.h>
 	<SDL_image.h>
 
-1741786518 source:c:\code\ninjastrike\ninjastrike\src\main.cpp
+1742058105 source:c:\code\ninjastrike\ninjastrike\src\main.cpp
 	<SDL.h>
 	<iostream>
 	"Texture.h"
 	"Game.h"
 
-1741693315 source:c:\code\ninjastrike\ninjastrike\src\texture.cpp
+1742208208 source:c:\code\ninjastrike\ninjastrike\src\texture.cpp
 	"Texture.h"
 
-1741693384 c:\code\ninjastrike\ninjastrike\src\texture.h
+1742208098 c:\code\ninjastrike\ninjastrike\src\texture.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
 
-1741954963 source:c:\code\ninjastrike\ninjastrike\src\game.cpp
+1742038300 source:c:\code\ninjastrike\ninjastrike\src\game.cpp
 	"Game.h"
 	"Texture.h"
 
-1741952249 c:\code\ninjastrike\ninjastrike\src\game.h
+1742038300 c:\code\ninjastrike\ninjastrike\src\game.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
 	"Player.h"
 
-1741954963 c:\code\ninjastrike\ninjastrike\src\player.h
+1742208098 c:\code\ninjastrike\ninjastrike\src\player.h
+	"SpriteSheet.h"
 	"Texture.h"
 	<SDL.h>
 
-1741954839 source:c:\code\ninjastrike\ninjastrike\src\player.cpp
+1742206867 source:c:\code\ninjastrike\ninjastrike\src\player.cpp
 	"Player.h"
+
+1742208098 c:\code\ninjastrike\ninjastrike\src\spritesheet.h
+	<SDL.h>
+	<vector>
+	<string>
+	"Texture.h"
+
+1742208098 source:c:\code\ninjastrike\ninjastrike\src\spritesheet.cpp
+	"SpriteSheet.h"
+	<fstream>
+	<iostream>
+	"json.hpp"
+
+1742051431 c:\code\ninjastrike\ninjastrike\src\json.hpp
+	<algorithm>
+	<cstddef>
+	<functional>
+	<initializer_list>
+	<iosfwd>
+	<iterator>
+	<memory>
+	<numeric>
+	<string>
+	<utility>
+	<vector>
+	<utility>
+	<algorithm>
+	<array>
+	<forward_list>
+	<iterator>
+	<map>
+	<string>
+	<tuple>
+	<type_traits>
+	<unordered_map>
+	<utility>
+	<valarray>
+	<cstddef>
+	<exception>
+	<stdexcept>
+	<string>
+	<vector>
+	<array>
+	<cstddef>
+	<cstdint>
+	<string>
+	<utility>
+	<type_traits>
+	<stdint.h>
+	<stdint.h>
+	<version>
+	<cstdlib>
+	<cassert>
+	<compare>
+	<cstddef>
+	<cstddef>
+	<type_traits>
+	<utility>
+	<limits>
+	<type_traits>
+	<utility>
+	<tuple>
+	<iterator>
+	<cstdint>
+	<map>
+	<memory>
+	<string>
+	<vector>
+	<cstring>
+	<string>
+	<utility>
+	<experimental/filesystem>
+	<filesystem>
+	<algorithm>
+	<iterator>
+	<string>
+	<tuple>
+	<type_traits>
+	<utility>
+	<valarray>
+	<vector>
+	<cstddef>
+	<iterator>
+	<string>
+	<tuple>
+	<utility>
+	<ranges>
+	<cstdint>
+	<tuple>
+	<utility>
+	<cstdint>
+	<cstddef>
+	<functional>
+	<algorithm>
+	<array>
+	<cmath>
+	<cstddef>
+	<cstdint>
+	<cstdio>
+	<cstring>
+	<iterator>
+	<limits>
+	<string>
+	<utility>
+	<vector>
+	<map>
+	<array>
+	<cstddef>
+	<cstring>
+	<iterator>
+	<memory>
+	<numeric>
+	<string>
+	<type_traits>
+	<utility>
+	<cstdio>
+	<istream>
+	<cstddef>
+	<string>
+	<utility>
+	<vector>
+	<array>
+	<clocale>
+	<cstddef>
+	<cstdio>
+	<cstdlib>
+	<initializer_list>
+	<string>
+	<utility>
+	<vector>
+	<cstdint>
+	<utility>
+	<string>
+	<cmath>
+	<cstdint>
+	<functional>
+	<string>
+	<utility>
+	<vector>
+	<cstddef>
+	<limits>
+	<iterator>
+	<type_traits>
+	<cstddef>
+	<iterator>
+	<utility>
+	<algorithm>
+	<cctype>
+	<cerrno>
+	<cstdlib>
+	<iosfwd>
+	<limits>
+	<numeric>
+	<string>
+	<utility>
+	<vector>
+	<initializer_list>
+	<utility>
+	<algorithm>
+	<array>
+	<map>
+	<cmath>
+	<cstdint>
+	<cstring>
+	<limits>
+	<string>
+	<utility>
+	<vector>
+	<algorithm>
+	<cstddef>
+	<iterator>
+	<memory>
+	<string>
+	<vector>
+	<ios>
+	<ostream>
+	<algorithm>
+	<array>
+	<clocale>
+	<cmath>
+	<cstddef>
+	<cstdint>
+	<cstdio>
+	<limits>
+	<string>
+	<iomanip>
+	<type_traits>
+	<utility>
+	<array>
+	<cmath>
+	<cstdint>
+	<cstring>
+	<limits>
+	<type_traits>
+	<functional>
+	<initializer_list>
+	<iterator>
+	<memory>
+	<stdexcept>
+	<type_traits>
+	<utility>
+	<vector>
+	<any>
+	<string_view>
 

@@ -10,7 +10,7 @@ Texture::~Texture()
     clean();
 }
 
-bool Texture::load(const char* fileName, SDL_Renderer* renderer)
+bool Texture::load(SDL_Renderer* renderer, const char* fileName)
 {
     SDL_Surface* surface = IMG_Load(fileName);
     if(!surface)
@@ -35,6 +35,10 @@ void Texture::draw(SDL_Renderer* renderer, int x, int y, int width, int height)
     SDL_RenderCopy(renderer, texture, nullptr, &dstRect);
 }
 
+void Texture::draw(SDL_Renderer* renderer, SDL_Rect* srcRect, SDL_Rect* dstRect, SDL_RendererFlip flip)
+{
+    SDL_RenderCopyEx(renderer, texture, srcRect, dstRect, 0, nullptr, flip);
+}
 void Texture::clean()
 {
     if(texture)

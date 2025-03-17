@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "SpriteSheet.h"
 #include "Texture.h"
 #include <SDL.h>
 
@@ -20,13 +21,27 @@ public:
     void clean();
 
 private:
-    Texture texture;
+    enum class PlayerState{Idle, Running, Jumping, Attacking, Throwing, Hurt};
+    PlayerState state;
+
+    SpriteSheet idleSheet;
+    SpriteSheet runSheet;
+    SpriteSheet jumpSheet;
+    SpriteSheet attackSheet;
+    SpriteSheet throwSheet;
+
+    Texture hurtTexture;
+
     float x, y;
     float dx, dy;
     float speed;
     float jump;
     bool isJumping;
     bool doubleJump;
+    const int playerW = 100;
+    const int playerH = 64;
+
+    bool facingRight = true;
 
 };
 
