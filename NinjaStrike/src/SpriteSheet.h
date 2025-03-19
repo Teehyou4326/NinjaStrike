@@ -22,6 +22,10 @@ public:
     void update(float dt);
     void draw(SDL_Renderer* renderer, int x, int y, SDL_RendererFlip flip = SDL_FLIP_NONE);
     void clean();
+    bool isAnimationFinished() const
+    {
+        return static_cast<size_t>(frameIndex) >= frames.size() - 1;
+    }
 
     int getFrameCount() const;
 
@@ -38,7 +42,8 @@ private:
 
     int frameIndex = 0;
     float frameTimer = 0.0f;
-    float frameSpeed = 0.2f;
+    float frameSpeed = 0.15f;
+
 
 };
 

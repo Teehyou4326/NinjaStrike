@@ -4,9 +4,12 @@
 #include "SpriteSheet.h"
 #include "Texture.h"
 #include <SDL.h>
+#include <vector>
+#include "Shuriken.h"
+#include "Config.h"
 
-const int startX = 30;
-const int startY = 500;
+//const int startX = 30;
+//const int startY = 500;
 
 class Player
 {
@@ -23,6 +26,7 @@ public:
 private:
     enum class PlayerState{Idle, Running, Jumping, Attacking, Throwing, Hurt};
     PlayerState state;
+    SDL_Renderer* renderer;
 
     SpriteSheet idleSheet;
     SpriteSheet runSheet;
@@ -42,6 +46,8 @@ private:
     const int playerH = 64;
 
     bool facingRight = true;
+
+    std::vector<Shuriken> shurikens;
 
 };
 
