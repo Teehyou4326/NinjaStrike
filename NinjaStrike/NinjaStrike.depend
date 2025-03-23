@@ -871,7 +871,7 @@
 	<SDL.h>
 	<SDL_image.h>
 
-1742058105 source:c:\code\ninjastrike\ninjastrike\src\main.cpp
+1742717375 source:c:\code\ninjastrike\ninjastrike\src\main.cpp
 	<SDL.h>
 	<iostream>
 	"Texture.h"
@@ -896,7 +896,7 @@
 	"Player.h"
 	"Config.h"
 
-1742394529 c:\code\ninjastrike\ninjastrike\src\player.h
+1742717858 c:\code\ninjastrike\ninjastrike\src\player.h
 	"SpriteSheet.h"
 	"Texture.h"
 	<SDL.h>
@@ -904,17 +904,17 @@
 	"Shuriken.h"
 	"Config.h"
 
-1742393994 source:c:\code\ninjastrike\ninjastrike\src\player.cpp
+1742718565 source:c:\code\ninjastrike\ninjastrike\src\player.cpp
 	"Player.h"
 	"Game.h"
 
-1742392551 c:\code\ninjastrike\ninjastrike\src\spritesheet.h
+1742717375 c:\code\ninjastrike\ninjastrike\src\spritesheet.h
 	<SDL.h>
 	<vector>
 	<string>
 	"Texture.h"
 
-1742208098 source:c:\code\ninjastrike\ninjastrike\src\spritesheet.cpp
+1742717375 source:c:\code\ninjastrike\ninjastrike\src\spritesheet.cpp
 	"SpriteSheet.h"
 	<fstream>
 	<iostream>
@@ -1112,12 +1112,12 @@
 	<any>
 	<string_view>
 
-1742394529 c:\code\ninjastrike\ninjastrike\src\shuriken.h
+1742717375 c:\code\ninjastrike\ninjastrike\src\shuriken.h
 	<SDL.h>
 	"Texture.h"
 	"Config.h"
 
-1742393811 source:c:\code\ninjastrike\ninjastrike\src\shuriken.cpp
+1742718565 source:c:\code\ninjastrike\ninjastrike\src\shuriken.cpp
 	"Shuriken.h"
 
 1742394529 c:\code\ninjastrike\ninjastrike\src\config.h

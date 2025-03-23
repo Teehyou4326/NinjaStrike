@@ -47,6 +47,9 @@ private:
 
     bool facingRight = true;
 
+    int shurikenCooldown;
+    const int maxCooldown = 10;
+
     std::vector<Shuriken> shurikens;
 
 };

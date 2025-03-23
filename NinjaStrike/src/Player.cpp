@@ -17,6 +17,7 @@ Player::Player()
     doubleJump = false;
 
     state = PlayerState::Idle;
+    shurikenCooldown = 0;
 }
 
 Player::~Player()
@@ -72,18 +73,36 @@ void Player::handleInput(const SDL_Event& event)
                 state = PlayerState::Attacking;
                 break;
             case SDLK_x:
+                if(shurikenCooldown == 0)
+                {
                 state = PlayerState::Throwing;
                 shurikens.emplace_back(x+(facingRight ? 50 : -10), y+20, facingRight, this->renderer);
+                shurikenCooldown = 50;
+                }
                 break;
         }
     }
     else if (event.type == SDL_KEYUP && event.key.repeat == 0)
     {
+        const Uint8* state = SDL_GetKeyboardState(NULL);
+
         switch (event.key.keysym.sym)
         {
             case SDLK_LEFT:
+                if(state[SDL_SCANCODE_RIGHT])
+                {
+                    dx= speed ;
+                    facingRight = true;
+                }
+                else dx = 0;
+                break;
             case SDLK_RIGHT:
-                dx = 0;
+                if(state[SDL_SCANCODE_LEFT])
+                {
+                    dx= -speed ;
+                    facingRight = false;
+                }
+                else dx = 0;
                 break;
         }
     }
@@ -94,6 +113,7 @@ void Player::update(double dt)
     x += dx * dt ;
     y += dy * dt ;
 
+    //update state
     if(state != PlayerState::Attacking && state != PlayerState::Throwing)
     {
         if(isJumping)    state = PlayerState::Jumping;
@@ -101,6 +121,7 @@ void Player::update(double dt)
         else             state = PlayerState::Idle;
     }
 
+    //gravity
     if( y < groundY ) dy += gravity * dt * 1.5f ;
     else if(y >= groundY)
     {
@@ -109,6 +130,7 @@ void Player::update(double dt)
         isJumping = false;
     }
 
+    //animation
     switch (state)
     {
         case PlayerState::Idle:
@@ -132,11 +154,18 @@ void Player::update(double dt)
             break;
     }
 
+    //shuriken
     for(auto it = shurikens.begin(); it != shurikens.end();)
     {
         it->update(dt);
         if(it->isOffScr()) it = shurikens.erase(it);
         else it++;
+    }
+
+    //Cooldown
+    if(shurikenCooldown > 0)
+    {
+        shurikenCooldown--;
     }
 }
 
