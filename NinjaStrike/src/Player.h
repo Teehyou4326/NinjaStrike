@@ -8,9 +8,6 @@
 #include "Shuriken.h"
 #include "Config.h"
 
-//const int startX = 30;
-//const int startY = 500;
-
 class Player
 {
 public:
@@ -42,13 +39,10 @@ private:
     float jump;
     bool isJumping;
     bool doubleJump;
-    const int playerW = 100;
-    const int playerH = 64;
 
     bool facingRight = true;
 
     int shurikenCooldown;
-    const int maxCooldown = 10;
 
     std::vector<Shuriken> shurikens;
 

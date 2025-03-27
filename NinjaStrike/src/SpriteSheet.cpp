@@ -76,6 +76,15 @@ void SpriteSheet::draw(SDL_Renderer* renderer, int x, int y, SDL_RendererFlip fl
     texture.draw(renderer, &srcRect, &dstRect, flip);
 }
 
+void SpriteSheet::setFrame(int index)
+    {
+        if(index >= 0 && index < static_cast<int>(frames.size()) )
+        {
+            frameIndex = index;
+            frameTimer = 0;
+        }
+    }
+
 void SpriteSheet::clean()
 {
     texture.clean();

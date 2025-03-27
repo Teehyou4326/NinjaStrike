@@ -1,7 +1,8 @@
 #include "Player.h"
 #include "Game.h"
+#include "Config.h"
 
-const float gravity = 2200.0f;   //Trọng lực.
+const float gravity = 2100.0f;   //Trọng lực.
 const int groundY = 500; // Giả lập mặt đất.
 
 
@@ -128,25 +129,41 @@ void Player::update(double dt)
         y = groundY;
         dy = 0;
         isJumping = false;
+        jumpSheet.setFrame(2);
     }
 
     //animation
     switch (state)
     {
         case PlayerState::Idle:
+            idleSheet.setSpeed(0.05f);
             idleSheet.update(dt);
             break;
         case PlayerState::Running:
+            runSheet.setSpeed(0.04f);
             runSheet.update(dt);
             break;
         case PlayerState::Jumping:
-            jumpSheet.update(dt);
+            if(dy < 0 && !doubleJump)
+            {
+                jumpSheet.setFrame(0);
+            }
+            else if(dy < 0 && doubleJump )
+            {
+                jumpSheet.setFrame(3);
+            }
+            else if(dy > 0)
+            {
+                jumpSheet.setFrame(1);
+            }
             break;
         case PlayerState::Attacking:
+            attackSheet.setSpeed(0.015f);
             attackSheet.update(dt);
             if(attackSheet.isAnimationFinished()) state = PlayerState::Idle;
             break;
         case PlayerState::Throwing:
+            throwSheet.setSpeed(0.015f);
             throwSheet.update(dt);
             if(throwSheet.isAnimationFinished()) state = PlayerState::Idle;
             break;
@@ -158,7 +175,7 @@ void Player::update(double dt)
     for(auto it = shurikens.begin(); it != shurikens.end();)
     {
         it->update(dt);
-        if(it->isOffScr()) it = shurikens.erase(it);
+        if(it->getDistanceFlew() >= it->getMaxDistance()) it = shurikens.erase(it);
         else it++;
     }
 

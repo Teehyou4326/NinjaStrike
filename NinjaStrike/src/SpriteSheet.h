@@ -22,6 +22,8 @@ public:
     void update(float dt);
     void draw(SDL_Renderer* renderer, int x, int y, SDL_RendererFlip flip = SDL_FLIP_NONE);
     void clean();
+    void setFrame(int index);
+    void setSpeed(float speed) { frameSpeed = speed; }
     bool isAnimationFinished() const
     {
         return static_cast<size_t>(frameIndex) >= frames.size() - 1;
@@ -33,16 +35,9 @@ private:
     Texture texture;
     std::vector<Frame> frames;
 
-    /*int idleFrame = 0;
-    int runFrame = 0;
-    int jumpFrame = 0;
-    int attackFrame = 0;
-    int throwFrame = 0;
-    */
-
     int frameIndex = 0;
     float frameTimer = 0.0f;
-    float frameSpeed = 0.15f;
+    float frameSpeed;
 
 
 };

@@ -7,6 +7,7 @@ Shuriken::Shuriken(int startX, int startY, bool facingRight, SDL_Renderer* rende
     y = startY;
     speed = 1000;
     direction = facingRight ? 1 : -1;
+    this->facingRight = facingRight;
 
     texture.load(renderer, "res/shuriken.png");
 }
@@ -18,10 +19,12 @@ Shuriken::~Shuriken()
 
 void Shuriken::update(float dt)
 {
-    x += float(direction) * speed * dt;
+    float moveDistance = speed * dt;
+    x += direction * moveDistance;
+    distanceFlew += moveDistance;
 }
 
 void Shuriken::draw(SDL_Renderer* renderer)
 {
-    texture.draw(renderer, x, y, 32, 32);
+    texture.draw(renderer, x, y, 28, 28);
 }
