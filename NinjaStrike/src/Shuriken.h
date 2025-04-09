@@ -19,12 +19,18 @@ public:
     float getMaxDistance() const { return maxDistance; }
     bool isOffScr() const {return x > SCREEN_WIDTH || x < 0; }
 
+    SDL_Rect getHitbox() const;
+    void setInactive();
+    bool isActive() const;
+
 private:
     float x, y;
     float speed;
     int direction;
     Texture texture;
     bool facingRight;
+
+    bool active = true;
 
     float distanceFlew = 0.0f;
     float maxDistance = 1000.0f;

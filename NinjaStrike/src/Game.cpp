@@ -1,5 +1,7 @@
 #include "Game.h"
 #include "Texture.h"
+#include "Map.h"
+#include "Collision.h"
 
 Game::Game()
 {
@@ -49,7 +51,13 @@ bool Game::init(const char* title)
     {
         return false;
     }
-
+    /**
+    if(!gameMap.loadMap("res/map.json", "res/tileset.tsx", renderer))
+    {
+        std::cout << "K the tai map" << std::endl;
+        return false;
+    }
+    */
     running = true;
     lastTime = SDL_GetTicks();
 
@@ -79,6 +87,25 @@ void Game::update()
 
     player.update(deltaTime);
 
+    for(Enemy& enemy : enemies)
+    {
+        enemy.update(deltaTime);
+
+        if(Collision::checkCollision(player.getHitbox(), enemy.getHitbox()))
+        {
+            player.takeDamage();
+        }
+
+        for(auto& shuriken : player.getShurikens())
+        {
+            if(Collision::checkCollision(shuriken.getHitbox(), enemy.getHitbox()))
+            {
+                enemy.takeDamage();
+                shuriken.setInactive();
+            }
+        }
+    }
+
     Uint32 frameTime = SDL_GetTicks() - currentTime;
     if(frameDelay > frameTime)
     {
@@ -92,6 +119,7 @@ void Game::render()
     SDL_SetRenderDrawColor(renderer , 255, 255, 255, 255);
     SDL_RenderClear(renderer);
 
+    gameMap.render(renderer);
     player.draw(renderer);
 
     SDL_RenderPresent(renderer);

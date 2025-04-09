@@ -4,9 +4,12 @@
 #include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
+#include <vector>
 
 #include "Player.h"
 #include "Config.h"
+#include "Map.h"
+#include "Enemy.h"
 
 class Game
 {
@@ -27,9 +30,13 @@ private:
     SDL_Renderer* renderer;
     bool running;
 
-    Player player;
     Uint32 lastTime;
     double deltaTime;
+
+    Player player;
+    Map gameMap;
+
+    std::vector<Enemy> enemies;
 };
 
 #endif

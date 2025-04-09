@@ -228,4 +228,12 @@ void Player::clean()
     hurtTexture.clean();
 }
 
+SDL_Rect Player::getHitbox() const
+{
+    return SDL_Rect{x, y, playerW, playerH};
+}
 
+void Player::takeDamage()
+{
+    std::cout << "-- hp" << std::endl;
+}

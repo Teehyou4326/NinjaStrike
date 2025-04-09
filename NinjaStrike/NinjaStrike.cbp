@@ -45,6 +45,8 @@
 		<Unit filename="src/Config.h" />
 		<Unit filename="src/Game.cpp" />
 		<Unit filename="src/Game.h" />
+		<Unit filename="src/Map.cpp" />
+		<Unit filename="src/Map.h" />
 		<Unit filename="src/Player.cpp" />
 		<Unit filename="src/Player.h" />
 		<Unit filename="src/Shuriken.cpp" />
@@ -55,6 +57,8 @@
 		<Unit filename="src/Texture.h" />
 		<Unit filename="src/json.hpp" />
 		<Unit filename="src/main.cpp" />
+		<Unit filename="src/tinyxml2.cpp" />
+		<Unit filename="src/tinyxml2.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

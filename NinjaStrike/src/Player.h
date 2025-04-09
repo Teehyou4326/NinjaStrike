@@ -20,6 +20,12 @@ public:
     void draw(SDL_Renderer* renderer);
     void clean();
 
+    SDL_Rect getHitbox() const;
+    void takeDamage();
+
+    const std::vector<Shuriken>& getShurikens() const;
+    std::vector<Shuriken>& getShurikens();
+
 private:
     enum class PlayerState{Idle, Running, Jumping, Attacking, Throwing, Hurt};
     PlayerState state;

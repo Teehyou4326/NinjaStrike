@@ -28,3 +28,18 @@ void Shuriken::draw(SDL_Renderer* renderer)
 {
     texture.draw(renderer, x, y, 28, 28);
 }
+
+SDL_Rect Shuriken::getHitbox() const
+{
+    return  SDL_Rect{x, y, 28, 28};
+}
+
+void Shuriken::setInactive()
+{
+    active = false;
+}
+
+bool Shuriken::isActive() const
+{
+    return active;
+}

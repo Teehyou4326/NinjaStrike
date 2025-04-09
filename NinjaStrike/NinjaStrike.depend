@@ -871,32 +871,37 @@
 	<SDL.h>
 	<SDL_image.h>
 
-1742717375 source:c:\code\ninjastrike\ninjastrike\src\main.cpp
+1743092070 source:c:\code\ninjastrike\ninjastrike\src\main.cpp
 	<SDL.h>
 	<iostream>
 	"Texture.h"
 	"Game.h"
 
-1742923452 source:c:\code\ninjastrike\ninjastrike\src\texture.cpp
+1743092070 source:c:\code\ninjastrike\ninjastrike\src\texture.cpp
 	"Texture.h"
 
-1742208098 c:\code\ninjastrike\ninjastrike\src\texture.h
+1743092070 c:\code\ninjastrike\ninjastrike\src\texture.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
 
-1742923569 source:c:\code\ninjastrike\ninjastrike\src\game.cpp
+1744175297 source:c:\code\ninjastrike\ninjastrike\src\game.cpp
 	"Game.h"
 	"Texture.h"
+	"Map.h"
+	"Collision.h"
 
-1742922592 c:\code\ninjastrike\ninjastrike\src\game.h
+1744022268 c:\code\ninjastrike\ninjastrike\src\game.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
+	<vector>
 	"Player.h"
 	"Config.h"
+	"Map.h"
+	"Enemy.h"
 
-1743088826 c:\code\ninjastrike\ninjastrike\src\player.h
+1744168207 c:\code\ninjastrike\ninjastrike\src\player.h
 	"SpriteSheet.h"
 	"Texture.h"
 	<SDL.h>
@@ -904,24 +909,24 @@
 	"Shuriken.h"
 	"Config.h"
 
-1743091960 source:c:\code\ninjastrike\ninjastrike\src\player.cpp
+1744026442 source:c:\code\ninjastrike\ninjastrike\src\player.cpp
 	"Player.h"
 	"Game.h"
 	"Config.h"
 
-1743091535 c:\code\ninjastrike\ninjastrike\src\spritesheet.h
+1743092070 c:\code\ninjastrike\ninjastrike\src\spritesheet.h
 	<SDL.h>
 	<vector>
 	<string>
 	"Texture.h"
 
-1743090994 source:c:\code\ninjastrike\ninjastrike\src\spritesheet.cpp
+1743092070 source:c:\code\ninjastrike\ninjastrike\src\spritesheet.cpp
 	"SpriteSheet.h"
 	<fstream>
 	<iostream>
 	"json.hpp"
 
-1742051431 c:\code\ninjastrike\ninjastrike\src\json.hpp
+1743092070 c:\code\ninjastrike\ninjastrike\src\json.hpp
 	<algorithm>
 	<cstddef>
 	<functional>
@@ -1113,13 +1118,62 @@
 	<any>
 	<string_view>
 
-1743090078 c:\code\ninjastrike\ninjastrike\src\shuriken.h
+1744026442 c:\code\ninjastrike\ninjastrike\src\shuriken.h
 	<SDL.h>
 	"Texture.h"
 	"Config.h"
 
-1743089846 source:c:\code\ninjastrike\ninjastrike\src\shuriken.cpp
+1744026440 source:c:\code\ninjastrike\ninjastrike\src\shuriken.cpp
 	"Shuriken.h"
 
-1742922506 c:\code\ninjastrike\ninjastrike\src\config.h
+1743092070 c:\code\ninjastrike\ninjastrike\src\config.h
+
+1742075148 source:c:\code\ninjastrike\ninjastrike\src\tinyxml2.cpp
+	"tinyxml2.h"
+	<new>
+	<stddef.h>
+	<stdarg.h>
+	<cstddef>
+	<cstdarg>
+
+1742075148 c:\code\ninjastrike\ninjastrike\src\tinyxml2.h
+	<ctype.h>
+	<limits.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stddef.h>
+	<cctype>
+	<climits>
+	<cstdio>
+	<cstdlib>
+	<cstring>
+	<stdint.h>
+	<android/log.h>
+	<assert.h>
+
+1744022088 source:c:\code\ninjastrike\ninjastrike\src\collision.cpp
+	"Collision.h"
+
+1744021594 c:\code\ninjastrike\ninjastrike\src\collision.h
+	<SDL.h>
+
+1743996800 source:c:\code\ninjastrike\ninjastrike\src\enemyai.cpp
+	"EnemyAI.h"
+	"Map.h"
+	<cmath>
+
+1743996296 c:\code\ninjastrike\ninjastrike\src\enemyai.h
+
+1743998898 c:\code\ninjastrike\ninjastrike\src\map.h
+	<SDL.h>
+	<string>
+	<vector>
+	"Texture.h"
+	"json.hpp"
+	"tinyxml2.h"
+
+1744170518 c:\code\ninjastrike\ninjastrike\src\enemy.h
+	<SDL.h>
+	"SpriteSheet.h"
 
