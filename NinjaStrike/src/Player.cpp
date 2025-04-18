@@ -109,6 +109,9 @@ void Player::handleInput(const SDL_Event& event)
 
 void Player::update(double dt)
 {
+    prevX = x;
+    prevY = y;
+
     x += dx * dt ;
     y += dy * dt ;
 
@@ -226,13 +229,6 @@ void Player::clean()
     hurtTexture.clean();
 }
 
-
-
-SDL_Rect Player::getHitbox() const
-{
-    return SDL_Rect{static_cast<int>(x), static_cast<int>(y), playerW, playerH};
-}
-
 void Player::takeDamage()
 {
     std::cout << "-- hp" << std::endl;
@@ -244,4 +240,12 @@ SDL_Rect Player::attackHitbox() const
     int attackHeight = 30;
     int offsetX = facingRight ? playerW : -attackWidth;
     return SDL_Rect{static_cast<int>(x+offsetX), static_cast<int>(y + 10), attackWidth, attackHeight};
+}
+
+void Player::undoMovement()
+{
+    x = prevX;
+    y = prevY;
+    hitbox.x = static_cast<int>(x);
+    hitbox.y = static_cast<int>(y);
 }

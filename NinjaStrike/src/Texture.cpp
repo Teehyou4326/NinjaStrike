@@ -7,12 +7,12 @@ Texture::Texture()
 
 Texture::~Texture()
 {
-    clean();
+    //std::cout << "[~Texture] bi huy: " << this << ", SDL_Texture*: " << texture << std::endl;
 }
 
 bool Texture::load(SDL_Renderer* renderer, const char* fileName)
 {
-    std::cout << "[Texture::load] dang load: " << fileName <<std::endl;
+    std::cout << "[Texture::load] dang load: " << this << ", SDL_Texture*: " << texture <<std::endl;
 
     SDL_Surface* surface = IMG_Load(fileName);
     if(!surface)
@@ -53,7 +53,7 @@ void Texture::clean()
 
 void Texture::draw(SDL_Renderer* renderer, int x, int y, SDL_Rect* srcRect)
 {
-    if (!texture)
+    if (texture == nullptr)
     {
         std::cout << "[Texture::draw] texture null!" << std::endl;
         return;

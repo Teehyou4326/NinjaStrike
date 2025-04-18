@@ -54,12 +54,17 @@ bool Map::loadMap(SDL_Renderer* renderer, const std::string& path)
             int tsxTileHeight = root->IntAttribute("tileheight");
             int columns = imageElement->IntAttribute("width") / tsxTileWidth;
 
+            int imageHeight = imageElement->IntAttribute("height");
+            int rows = imageHeight / tsxTileHeight;
+
             TileSet tileSet;
             tileSet.texture.load(renderer, ("res/map/" + imagePath).c_str());
+
             tileSet.firstGid = ts["firstgid"];
             tileSet.tileWidth = tsxTileWidth;
             tileSet.tileHeight = tsxTileHeight;
             tileSet.columns = columns;
+            tileSet.tileCount = columns * rows;
 
             tileSets.push_back(tileSet);
 
@@ -145,8 +150,13 @@ void Map::draw(SDL_Renderer* renderer)
             };
 
             SDL_Rect dstRect;
-            dstRect.x = (i % mapWidth) * tileWidth - cameraX *0;
-            dstRect.y = (i / mapWidth) * tileHeight - cameraY *0;
+            dstRect.x = (i % mapWidth) * tileWidth - cameraX ;
+            dstRect.y = (i / mapWidth) * tileHeight - cameraY ;
+
+            if(!ts->texture.isValid())
+            {
+                std::cout << "[Map::draw] Texture null cho GID: " << gid << std::endl;
+            }
 
             ts->texture.draw(renderer, dstRect.x, dstRect.y, &srcRect);
         }
@@ -178,6 +188,11 @@ void Map::draw(SDL_Renderer* renderer)
                 float y = obj["y"];
                 y -= ts->tileHeight;
 
+                if(!ts->texture.isValid())
+                {
+                    std::cout << "[Map::draw] Texture null cho GID: " << gid << std::endl;
+                }
+
                 ts->texture.draw(renderer, int(x) - cameraX, int(y) - cameraY, &srcRect);
             }
         }
@@ -189,7 +204,7 @@ TileSet* Map::findTileSetByGid(int gid)
     TileSet* result = nullptr;
     for(auto& ts : tileSets)
     {
-        if(gid >= ts.firstGid && gid < ts.firstGid + (ts.columns * ts.tileWidth))
+        if(gid >= ts.firstGid && gid < ts.firstGid + ts.tileCount)
         {
             result = &ts;
             break;
@@ -197,3 +212,32 @@ TileSet* Map::findTileSetByGid(int gid)
     }
     return result;
 }
+
+bool Map::checkCollision(const SDL_Rect& rect)
+{
+    int startX = rect.x / tileWidth;
+    int endX = (rect.x + rect.w) / tileWidth;
+    int startY = rect.y / tileHeight;
+    int endY = (rect.y + rect.h) / tileHeight;
+
+    for(int y = startY; y <= endY; y++)
+    {
+        for(int x = startX; x <= endX; x++)
+        {
+            if(x >= 0 && y >= 0 && y < static_cast<int>(collisionLayer.size()) && x < static_cast<int>(collisionLayer[0].size()))
+            {
+                int tileID = collisionLayer[y][x];
+                if(collidableTileIDs.count(tileID))
+                {
+                    SDL_Rect tileRect = {x*tileWidth, y*tileHeight, tileWidth, tileHeight };
+                    if(Collision::checkCollision(rect, tileRect))
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+

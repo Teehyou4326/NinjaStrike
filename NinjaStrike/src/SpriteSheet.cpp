@@ -71,7 +71,7 @@ void SpriteSheet::draw(SDL_Renderer* renderer, int x, int y, SDL_RendererFlip fl
     if(frameIndex < 0 || static_cast<size_t>(frameIndex) >= frames.size()) return;
 
     SDL_Rect srcRect = {frames[frameIndex].x, frames[frameIndex].y, frames[frameIndex].w, frames[frameIndex].h};
-    SDL_Rect dstRect = {x, y, frames[frameIndex].w, frames[frameIndex].h };
+    SDL_Rect dstRect = {x, y, frames[frameIndex].w *1.5, frames[frameIndex].h *1.5 };
 
     texture.draw(renderer, &srcRect, &dstRect, flip);
 }

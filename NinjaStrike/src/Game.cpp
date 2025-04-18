@@ -27,7 +27,7 @@ bool Game::init(const char* title)
         return false;
     }
 ///
-    window = SDL_CreateWindow("Ninja Strike", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow(title , SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (!window)
         {
         std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
@@ -44,7 +44,7 @@ bool Game::init(const char* title)
         return false;
         }
 ///
-    if(!gameMap.loadMap(renderer, "res/map/map0.tmj"))
+    if(!gameMap.loadMap(renderer, "res/map/spawn_map.tmj"))
     {
         std::cout << "Load spawn map fail" << std::endl;
         return false;
@@ -88,6 +88,11 @@ void Game::update()
 
     player.update(deltaTime);
     enemy.update(deltaTime);
+
+    if(gameMap.checkCollision(player.getHitbox()))
+    {
+        player.undoMovement();
+    }
 
     if(Collision::checkCollision(player.getHitbox(), enemy.getHitbox()))
     {

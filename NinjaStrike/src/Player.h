@@ -22,10 +22,12 @@ public:
     void draw(SDL_Renderer* renderer);
     void clean();
 
-    SDL_Rect getHitbox() const;
+    SDL_Rect getHitbox() const { return hitbox; };
     SDL_Rect attackHitbox() const;
     void takeDamage();
     PlayerState getState() const { return state; }
+
+    void undoMovement();
 
     std::vector<Shuriken>& getShurikens()
     {
@@ -47,6 +49,7 @@ private:
 
     float x, y;
     float dx, dy;
+    float prevX, prevY;
     float speed;
     float jump;
     bool isJumping;
@@ -57,6 +60,8 @@ private:
     int shurikenCooldown;
 
     std::vector<Shuriken> shurikens;
+
+    SDL_Rect hitbox ={ static_cast<int>(x), static_cast<int>(y), playerW, playerH};
 
 };
 
