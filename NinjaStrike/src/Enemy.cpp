@@ -1,65 +1,117 @@
 #include "Enemy.h"
-#include "EnemyAI.h"
-#include "Map.h"
+#include "Config.h"
+#include <cmath>
 
-Enemy::Enemy(int x, int y)
+Enemy::Enemy() : x(0), y(0), state(State::Idle),  dx(0), dy(0) {}
+
+Enemy::~Enemy() {}
+
+bool Enemy::load(SDL_Renderer* renderer)
 {
-    x = x;
-    y = y;
-    velX = 0;
-    velY = 0;
-    enemyHeight = 64;
-    enemyWidth = 64;
-    facingLeft = true;
-    currentState = ENEMY_IDLE;
-
-    idleSheet("","");
-    walkSheet("","");
-    attackSheet("","");
-    hurtSheet("","");
-    deadSheet("","");
-
-    EnemyAI ai;
-    ai = EnemyAI(patrolStartX, patrolEndX, detectionRange, &map);
+    if (!idleSheet.load(renderer, "res/enemy/idle.png", "res/enemy/idle.json")) return false;
+    if (!walkSheet.load(renderer, "res/enemy/walk.png", "res/enemy/walk.json")) return false;
+    if (!attackSheet.load(renderer, "res/enemy/attack.png", "res/enemy/attack.json")) return false;
+    if (!hurtSheet.load(renderer, "res/enemy/hurt.png", "res/enemy/hurt.json")) return false;
+    if (!deadSheet.load(renderer, "res/enemy/dead.png", "res/enemy/dead.json")) return false;
+    return true;
 }
 
-Enemy::~Enemy(){}
-
-void Enemy::update(float deltaTime)
+void Enemy::update(float dt)
 {
-    x += velX * deltaTime;
 
-    switch (currentState)
+    if(dt == 0) return;
+
+    if (state != State::Attack && state != State::Hurt && state != State::Dead)
     {
-        case ENEMY_IDLE: idleSheet; break;
-        case ENEMY_WALK: walkSheet; break;
-        case ENEMY_ATTACK: attackSheet; break;
-        case ENEMY_HURT: hurtSheet; break;
-        case ENEMY_DEAD: deadSheet; break;
+        if (dx != 0)
+        {
+            state = State::Walk;
+        }
+        else
+        {
+            state = State::Idle;
+        }
     }
 
-    ai.update(position.x, velocity.x, player.x, position.y + enemyHeight, facingLeft);
-}
+    x += dx * dt;
+    y += dy * dt;
 
-SDL_Rect Enemy::getCollisionBox() const
-{
-    return SDL_Rect{ static_cast<int>(x), static_cast<int>(y), enemyWidth, enemyHeight};
-}
-
-void Enemy::changeState(State newState)
-{
-    if(currentState != newState)
+    if(y < groundY) dy += gravity * dt;
+    else if( y >= groundY)
     {
-        currentState = newState;
+        y = groundY;
+        dy = 0;
+    }
+
+    switch (state)
+    {
+        case State::Idle:
+            idleSheet.setSpeed(0.1f);
+            idleSheet.update(dt);
+            break;
+        case State::Walk:
+            walkSheet.setSpeed(0.08f);
+            walkSheet.update(dt);
+            break;
+        case State::Attack:
+            attackSheet.setSpeed(0.05f);
+            attackSheet.update(dt);
+            if (attackSheet.isAnimationFinished()) state = State::Idle;
+            break;
+        case State::Hurt:
+            hurtSheet.setSpeed(0.02f);
+            hurtSheet.update(dt);
+            if (hurtSheet.isAnimationFinished()) state = State::Idle;
+            break;
+        case State::Dead:
+            deadSheet.setSpeed(0.25f);
+            deadSheet.update(dt);
+            if (deadSheet.isAnimationFinished()) state = State::Idle;
+            break;
+    }
+}
+
+void Enemy::draw(SDL_Renderer* renderer)
+{
+    switch (state)
+    {
+    case State::Idle:
+        idleSheet.draw(renderer, x, y);
+        break;
+    case State::Walk:
+        walkSheet.draw(renderer, x, y);
+        break;
+    case State::Attack:
+        attackSheet.draw(renderer, x, y);
+        break;
+    case State::Hurt:
+        hurtSheet.draw(renderer, x, y);
+        break;
+    case State::Dead:
+        deadSheet.draw(renderer, x, y);
+        break;
+    }
+}
+
+void Enemy::setPosition(int x, int y)
+{
+    this->x = x;
+    this->y = y;
+}
+
+void Enemy::takeDamage()
+{
+    std::cout << "enemy --hp" << std::endl;
+    state = State::Hurt;
+    count ++;
+    if(count == 3)
+    {
+        state = State::Dead;
+        count = 0;
     }
 }
 
 SDL_Rect Enemy::getHitbox() const
 {
-    return SDL_Rect{x, y, enemyWidth, enemyHeight};
-}
-
-void Enemy::takeDamage()
-{
-    std::cout << "enemy -- hp" << std::endl;
+    return SDL_Rect{x, y, enemyW, enemyH};
 }

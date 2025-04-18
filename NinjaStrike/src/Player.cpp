@@ -1,9 +1,7 @@
 #include "Player.h"
 #include "Game.h"
 #include "Config.h"
-
-const float gravity = 2100.0f;   //Trọng lực.
-const int groundY = 500; // Giả lập mặt đất.
+#include "Collision.h"
 
 
 Player::Player()
@@ -136,11 +134,11 @@ void Player::update(double dt)
     switch (state)
     {
         case PlayerState::Idle:
-            idleSheet.setSpeed(0.05f);
+            idleSheet.setSpeed(0.1f);
             idleSheet.update(dt);
             break;
         case PlayerState::Running:
-            runSheet.setSpeed(0.04f);
+            runSheet.setSpeed(0.045f);
             runSheet.update(dt);
             break;
         case PlayerState::Jumping:
@@ -163,7 +161,7 @@ void Player::update(double dt)
             if(attackSheet.isAnimationFinished()) state = PlayerState::Idle;
             break;
         case PlayerState::Throwing:
-            throwSheet.setSpeed(0.015f);
+            throwSheet.setSpeed(0.025f);
             throwSheet.update(dt);
             if(throwSheet.isAnimationFinished()) state = PlayerState::Idle;
             break;
@@ -228,12 +226,22 @@ void Player::clean()
     hurtTexture.clean();
 }
 
+
+
 SDL_Rect Player::getHitbox() const
 {
-    return SDL_Rect{x, y, playerW, playerH};
+    return SDL_Rect{static_cast<int>(x), static_cast<int>(y), playerW, playerH};
 }
 
 void Player::takeDamage()
 {
     std::cout << "-- hp" << std::endl;
+}
+
+SDL_Rect Player::attackHitbox() const
+{
+    int attackWidth = 50;
+    int attackHeight = 30;
+    int offsetX = facingRight ? playerW : -attackWidth;
+    return SDL_Rect{static_cast<int>(x+offsetX), static_cast<int>(y + 10), attackWidth, attackHeight};
 }

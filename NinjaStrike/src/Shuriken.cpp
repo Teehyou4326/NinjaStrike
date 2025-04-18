@@ -31,15 +31,5 @@ void Shuriken::draw(SDL_Renderer* renderer)
 
 SDL_Rect Shuriken::getHitbox() const
 {
-    return  SDL_Rect{x, y, 28, 28};
-}
-
-void Shuriken::setInactive()
-{
-    active = false;
-}
-
-bool Shuriken::isActive() const
-{
-    return active;
+    return  SDL_Rect{static_cast<int>(x), static_cast<int>(y), 28, 28};
 }

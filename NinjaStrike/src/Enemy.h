@@ -1,36 +1,24 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
-#include <SDL.h>
 #include "SpriteSheet.h"
+#include <SDL.h>
 
 class Enemy
 {
 public:
-    Enemy(int x, int y, SDL_Renderer* renderer);
+    Enemy();
     ~Enemy();
 
-    void update(float deltaTime);
-    void render(SDL_Renderer* renderer);
+    bool load(SDL_Renderer* renderer);
+    void update(float dt);
+    void draw(SDL_Renderer* renderer);
+    void setPosition(int x, int y);
 
-    SDL_Rect getCollisionBox() const;
-    SDL_Rect getHitbox() const;
     void takeDamage();
+    SDL_Rect getHitbox() const;
 private:
-    float x, y;
-    float velX, velY;
-    int enemyWidth, enemyHeight;
-    bool facingLeft;
-
-    enum State
-    {
-        ENEMY_IDLE,
-        ENEMY_WALK,
-        ENEMY_ATTACK,
-        ENEMY_HURT,
-        ENEMY_DEAD
-    };
-    State currentState;
+    enum class State { Idle, Walk, Attack, Hurt, Dead};
 
     SpriteSheet idleSheet;
     SpriteSheet walkSheet;
@@ -38,6 +26,11 @@ private:
     SpriteSheet hurtSheet;
     SpriteSheet deadSheet;
 
-    void changeState(State newState);
+    int x, y;
+    State state;
+    float dx, dy;
+
+    int count = 0;
 };
+
 #endif // ENEMY_H

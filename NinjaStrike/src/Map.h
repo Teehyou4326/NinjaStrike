@@ -1,12 +1,20 @@
 #ifndef MAP_H
 #define MAP_H
 
-#include <SDL.h>
-#include <string>
 #include <vector>
-#include "Texture.h"
+#include <string>
 #include "json.hpp"
-#include "tinyxml2.h"
+
+#include "Texture.h"
+
+struct TileSet
+{
+    Texture texture;
+    int firstGid;
+    int tileWidth;
+    int tileHeight;
+    int columns;
+};
 
 class Map
 {
@@ -14,16 +22,23 @@ public:
     Map();
     ~Map();
 
-    bool loadMap(const std::string& jsonFile, const std::string& tsxFile, SDL_Renderer* renderer);
-    void render(SDL_Renderer* renderer);
+    bool loadMap(SDL_Renderer* renderer, const std::string& path);
+    void draw(SDL_Renderer* renderer);
 
-    bool isSolidAt(float worldX, float worldY) const;
-
+    int cameraX = 0;
+    int cameraY = 0;
 private:
-    int mapWidth, mapHeight, tileSize;
-    std::vector<std::vector<int>> tiles;
-    Texture tileSet;
+    std::vector<TileSet> tileSets;
+    std::vector<std::vector<int>> tileData;
+    std::vector<nlohmann::json> objectLayers;
 
-    bool loadTileSet(const std::string& tsxFile, SDL_Renderer* renderer);
+    int mapWidth;
+    int mapHeight;
+    int tileWidth;
+    int tileHeight;
+
+    TileSet* findTileSetByGid(int gid);
+
 };
+
 #endif // MAP_H

@@ -36,8 +36,8 @@ private:
     std::vector<Frame> frames;
 
     int frameIndex = 0;
-    float frameTimer = 0.0f;
-    float frameSpeed;
+    float frameTimer = 1.0f;
+    float frameSpeed = 0.5f;
 
 
 };

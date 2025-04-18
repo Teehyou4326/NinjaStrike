@@ -42,7 +42,11 @@
 			<Add directory="../SDL lib/SDL2_mixer-2.8.1/x86_64-w64-mingw32/lib" />
 			<Add directory="../SDL lib/SDL2_ttf-2.24.0/x86_64-w64-mingw32/lib" />
 		</Linker>
+		<Unit filename="src/Collision.cpp" />
+		<Unit filename="src/Collision.h" />
 		<Unit filename="src/Config.h" />
+		<Unit filename="src/Enemy.cpp" />
+		<Unit filename="src/Enemy.h" />
 		<Unit filename="src/Game.cpp" />
 		<Unit filename="src/Game.h" />
 		<Unit filename="src/Map.cpp" />

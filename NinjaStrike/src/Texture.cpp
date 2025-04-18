@@ -12,14 +12,14 @@ Texture::~Texture()
 
 bool Texture::load(SDL_Renderer* renderer, const char* fileName)
 {
+    std::cout << "[Texture::load] dang load: " << fileName <<std::endl;
+
     SDL_Surface* surface = IMG_Load(fileName);
     if(!surface)
     {
         std::cout << "IMG_Load Error: " << IMG_GetError() << std::endl;
         return false;
     }
-
-    SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 255, 255, 255));
 
     texture = SDL_CreateTextureFromSurface(renderer, surface);
     SDL_FreeSurface( surface);
@@ -28,6 +28,7 @@ bool Texture::load(SDL_Renderer* renderer, const char* fileName)
         std::cout << "SDL_CreateTextureFromSurface Error:" << SDL_GetError() << std ::endl;
         return false;
     }
+    std::cout << "[Texture::load] thanh cong." << std::endl;
     return true;
 }
 
@@ -47,5 +48,32 @@ void Texture::clean()
     {
         SDL_DestroyTexture(texture);
         texture = nullptr;
+    }
+}
+
+void Texture::draw(SDL_Renderer* renderer, int x, int y, SDL_Rect* srcRect)
+{
+    if (!texture)
+    {
+        std::cout << "[Texture::draw] texture null!" << std::endl;
+        return;
+    }
+
+    SDL_Rect dstRect = {x, y, 0, 0};
+    if(srcRect)
+    {
+        dstRect.w = srcRect->w;
+        dstRect.h = srcRect->h;
+    }
+    else
+    {
+        if(SDL_QueryTexture(texture, nullptr, nullptr, &dstRect.w, &dstRect.h) != 0)
+        {
+            std::cout << "[Texture] SDL_Query that bai...  " << SDL_GetError() << std::endl;
+        }
+    }
+    if(SDL_RenderCopy(renderer, texture, srcRect, &dstRect) != 0)
+    {
+        std::cout << "[Texture] SDL_RenderCopy that bai: " << SDL_GetError() << std::endl;
     }
 }

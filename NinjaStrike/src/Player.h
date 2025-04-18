@@ -8,6 +8,8 @@
 #include "Shuriken.h"
 #include "Config.h"
 
+enum class PlayerState{Idle, Running, Jumping, Attacking, Throwing, Hurt};
+
 class Player
 {
 public:
@@ -21,14 +23,18 @@ public:
     void clean();
 
     SDL_Rect getHitbox() const;
+    SDL_Rect attackHitbox() const;
     void takeDamage();
+    PlayerState getState() const { return state; }
 
-    const std::vector<Shuriken>& getShurikens() const;
-    std::vector<Shuriken>& getShurikens();
+    std::vector<Shuriken>& getShurikens()
+    {
+        return shurikens;
+    }
 
 private:
-    enum class PlayerState{Idle, Running, Jumping, Attacking, Throwing, Hurt};
     PlayerState state;
+
     SDL_Renderer* renderer;
 
     SpriteSheet idleSheet;

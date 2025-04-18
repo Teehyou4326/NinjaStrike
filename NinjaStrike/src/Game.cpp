@@ -1,7 +1,4 @@
 #include "Game.h"
-#include "Texture.h"
-#include "Map.h"
-#include "Collision.h"
 
 Game::Game()
 {
@@ -29,7 +26,7 @@ bool Game::init(const char* title)
         SDL_Quit();
         return false;
     }
-
+///
     window = SDL_CreateWindow("Ninja Strike", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (!window)
         {
@@ -46,18 +43,22 @@ bool Game::init(const char* title)
         SDL_Quit();
         return false;
         }
+///
+    if(!gameMap.loadMap(renderer, "res/map/map0.tmj"))
+    {
+        std::cout << "Load spawn map fail" << std::endl;
+        return false;
+    }
 
     if(!player.init("res/Ninja/idle_0.png", renderer, startX, startY))
     {
         return false;
     }
-    /**
-    if(!gameMap.loadMap("res/map.json", "res/tileset.tsx", renderer))
-    {
-        std::cout << "K the tai map" << std::endl;
-        return false;
-    }
-    */
+
+    if(!enemy.load(renderer)) return false;
+
+    enemy.setPosition(500, 500);
+
     running = true;
     lastTime = SDL_GetTicks();
 
@@ -86,23 +87,26 @@ void Game::update()
     if(deltaTime > 0.1) deltaTime = 0.1;
 
     player.update(deltaTime);
+    enemy.update(deltaTime);
 
-    for(Enemy& enemy : enemies)
+    if(Collision::checkCollision(player.getHitbox(), enemy.getHitbox()))
     {
-        enemy.update(deltaTime);
+        player.takeDamage();
+    }
 
-        if(Collision::checkCollision(player.getHitbox(), enemy.getHitbox()))
+    for(auto& shuriken : player.getShurikens())
+    {
+        if(Collision::checkCollision(shuriken.getHitbox(), enemy.getHitbox()))
         {
-            player.takeDamage();
+            enemy.takeDamage();
         }
+    }
 
-        for(auto& shuriken : player.getShurikens())
+    if(player.getState() == PlayerState::Attacking)
+    {
+        if(Collision::checkCollision(player.attackHitbox(), enemy.getHitbox()))
         {
-            if(Collision::checkCollision(shuriken.getHitbox(), enemy.getHitbox()))
-            {
-                enemy.takeDamage();
-                shuriken.setInactive();
-            }
+            enemy.takeDamage();
         }
     }
 
@@ -112,6 +116,7 @@ void Game::update()
         SDL_Delay(frameDelay - frameTime);
     }
 
+    gameMap.cameraY += static_cast<int>(10 * deltaTime);
 }
 
 void Game::render()
@@ -119,8 +124,9 @@ void Game::render()
     SDL_SetRenderDrawColor(renderer , 255, 255, 255, 255);
     SDL_RenderClear(renderer);
 
-    gameMap.render(renderer);
+    gameMap.draw(renderer);
     player.draw(renderer);
+    enemy.draw(renderer);
 
     SDL_RenderPresent(renderer);
 }

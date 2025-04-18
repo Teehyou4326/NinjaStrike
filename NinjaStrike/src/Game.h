@@ -8,8 +8,10 @@
 
 #include "Player.h"
 #include "Config.h"
-#include "Map.h"
 #include "Enemy.h"
+#include "Map.h"
+#include "Texture.h"
+#include "Collision.h"
 
 class Game
 {
@@ -34,9 +36,8 @@ private:
     double deltaTime;
 
     Player player;
+    Enemy enemy;
     Map gameMap;
-
-    std::vector<Enemy> enemies;
 };
 
 #endif
