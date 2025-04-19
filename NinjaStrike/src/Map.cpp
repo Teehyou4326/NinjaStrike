@@ -160,7 +160,7 @@ void Map::draw(SDL_Renderer* renderer)
 
             SDL_Rect dstRect;
             dstRect.x = (i % mapWidth) * tileWidth - cameraX ;
-            dstRect.y = (i / mapWidth) * tileHeight - cameraY ;
+            dstRect.y = (i / mapWidth) * tileHeight;
 
             if(!ts->texture.isValid())
             {
@@ -202,7 +202,7 @@ void Map::draw(SDL_Renderer* renderer)
                     std::cout << "[Map::draw] Texture null cho GID: " << gid << std::endl;
                 }
 
-                ts->texture.draw(renderer, int(x) - cameraX, int(y) - cameraY, &srcRect);
+                ts->texture.draw(renderer, int(x) - cameraX, int(y), &srcRect);
             }
         }
     }
@@ -224,8 +224,8 @@ TileSet* Map::findTileSetByGid(int gid)
 
 bool Map::checkCollision(const SDL_Rect& rect)
 {
-    int startX = rect.x / tileWidth;
-    int endX = (rect.x + rect.w ) / tileWidth ;
+    int startX = (rect.x + cameraX) / tileWidth;
+    int endX = (rect.x + rect.w + cameraX) / tileWidth ;
     int startY = rect.y / tileHeight;
     int endY = (rect.y + rect.h ) / tileHeight ;
 
@@ -243,7 +243,7 @@ bool Map::checkCollision(const SDL_Rect& rect)
                     int tileID = layer[index];
                     if(collidableTileIDs.count(tileID))
                     {
-                        SDL_Rect tileRect = {x*tileWidth, y*tileHeight, tileWidth, tileHeight };
+                        SDL_Rect tileRect = {x*tileWidth - cameraX, y*tileHeight, tileWidth, tileHeight };
                         if(Collision::checkCollision(rect, tileRect))
                         {
                             return true;
@@ -255,6 +255,29 @@ bool Map::checkCollision(const SDL_Rect& rect)
     }
     return false;
 }
+
+std::vector<SDL_Point> Map::getEnemySpawnPoints() const
+{
+    std::vector<SDL_Point> enemySpawns;
+
+    for(const auto& layer : objectLayers)
+    {
+        for(const auto& obj : layer["objects"])
+        {
+            if(obj.contains("type") && obj["type"] == "enemy")
+            {
+                int x = static_cast<int>(obj["x"]);
+                int y = static_cast<int>(obj["y"]);
+                y -= tileHeight;
+                enemySpawns.push_back({x,y});
+            }
+        }
+    }
+    return enemySpawns;
+}
+
+
+
 
 ///debug
 void Map::drawCollisionTiles(SDL_Renderer* renderer)
@@ -270,7 +293,7 @@ void Map::drawCollisionTiles(SDL_Renderer* renderer)
             {
                 int x = (i % mapWidth) * tileWidth;
                 int y = (i / mapWidth) * tileHeight;
-                SDL_Rect tileRect = {x, y, tileWidth, tileHeight};
+                SDL_Rect tileRect = {x - cameraX, y, tileWidth, tileHeight};
                 SDL_SetRenderDrawColor(renderer, 255, 0, 0, 100);
                 SDL_RenderFillRect(renderer, &tileRect);
             }

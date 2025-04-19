@@ -39,7 +39,7 @@ public:
     void drawHitbox(SDL_Renderer* renderer);
 private:
     int offsetX = 44;
-    int offsetY = 30;
+    int offsetY = 26;
 
     PlayerState state;
 

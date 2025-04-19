@@ -118,7 +118,7 @@ void Game::update()
         SDL_Delay(frameDelay - frameTime);
     }
 
-    gameMap.cameraY += static_cast<int>(10 * deltaTime);
+    gameMap.cameraX += static_cast<int>(10 * deltaTime);
 }
 
 void Game::render()
@@ -129,7 +129,7 @@ void Game::render()
     gameMap.draw(renderer);
     player.draw(renderer);
     enemy.draw(renderer);
-
+    gameMap.updateCamera();
 
     gameMap.drawCollisionTiles(renderer);
     player.drawHitbox(renderer);

@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "test.tmj",
+    "activeFile": "map0.tmj",
     "expandedProjectPaths": [
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -83,8 +83,8 @@
             "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 1280,
-                "y": 367.3333333333333
+                "x": 2000.6666666666665,
+                "y": 208.66666666666663
             }
         },
         "potion.tsx": {
@@ -93,9 +93,9 @@
         },
         "spawn_map.tmj": {
             "scale": 0.75,
-            "selectedLayer": 2,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 1132,
+                "x": 1229.3333333333333,
                 "y": 367.3333333333333
             }
         },
@@ -103,8 +103,8 @@
             "scale": 0.4794531249999999,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 639.2700016294607,
-                "y": 399.4133941665309
+                "x": 640.3128564445169,
+                "y": 368.1277497148444
             }
         }
     },
@@ -115,41 +115,22 @@
     "map.width": 40,
     "openFiles": [
         "map0.tmj",
-        "1.tsx",
-        "2.tsx",
-        "3.tsx",
-        "4.tsx",
-        "5.tsx",
-        "6.tsx",
-        "7.tsx",
-        "8.tsx",
-        "9.tsx",
-        "10.tsx",
-        "11.tsx",
-        "12.tsx",
-        "13.tsx",
-        "14.tsx",
-        "15.tsx",
-        "16.tsx",
-        "enemy.tsx",
-        "potion.tsx",
-        "spawn_map.tmj",
-        "test.tmj"
+        "spawn_map.tmj"
     ],
     "project": "gameMap.tiled-project",
     "recentFiles": [
+        "spawn_map.tmj",
         "map0.tmj",
-        "1.tsx",
-        "2.tsx",
-        "3.tsx",
-        "4.tsx",
-        "5.tsx",
-        "6.tsx",
-        "7.tsx",
-        "8.tsx",
-        "9.tsx",
-        "10.tsx",
-        "11.tsx"
+        "test.tmj",
+        "potion.tsx",
+        "enemy.tsx",
+        "16.tsx",
+        "15.tsx",
+        "14.tsx",
+        "13.tsx",
+        "12.tsx",
+        "11.tsx",
+        "10.tsx"
     ],
     "resizeMap.removeObjects": false
 }

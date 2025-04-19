@@ -1,4 +1,5 @@
 #include "Player.h"
+
 #include "Game.h"
 #include "Config.h"
 #include "Collision.h"
@@ -112,16 +113,20 @@ void Player::update(double dt)
     prevX = x;
     prevY = y;
 
-    x += dx * dt ;
-    SDL_Rect futureXHitbox = {static_cast<int>(x + offsetX), static_cast<int>(y + offsetY), playerW, playerH };
-    if(map && map->checkCollision(futureXHitbox))
+    x += dx * dt -2;
+    SDL_Rect futureXHitboxRight = {static_cast<int>(x) + offsetX, static_cast<int>(y + offsetY), playerW, playerH };
+    if(map && map->checkCollision(futureXHitboxRight))
+    {
+        x = prevX - 2;
+    }
+    SDL_Rect futureXHitboxLeft = {static_cast<int>(x) + offsetX, static_cast<int>(y + offsetY), playerW, playerH };
+    if(map && map->checkCollision(futureXHitboxLeft))
     {
         x = prevX;
-        dx = 0;
     }
 
     y += dy * dt ;
-    SDL_Rect futureYHitbox = {static_cast<int>(x + offsetX), static_cast<int>(y + offsetY), playerW, playerH };
+    SDL_Rect futureYHitbox = {static_cast<int>(x) + offsetX, static_cast<int>(y + offsetY), playerW, playerH };
     if(map && map->checkCollision(futureYHitbox))
     {
         y = prevY;
@@ -255,7 +260,6 @@ SDL_Rect Player::getHitbox() const
 
 SDL_Rect Player::attackHitbox() const
 {
-
     int attackWidth = 30;
     int attackHeight = 30;
     int offsetAttackX = facingRight ? 78 : 14;

@@ -29,8 +29,8 @@ public:
     void draw(SDL_Renderer* renderer);
     bool checkCollision(const SDL_Rect& rect);
 
-    int cameraX = 1;
-    int cameraY = 1;
+    int cameraX = 0;
+    void updateCamera() { cameraX += 2 ; };
 
     void drawCollisionTiles(SDL_Renderer* renderer);
 private:
@@ -47,6 +47,9 @@ private:
 
     std::vector<std::vector<int>> collisionLayer;
     std::set<int> collidableTileIDs;
+
+    std::vector<SDL_Point> getEnemySpawnPoints() const;
+    std::vector<SDL_Point> getPotionSpawnPoints() const;
 
 };
 

@@ -3,6 +3,7 @@
 
 #include "SpriteSheet.h"
 #include <SDL.h>
+#include <vector>
 
 class Enemy
 {
