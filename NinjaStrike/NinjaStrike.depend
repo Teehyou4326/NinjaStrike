@@ -877,7 +877,7 @@
 	"Texture.h"
 	"Game.h"
 
-1744994656 source:c:\code\ninjastrike\ninjastrike\src\texture.cpp
+1745028567 source:c:\code\ninjastrike\ninjastrike\src\texture.cpp
 	"Texture.h"
 
 1744993987 c:\code\ninjastrike\ninjastrike\src\texture.h
@@ -885,7 +885,7 @@
 	<SDL.h>
 	<SDL_image.h>
 
-1744996289 source:c:\code\ninjastrike\ninjastrike\src\game.cpp
+1745056256 source:c:\code\ninjastrike\ninjastrike\src\game.cpp
 	"Game.h"
 
 1744823768 c:\code\ninjastrike\ninjastrike\src\game.h
@@ -900,15 +900,16 @@
 	"Texture.h"
 	"Collision.h"
 
-1744996474 c:\code\ninjastrike\ninjastrike\src\player.h
-	"SpriteSheet.h"
-	"Texture.h"
+1745055556 c:\code\ninjastrike\ninjastrike\src\player.h
 	<SDL.h>
 	<vector>
+	"SpriteSheet.h"
+	"Texture.h"
 	"Shuriken.h"
 	"Config.h"
+	"Map.h"
 
-1744996474 source:c:\code\ninjastrike\ninjastrike\src\player.cpp
+1745055997 source:c:\code\ninjastrike\ninjastrike\src\player.cpp
 	"Player.h"
 	"Game.h"
 	"Config.h"
@@ -1126,7 +1127,7 @@
 1744559669 source:c:\code\ninjastrike\ninjastrike\src\shuriken.cpp
 	"Shuriken.h"
 
-1744823479 c:\code\ninjastrike\ninjastrike\src\config.h
+1745056144 c:\code\ninjastrike\ninjastrike\src\config.h
 
 1742075148 source:c:\code\ninjastrike\ninjastrike\src\tinyxml2.cpp
 	"tinyxml2.h"
@@ -1165,7 +1166,7 @@
 
 1744520160 c:\code\ninjastrike\ninjastrike\src\enemyai.h
 
-1744996655 c:\code\ninjastrike\ninjastrike\src\map.h
+1745056439 c:\code\ninjastrike\ninjastrike\src\map.h
 	<vector>
 	<string>
 	<set>
@@ -1173,16 +1174,16 @@
 	"Texture.h"
 	"Collision.h"
 
-1744559645 c:\code\ninjastrike\ninjastrike\src\enemy.h
+1745056180 c:\code\ninjastrike\ninjastrike\src\enemy.h
 	"SpriteSheet.h"
 	<SDL.h>
 
-1744559645 source:c:\code\ninjastrike\ninjastrike\src\enemy.cpp
+1745056077 source:c:\code\ninjastrike\ninjastrike\src\enemy.cpp
 	"Enemy.h"
 	"Config.h"
 	<cmath>
 
-1744994689 source:c:\code\ninjastrike\ninjastrike\src\map.cpp
+1745056256 source:c:\code\ninjastrike\ninjastrike\src\map.cpp
 	"Map.h"
 	<fstream>
 	<iostream>

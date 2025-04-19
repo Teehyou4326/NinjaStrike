@@ -29,8 +29,10 @@ public:
     void draw(SDL_Renderer* renderer);
     bool checkCollision(const SDL_Rect& rect);
 
-    int cameraX = 0;
-    int cameraY = 0;
+    int cameraX = 1;
+    int cameraY = 1;
+
+    void drawCollisionTiles(SDL_Renderer* renderer);
 private:
     std::vector<TileSet> tileSets;
     std::vector<std::vector<int>> tileData;

@@ -86,6 +86,15 @@ bool Map::loadMap(SDL_Renderer* renderer, const std::string& path)
         }
     }
 
+    for (const auto& layer : tileData)
+    {
+        for (int gid : layer)
+        {
+            if (gid > 0)
+                collidableTileIDs.insert(gid);
+        }
+    }
+
     std::cout << "=== Tile Data ===" << std::endl;
     for (size_t layerIndex = 0; layerIndex < tileData.size(); ++layerIndex)
     {
@@ -216,23 +225,29 @@ TileSet* Map::findTileSetByGid(int gid)
 bool Map::checkCollision(const SDL_Rect& rect)
 {
     int startX = rect.x / tileWidth;
-    int endX = (rect.x + rect.w) / tileWidth;
+    int endX = (rect.x + rect.w ) / tileWidth ;
     int startY = rect.y / tileHeight;
-    int endY = (rect.y + rect.h) / tileHeight;
+    int endY = (rect.y + rect.h ) / tileHeight ;
 
-    for(int y = startY; y <= endY; y++)
+    for(size_t layerIndex = 0; layerIndex < tileData.size(); layerIndex++)
     {
-        for(int x = startX; x <= endX; x++)
+        const auto& layer = tileData[layerIndex];
+        for(int y = startY; y <= endY; y++)
         {
-            if(x >= 0 && y >= 0 && y < static_cast<int>(collisionLayer.size()) && x < static_cast<int>(collisionLayer[0].size()))
+            for(int x = startX; x <= endX; x++)
             {
-                int tileID = collisionLayer[y][x];
-                if(collidableTileIDs.count(tileID))
+                int index = y * mapWidth + x;
+
+                if(x >= 0 && x < mapWidth && y >= 0 && y < mapHeight && index >= 0 && index < static_cast<int>(layer.size()))
                 {
-                    SDL_Rect tileRect = {x*tileWidth, y*tileHeight, tileWidth, tileHeight };
-                    if(Collision::checkCollision(rect, tileRect))
+                    int tileID = layer[index];
+                    if(collidableTileIDs.count(tileID))
                     {
-                        return true;
+                        SDL_Rect tileRect = {x*tileWidth, y*tileHeight, tileWidth, tileHeight };
+                        if(Collision::checkCollision(rect, tileRect))
+                        {
+                            return true;
+                        }
                     }
                 }
             }
@@ -241,3 +256,25 @@ bool Map::checkCollision(const SDL_Rect& rect)
     return false;
 }
 
+///debug
+void Map::drawCollisionTiles(SDL_Renderer* renderer)
+{
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    for (size_t layerIndex = 0; layerIndex < tileData.size(); ++layerIndex)
+    {
+        const auto& layer = tileData[layerIndex];
+        for (size_t i = 0; i < layer.size(); ++i)
+        {
+            int tileID = layer[i];
+            if (collidableTileIDs.count(tileID))
+            {
+                int x = (i % mapWidth) * tileWidth;
+                int y = (i / mapWidth) * tileHeight;
+                SDL_Rect tileRect = {x, y, tileWidth, tileHeight};
+                SDL_SetRenderDrawColor(renderer, 255, 0, 0, 100);
+                SDL_RenderFillRect(renderer, &tileRect);
+            }
+        }
+    }
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
+}

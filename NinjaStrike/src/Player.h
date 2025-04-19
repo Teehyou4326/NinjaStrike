@@ -1,12 +1,14 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "SpriteSheet.h"
-#include "Texture.h"
 #include <SDL.h>
 #include <vector>
+
+#include "SpriteSheet.h"
+#include "Texture.h"
 #include "Shuriken.h"
 #include "Config.h"
+#include "Map.h"
 
 enum class PlayerState{Idle, Running, Jumping, Attacking, Throwing, Hurt};
 
@@ -22,19 +24,23 @@ public:
     void draw(SDL_Renderer* renderer);
     void clean();
 
-    SDL_Rect getHitbox() const { return hitbox; };
+    SDL_Rect getHitbox() const ;
     SDL_Rect attackHitbox() const;
     void takeDamage();
     PlayerState getState() const { return state; }
 
-    void undoMovement();
+    void setMap(Map* map) { this->map = map; };
 
     std::vector<Shuriken>& getShurikens()
     {
         return shurikens;
     }
 
+    void drawHitbox(SDL_Renderer* renderer);
 private:
+    int offsetX = 44;
+    int offsetY = 30;
+
     PlayerState state;
 
     SDL_Renderer* renderer;
@@ -58,11 +64,9 @@ private:
     bool facingRight = true;
 
     int shurikenCooldown;
-
     std::vector<Shuriken> shurikens;
 
-    SDL_Rect hitbox ={ static_cast<int>(x), static_cast<int>(y), playerW, playerH};
-
+    Map* map = nullptr;
 };
 
 #endif // PLAYER_H

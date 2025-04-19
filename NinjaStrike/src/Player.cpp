@@ -113,7 +113,21 @@ void Player::update(double dt)
     prevY = y;
 
     x += dx * dt ;
+    SDL_Rect futureXHitbox = {static_cast<int>(x + offsetX), static_cast<int>(y + offsetY), playerW, playerH };
+    if(map && map->checkCollision(futureXHitbox))
+    {
+        x = prevX;
+        dx = 0;
+    }
+
     y += dy * dt ;
+    SDL_Rect futureYHitbox = {static_cast<int>(x + offsetX), static_cast<int>(y + offsetY), playerW, playerH };
+    if(map && map->checkCollision(futureYHitbox))
+    {
+        y = prevY;
+        dy = 0;
+        isJumping = false;
+    }
 
     //update state
     if(state != PlayerState::Attacking && state != PlayerState::Throwing)
@@ -234,18 +248,30 @@ void Player::takeDamage()
     std::cout << "-- hp" << std::endl;
 }
 
-SDL_Rect Player::attackHitbox() const
+SDL_Rect Player::getHitbox() const
 {
-    int attackWidth = 50;
-    int attackHeight = 30;
-    int offsetX = facingRight ? playerW : -attackWidth;
-    return SDL_Rect{static_cast<int>(x+offsetX), static_cast<int>(y + 10), attackWidth, attackHeight};
+    return SDL_Rect{ static_cast<int>(x) + offsetX, static_cast<int>(y) + offsetY, playerW, playerH };
 }
 
-void Player::undoMovement()
+SDL_Rect Player::attackHitbox() const
 {
-    x = prevX;
-    y = prevY;
-    hitbox.x = static_cast<int>(x);
-    hitbox.y = static_cast<int>(y);
+
+    int attackWidth = 30;
+    int attackHeight = 30;
+    int offsetAttackX = facingRight ? 78 : 14;
+    return SDL_Rect{static_cast<int>(x + offsetAttackX), static_cast<int>(y + offsetY), attackWidth, attackHeight};
 }
+
+///debug
+void Player::drawHitbox(SDL_Renderer* renderer)
+{
+    SDL_Rect playerHitbox = getHitbox();
+    SDL_Rect playerAttackHitbox = attackHitbox();
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 100);  // Màu xanh lá, alpha = 100 (mờ)
+    SDL_RenderFillRect(renderer, &playerHitbox);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 100);
+    SDL_RenderFillRect(renderer, &playerAttackHitbox);
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
+}
+

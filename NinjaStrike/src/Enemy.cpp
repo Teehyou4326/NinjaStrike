@@ -113,5 +113,14 @@ void Enemy::takeDamage()
 
 SDL_Rect Enemy::getHitbox() const
 {
-    return SDL_Rect{x, y, enemyW, enemyH};
+    return SDL_Rect{static_cast<int>(x) + offsetX, static_cast<int>(y) + offsetY, enemyW, enemyH};
+}
+///debug
+void Enemy::drawHitbox(SDL_Renderer* renderer)
+{
+    SDL_Rect enemyHitbox = getHitbox();
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 100);  // Màu xanh lá, alpha = 100 (mờ)
+    SDL_RenderFillRect(renderer, &enemyHitbox);
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
 }

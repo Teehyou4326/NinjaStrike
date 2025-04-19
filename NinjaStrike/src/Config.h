@@ -5,15 +5,15 @@ const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 720;
 
 const float gravity = 2100.0f;   //Trọng lực.
-const int groundY = 500; // Giả lập mặt đất.
+const int groundY = 600; // Giả lập mặt đất.
 
 const int startX = 30;
-const int startY = 500;
+const int startY = 400;
 
-const int playerW = 25;
-const int playerH = 25;
+const int playerW = 34;
+const int playerH = 45;
 
-const int enemyW = 30;
-const int enemyH = 30;
+const int enemyW = 44;
+const int enemyH = 64;
 
 #endif // CONFIG_H

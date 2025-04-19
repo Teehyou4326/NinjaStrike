@@ -50,6 +50,8 @@ bool Game::init(const char* title)
         return false;
     }
 
+    player.setMap(&gameMap);
+
     if(!player.init("res/Ninja/idle_0.png", renderer, startX, startY))
     {
         return false;
@@ -89,11 +91,6 @@ void Game::update()
     player.update(deltaTime);
     enemy.update(deltaTime);
 
-    if(gameMap.checkCollision(player.getHitbox()))
-    {
-        player.undoMovement();
-    }
-
     if(Collision::checkCollision(player.getHitbox(), enemy.getHitbox()))
     {
         player.takeDamage();
@@ -132,6 +129,11 @@ void Game::render()
     gameMap.draw(renderer);
     player.draw(renderer);
     enemy.draw(renderer);
+
+
+    gameMap.drawCollisionTiles(renderer);
+    player.drawHitbox(renderer);
+    enemy.drawHitbox(renderer);
 
     SDL_RenderPresent(renderer);
 }

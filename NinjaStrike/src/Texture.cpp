@@ -12,7 +12,7 @@ Texture::~Texture()
 
 bool Texture::load(SDL_Renderer* renderer, const char* fileName)
 {
-    std::cout << "[Texture::load] dang load: " << this << ", SDL_Texture*: " << texture <<std::endl;
+    std::cout << "[Texture::load] dang load: " << fileName << ", SDL_Texture*: " << texture <<std::endl;
 
     SDL_Surface* surface = IMG_Load(fileName);
     if(!surface)

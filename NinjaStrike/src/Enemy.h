@@ -17,7 +17,12 @@ public:
 
     void takeDamage();
     SDL_Rect getHitbox() const;
+
+    void drawHitbox(SDL_Renderer* renderer);
 private:
+    int offsetX = 48;
+    int offsetY = 33;
+
     enum class State { Idle, Walk, Attack, Hurt, Dead};
 
     SpriteSheet idleSheet;

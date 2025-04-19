@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "spawn_map.tmj",
+    "activeFile": "test.tmj",
     "expandedProjectPaths": [
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -95,24 +95,24 @@
             "scale": 0.75,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 520.6666666666665,
-                "y": 420.66666666666674
+                "x": 1132,
+                "y": 367.3333333333333
             }
         },
         "test.tmj": {
-            "scale": 1.9178124999999997,
+            "scale": 0.4794531249999999,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 160.07821411112923,
-                "y": 159.81750040736517
+                "x": 639.2700016294607,
+                "y": 399.4133941665309
             }
         }
     },
     "last.exportedFilePath": "C:/Code/NinjaStrike/NinjaStrike/res/map",
-    "map.height": 10,
+    "map.height": 25,
     "map.lastUsedExportFilter": "Tiled map files (*.tmx *.xml)",
     "map.lastUsedFormat": "json",
-    "map.width": 10,
+    "map.width": 40,
     "openFiles": [
         "map0.tmj",
         "1.tsx",
@@ -150,5 +150,6 @@
         "9.tsx",
         "10.tsx",
         "11.tsx"
-    ]
+    ],
+    "resizeMap.removeObjects": false
 }
