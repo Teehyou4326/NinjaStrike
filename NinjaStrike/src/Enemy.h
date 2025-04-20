@@ -5,6 +5,8 @@
 #include <SDL.h>
 #include <vector>
 
+#include "Map.h"
+
 class Enemy
 {
 public:
@@ -14,7 +16,9 @@ public:
     bool load(SDL_Renderer* renderer);
     void update(float dt);
     void draw(SDL_Renderer* renderer);
+    void clean();
     void setPosition(int x, int y);
+    void setMap(Map* map) { this->map = map; };
 
     void takeDamage();
     SDL_Rect getHitbox() const;
@@ -35,6 +39,9 @@ private:
     int x, y;
     State state;
     float dx, dy;
+    int prevX, prevY;
+
+    Map* map = nullptr;
 
     int count = 0;
 };

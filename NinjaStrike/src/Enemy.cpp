@@ -8,7 +8,11 @@ Enemy::~Enemy() {}
 
 bool Enemy::load(SDL_Renderer* renderer)
 {
-    if (!idleSheet.load(renderer, "res/enemy/idle.png", "res/enemy/idle.json")) return false;
+    if (!idleSheet.load(renderer, "res/enemy/idle.png", "res/enemy/idle.json"))
+    {
+        std::cout << "[Enemy] load idle sheet that bai" << std::endl;
+        return false;
+    }
     if (!walkSheet.load(renderer, "res/enemy/walk.png", "res/enemy/walk.json")) return false;
     if (!attackSheet.load(renderer, "res/enemy/attack.png", "res/enemy/attack.json")) return false;
     if (!hurtSheet.load(renderer, "res/enemy/hurt.png", "res/enemy/hurt.json")) return false;
@@ -18,9 +22,6 @@ bool Enemy::load(SDL_Renderer* renderer)
 
 void Enemy::update(float dt)
 {
-
-    if(dt == 0) return;
-
     if (state != State::Attack && state != State::Hurt && state != State::Dead)
     {
         if (dx != 0)
@@ -33,11 +34,26 @@ void Enemy::update(float dt)
         }
     }
 
-    x += dx * dt;
-    y += dy * dt;
+    prevX = x;
+    prevY = y;
 
-    if(y < groundY) dy += gravity * dt;
-    else if( y >= groundY)
+    x += dx * dt - 2;
+    SDL_Rect futureXHitbox = {static_cast<int>(x) + offsetX, static_cast<int>(y) + offsetY, enemyW, enemyH};
+    if(map && map->checkCollision(futureXHitbox))
+    {
+        x = prevX - 2;
+    }
+
+    y += dy * dt;
+    SDL_Rect futureYHitbox = {static_cast<int>(x) + offsetX, static_cast<int>(y) + offsetY, enemyW, enemyH};
+    if(map && map->checkCollision(futureYHitbox))
+    {
+        y = prevY;
+        dy = 0;
+    }
+
+    if( y < groundY ) dy += gravity * dt * 1.5f ;
+    else if(y >= groundY)
     {
         y = groundY;
         dy = 0;
@@ -93,6 +109,15 @@ void Enemy::draw(SDL_Renderer* renderer)
     }
 }
 
+void Enemy::clean()
+{
+    idleSheet.clean();
+    walkSheet.clean();
+    attackSheet.clean();
+    hurtSheet.clean();
+    deadSheet.clean();
+}
+
 void Enemy::setPosition(int x, int y)
 {
     this->x = x;
@@ -115,6 +140,9 @@ SDL_Rect Enemy::getHitbox() const
 {
     return SDL_Rect{static_cast<int>(x) + offsetX, static_cast<int>(y) + offsetY, enemyW, enemyH};
 }
+
+
+
 ///debug
 void Enemy::drawHitbox(SDL_Renderer* renderer)
 {

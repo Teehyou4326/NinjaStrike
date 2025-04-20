@@ -36,8 +36,9 @@ private:
     double deltaTime;
 
     Player player;
-    Enemy enemy;
     Map gameMap;
+    std::vector<std::shared_ptr<Enemy>> enemies;
+
 };
 
 #endif

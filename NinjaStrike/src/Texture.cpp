@@ -22,7 +22,7 @@ bool Texture::load(SDL_Renderer* renderer, const char* fileName)
     }
 
     texture = SDL_CreateTextureFromSurface(renderer, surface);
-    SDL_FreeSurface( surface);
+    SDL_FreeSurface(surface);
     if(!texture)
     {
         std::cout << "SDL_CreateTextureFromSurface Error:" << SDL_GetError() << std ::endl;
@@ -40,7 +40,13 @@ void Texture::draw(SDL_Renderer* renderer, int x, int y, int width, int height)
 
 void Texture::draw(SDL_Renderer* renderer, SDL_Rect* srcRect, SDL_Rect* dstRect, SDL_RendererFlip flip)
 {
-    SDL_RenderCopyEx(renderer, texture, srcRect, dstRect, 0, nullptr, flip);
+    if(texture != nullptr)
+    {
+        if(SDL_RenderCopyEx(renderer, texture, srcRect, dstRect, 0, nullptr, flip) != 0)
+        {
+            std::cout << "[Texture] Loi: " << SDL_GetError() <<std::endl;
+        }
+    }
 }
 void Texture::clean()
 {

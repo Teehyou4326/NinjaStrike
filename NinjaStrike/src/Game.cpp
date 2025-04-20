@@ -44,22 +44,39 @@ bool Game::init(const char* title)
         return false;
         }
 ///
-    if(!gameMap.loadMap(renderer, "res/map/spawn_map.tmj"))
+    //load map
+    if(!gameMap.loadMap(renderer, "res/map/map0.tmj"))
     {
         std::cout << "Load spawn map fail" << std::endl;
         return false;
     }
 
+    //truyen map vao player
     player.setMap(&gameMap);
 
+    //khoi tao player
     if(!player.init("res/Ninja/idle_0.png", renderer, startX, startY))
     {
         return false;
     }
 
-    if(!enemy.load(renderer)) return false;
+    //spawn enemy
+    std::vector<SDL_Point> spawnPoints = gameMap.getEnemySpawnPoints();
+    for(const auto& pos : spawnPoints)
+    {
+        auto enemy = std::make_shared<Enemy>();
 
-    enemy.setPosition(500, 500);
+        if(!enemy->load(renderer))
+        {
+            std::cout << "Enemy load that bai" <<std::endl;
+            return false;
+        }
+
+        enemy->setPosition(pos.x, pos.y);
+        enemy->setMap(&gameMap);
+
+        enemies.push_back(enemy);
+    }
 
     running = true;
     lastTime = SDL_GetTicks();
@@ -89,26 +106,30 @@ void Game::update()
     if(deltaTime > 0.1) deltaTime = 0.1;
 
     player.update(deltaTime);
-    enemy.update(deltaTime);
 
-    if(Collision::checkCollision(player.getHitbox(), enemy.getHitbox()))
+    for(auto& enemy : enemies)
     {
-        player.takeDamage();
-    }
+        enemy->update(deltaTime);
 
-    for(auto& shuriken : player.getShurikens())
-    {
-        if(Collision::checkCollision(shuriken.getHitbox(), enemy.getHitbox()))
+        if(Collision::checkCollision(player.getHitbox(), enemy->getHitbox()))
         {
-            enemy.takeDamage();
+            player.takeDamage();
         }
-    }
 
-    if(player.getState() == PlayerState::Attacking)
-    {
-        if(Collision::checkCollision(player.attackHitbox(), enemy.getHitbox()))
+        for(auto& shuriken : player.getShurikens())
         {
-            enemy.takeDamage();
+            if(Collision::checkCollision(shuriken.getHitbox(), enemy->getHitbox()))
+            {
+                enemy->takeDamage();
+            }
+        }
+
+        if(player.getState() == PlayerState::Attacking)
+        {
+            if(Collision::checkCollision(player.attackHitbox(), enemy->getHitbox()))
+            {
+                enemy->takeDamage();
+            }
         }
     }
 
@@ -127,13 +148,19 @@ void Game::render()
     SDL_RenderClear(renderer);
 
     gameMap.draw(renderer);
-    player.draw(renderer);
-    enemy.draw(renderer);
     gameMap.updateCamera();
+    player.draw(renderer);
+    for(auto& enemy : enemies)
+    {
+        enemy->draw(renderer);
+    }
 
     gameMap.drawCollisionTiles(renderer);
     player.drawHitbox(renderer);
-    enemy.drawHitbox(renderer);
+    for(auto& enemy : enemies)
+    {
+        enemy->drawHitbox(renderer);
+    }
 
     SDL_RenderPresent(renderer);
 }
@@ -141,6 +168,10 @@ void Game::render()
 void Game::clean()
 {
     player.clean();
+    for(auto& enemy : enemies)
+    {
+        enemy->clean();
+    }
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     IMG_Quit();

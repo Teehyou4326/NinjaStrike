@@ -33,6 +33,10 @@ public:
     void updateCamera() { cameraX += 2 ; };
 
     void drawCollisionTiles(SDL_Renderer* renderer);
+
+    std::vector<SDL_Point> getEnemySpawnPoints() const;
+    std::vector<SDL_Point> getPotionSpawnPoints() const;
+
 private:
     std::vector<TileSet> tileSets;
     std::vector<std::vector<int>> tileData;
@@ -47,9 +51,6 @@ private:
 
     std::vector<std::vector<int>> collisionLayer;
     std::set<int> collidableTileIDs;
-
-    std::vector<SDL_Point> getEnemySpawnPoints() const;
-    std::vector<SDL_Point> getPotionSpawnPoints() const;
 
 };
 

@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "map0.tmj",
+    "activeFile": "spawn_map.tmj",
     "expandedProjectPaths": [
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -83,8 +83,8 @@
             "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 2000.6666666666665,
-                "y": 208.66666666666663
+                "x": 1280,
+                "y": 367.3333333333333
             }
         },
         "potion.tsx": {
@@ -93,10 +93,10 @@
         },
         "spawn_map.tmj": {
             "scale": 0.75,
-            "selectedLayer": 0,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 1229.3333333333333,
-                "y": 367.3333333333333
+                "x": 1199.3333333333333,
+                "y": 239.33333333333326
             }
         },
         "test.tmj": {
@@ -119,8 +119,8 @@
     ],
     "project": "gameMap.tiled-project",
     "recentFiles": [
-        "spawn_map.tmj",
         "map0.tmj",
+        "spawn_map.tmj",
         "test.tmj",
         "potion.tsx",
         "enemy.tsx",
