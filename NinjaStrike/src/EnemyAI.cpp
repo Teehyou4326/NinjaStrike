@@ -13,10 +13,14 @@ EnemyAI::EnemyAI(Enemy* enemy, Player* player,
 void EnemyAI::update()
 {
     float enemyX = enemy->getX();
+    float enemyY = enemy->getY();
     float playerX = player->getX();
-    float distance = std::abs(enemyX - playerX);
+    float playerY = player->getY();
 
-    if(distance <= detectionRange)
+    float distanceX = std::abs(enemyX - playerX);
+    float distanceY = std::abs(enemyY - playerY);
+
+    if(distanceX <= detectionRange && distanceY <= detectionRange)
     {
         state = EnemyState::Chase;
     }
@@ -33,14 +37,15 @@ void EnemyAI::update()
             int footY = enemy->getY() + enemyH;
 
             bool wallAhead = map->isWallAt(static_cast<int>(nextX), static_cast<int>(enemy->getY()) );
-            bool noGroundAhead = !map->isGroundBelow(static_cast<int>(nextX), static_cast<int>(footY) + 1);
+            bool noGroundAhead = !map->isGroundBelow(static_cast<int>(nextX) + 15, static_cast<int>(footY) + 1);
+
+            enemy->dx = direction * speed;
 
             if(wallAhead || noGroundAhead)
             {
                 direction *= -1;
             }
 
-            enemy->dx = direction * speed;
             break;
         }
         case EnemyState::Chase:
@@ -49,20 +54,20 @@ void EnemyAI::update()
             int footY = enemy->getY() + enemyH;
 
             bool wallAhead = map->isWallAt(static_cast<int>(nextX), static_cast<int>(enemy->getY()) );
-            bool noGroundAhead = !map->isGroundBelow(static_cast<int>(nextX), static_cast<int>(footY) + 1);
+            bool noGroundAhead = !map->isGroundBelow(static_cast<int>(nextX) + 15, static_cast<int>(footY) + 1);
+
+            if(playerX < enemyX)
+            {
+                enemy->dx = -speed * 3.5f;
+            }
+            else
+            {
+                enemy->dx = speed * 3.5f;
+            }
 
             if(wallAhead || noGroundAhead)
             {
                 enemy->dx = 0;
-            }
-
-            if(playerX < enemyX)
-            {
-                enemy->dx = -speed * 1.4;
-            }
-            else
-            {
-                enemy->dx = speed * 1.4;
             }
 
             break;

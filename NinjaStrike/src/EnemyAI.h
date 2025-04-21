@@ -30,11 +30,11 @@ public:
 private:
     Enemy* enemy;
     Player* player;
-    Map* map;
-
     int patrolLeftX, patrolRightX;
     float speed;
     float detectionRange;
+    Map* map;
+
     EnemyState state = EnemyState::Patrol;
     int direction = 1;
 

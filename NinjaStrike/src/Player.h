@@ -37,6 +37,7 @@ public:
     }
 
     float getX() const { return x; };
+    float getY() const { return y; };
 
     void drawHitbox(SDL_Renderer* renderer);
 private:
