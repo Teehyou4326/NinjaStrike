@@ -27,11 +27,11 @@ private:
     int offsetX = 12;
     int offsetY = 4;
 
+    Map* map = nullptr;
+
     int x, y;
 
     SpriteSheet sheet;
-
-    Map* map = nullptr;
 };
 
 #endif // POTION_H

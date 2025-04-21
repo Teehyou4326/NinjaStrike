@@ -2,10 +2,12 @@
 
 EnemyAI::EnemyAI(Enemy* enemy, Player* player,
                  int leftX, int rightX,
-                 float moveSpeed, float detectRange)
+                 float moveSpeed, float detectRange,
+                 Map* map)
     : enemy(enemy), player(player),
     patrolLeftX(leftX), patrolRightX(rightX),
-    speed(moveSpeed), detectionRange(detectRange)
+    speed(moveSpeed), detectionRange(detectRange),
+    map(map)
 {}
 
 void EnemyAI::update()
@@ -26,23 +28,44 @@ void EnemyAI::update()
     switch(state)
     {
         case EnemyState::Patrol:
+        {
+            int nextX = enemyX + direction * speed;
+            int footY = enemy->getY() + enemyH;
+
+            bool wallAhead = map->isWallAt(static_cast<int>(nextX), static_cast<int>(enemy->getY()) );
+            bool noGroundAhead = !map->isGroundBelow(static_cast<int>(nextX), static_cast<int>(footY) + 1);
+
+            if(wallAhead || noGroundAhead)
+            {
+                direction *= -1;
+            }
+
             enemy->dx = direction * speed;
-
-            if(enemy->getX() <= patrolLeftX)
-            {
-                direction = 1;
-            }
-            else if(enemy->getX() >= patrolRightX)
-            {
-                direction = -1;
-            }
-
             break;
-
+        }
         case EnemyState::Chase:
-            if(playerX < enemyX) enemy->dx = -speed*1.3;
-            else enemy->dx = speed*1.3;
+        {
+            int nextX = enemyX + ((playerX < enemyX) ? -1 : 1) * speed;
+            int footY = enemy->getY() + enemyH;
+
+            bool wallAhead = map->isWallAt(static_cast<int>(nextX), static_cast<int>(enemy->getY()) );
+            bool noGroundAhead = !map->isGroundBelow(static_cast<int>(nextX), static_cast<int>(footY) + 1);
+
+            if(wallAhead || noGroundAhead)
+            {
+                enemy->dx = 0;
+            }
+
+            if(playerX < enemyX)
+            {
+                enemy->dx = -speed * 1.4;
+            }
+            else
+            {
+                enemy->dx = speed * 1.4;
+            }
 
             break;
+        }
     }
 }

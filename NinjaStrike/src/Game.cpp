@@ -75,7 +75,7 @@ bool Game::init(const char* title)
 
         enemy->setPosition(pos.x, pos.y);
         enemy->setMap(&gameMap);
-        enemy->setAI(std::make_unique<EnemyAI>(enemy.get(), &player, 400, 400, 24, 120.0f));
+        enemy->setAI(std::make_unique<EnemyAI>(enemy.get(), &player, 600, 600, 24, 200.0f, &gameMap));
 
         enemies.push_back(enemy);
     }

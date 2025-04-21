@@ -299,6 +299,43 @@ std::vector<SDL_Point> Map::getPotionSpawnPoints() const
     return potionSpawns;
 }
 
+bool Map::isWallAt(int x, int y)
+{
+    int tileX = (x + cameraX) / tileWidth;
+    int tileY = y / tileHeight;
+
+    if(tileX < 0 || tileX >= mapWidth || tileY < 0 || tileY >= mapHeight)
+        return true;
+
+    for(const auto& layer : tileData)
+    {
+        int index = tileY * mapWidth + tileX;
+        if(index >= 0 && index < static_cast<int>(layer.size()))
+        {
+            if(collidableTileIDs.count(layer[index])) return true;
+        }
+    }
+    return false;
+}
+
+bool Map::isGroundBelow(int x, int y)
+{
+    int tileX = (x + cameraX) / tileWidth;
+    int tileY = y / tileHeight;
+
+    if(tileX < 0 || tileX >= mapWidth || tileY < 0 || tileY >= mapHeight)
+        return false;
+
+    for(const auto& layer : tileData)
+    {
+        int index = tileY * mapWidth + tileX;
+        if(index >= 0 && index < static_cast<int>(layer.size()))
+        {
+            if(collidableTileIDs.count(layer[index])) return true;
+        }
+    }
+    return false;
+}
 
 
 

@@ -31,12 +31,12 @@ public:
 
     std::unique_ptr<EnemyAI> ai;
     void setAI(std::unique_ptr<EnemyAI> newAI);
-    float getX() const { return x; }
-    float getY() const { return y; }
+    float getX() const { return x + offsetX; }
+    float getY() const { return y + offsetY; }
 
     void drawHitbox(SDL_Renderer* renderer);
 private:
-    int offsetX = 50;
+    int offsetX = 52;
     int offsetY = 33;
 
     enum class State { Idle, Walk, Attack, Hurt, Dead};

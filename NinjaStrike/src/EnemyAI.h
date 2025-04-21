@@ -5,6 +5,8 @@
 
 #include "Enemy.h"
 #include "Player.h"
+#include "Map.h"
+#include "Config.h"
 
 enum class EnemyState
 {
@@ -20,13 +22,15 @@ class EnemyAI
 public:
     EnemyAI(Enemy* enemy, Player* player,
             int leftX, int rightX,
-            float moveSpeed, float detectRange);
+            float moveSpeed, float detectRange,
+            Map* map);
 
     void update();
 
 private:
     Enemy* enemy;
     Player* player;
+    Map* map;
 
     int patrolLeftX, patrolRightX;
     float speed;

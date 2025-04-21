@@ -29,10 +29,13 @@ public:
     void draw(SDL_Renderer* renderer);
     bool checkCollision(const SDL_Rect& rect);
 
-    int cameraX = 0;
+    int cameraX = 50;
     void updateCamera() { cameraX += 2 *0; };
 
     void drawCollisionTiles(SDL_Renderer* renderer);
+
+    bool isWallAt(int x, int y);
+    bool isGroundBelow(int x, int y);
 
     std::vector<SDL_Point> getEnemySpawnPoints() const;
     std::vector<SDL_Point> getPotionSpawnPoints() const;

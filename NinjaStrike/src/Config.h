@@ -14,6 +14,6 @@ const int playerW = 34;
 const int playerH = 45;
 
 const int enemyW = 44;
-const int enemyH = 64;
+const int enemyH = 61;
 
 #endif // CONFIG_H
