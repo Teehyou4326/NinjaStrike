@@ -202,7 +202,7 @@ void Map::draw(SDL_Renderer* renderer)
                     std::cout << "[Map::draw] Texture null cho GID: " << gid << std::endl;
                 }
 
-                ts->texture.draw(renderer, int(x) - cameraX, int(y), &srcRect);
+                ts->texture.draw(renderer, int(x) - cameraX, int(y) - tileHeight, &srcRect);
             }
         }
     }
@@ -268,12 +268,35 @@ std::vector<SDL_Point> Map::getEnemySpawnPoints() const
             {
                 int x = static_cast<int>(obj["x"]);
                 int y = static_cast<int>(obj["y"]);
-                y -= tileHeight;
+                y -= tileHeight*3;
+                x -= 22;
                 enemySpawns.push_back({x,y});
             }
         }
     }
     return enemySpawns;
+}
+
+std::vector<SDL_Point> Map::getPotionSpawnPoints() const
+{
+    std::vector<SDL_Point> potionSpawns;
+
+    for(const auto& layer : objectLayers)
+    {
+        for(const auto& obj : layer["objects"])
+        {
+            if(obj.contains("type") && obj["type"] == "potion")
+            {
+                int x = static_cast<int>(obj["x"]);
+                int y = static_cast<int>(obj["y"]);
+                y -= tileHeight*3;
+                x += 7;
+                y += 6;
+                potionSpawns.push_back({x,y});
+            }
+        }
+    }
+    return potionSpawns;
 }
 
 

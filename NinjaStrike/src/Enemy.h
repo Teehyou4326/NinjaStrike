@@ -1,11 +1,15 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
-#include "SpriteSheet.h"
 #include <SDL.h>
 #include <vector>
+#include <memory>
 
 #include "Map.h"
+#include "SpriteSheet.h"
+#include "Config.h"
+
+class EnemyAI;
 
 class Enemy
 {
@@ -23,9 +27,16 @@ public:
     void takeDamage();
     SDL_Rect getHitbox() const;
 
+    float x, y, dx, dy;
+
+    std::unique_ptr<EnemyAI> ai;
+    void setAI(std::unique_ptr<EnemyAI> newAI);
+    float getX() const { return x; }
+    float getY() const { return y; }
+
     void drawHitbox(SDL_Renderer* renderer);
 private:
-    int offsetX = 48;
+    int offsetX = 50;
     int offsetY = 33;
 
     enum class State { Idle, Walk, Attack, Hurt, Dead};
@@ -36,9 +47,7 @@ private:
     SpriteSheet hurtSheet;
     SpriteSheet deadSheet;
 
-    int x, y;
     State state;
-    float dx, dy;
     int prevX, prevY;
 
     Map* map = nullptr;

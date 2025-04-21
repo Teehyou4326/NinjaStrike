@@ -26,7 +26,7 @@ bool Game::init(const char* title)
         SDL_Quit();
         return false;
     }
-///
+
     window = SDL_CreateWindow(title , SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (!window)
         {
@@ -43,9 +43,10 @@ bool Game::init(const char* title)
         SDL_Quit();
         return false;
         }
-///
+
+
     //load map
-    if(!gameMap.loadMap(renderer, "res/map/map0.tmj"))
+    if(!gameMap.loadMap(renderer, "res/map/spawn_map.tmj"))
     {
         std::cout << "Load spawn map fail" << std::endl;
         return false;
@@ -74,8 +75,27 @@ bool Game::init(const char* title)
 
         enemy->setPosition(pos.x, pos.y);
         enemy->setMap(&gameMap);
+        enemy->setAI(std::make_unique<EnemyAI>(enemy.get(), &player, 400, 400, 24, 120.0f));
 
         enemies.push_back(enemy);
+    }
+
+    //spawn potion
+    std::vector<SDL_Point> spawnPotionPoints = gameMap.getPotionSpawnPoints();
+    for(const auto& pos : spawnPotionPoints)
+    {
+        auto potion = std::make_shared<Potion>();
+
+        if(!potion->load(renderer))
+        {
+            std::cout << "Potion load that bai" << std::endl;
+            return false;
+        }
+
+        potion->setPosition(pos.x, pos.y);
+        potion->setMap(&gameMap);
+
+        potions.push_back(potion);
     }
 
     running = true;
@@ -133,6 +153,11 @@ void Game::update()
         }
     }
 
+    for(auto& potion : potions)
+    {
+        potion->update(deltaTime);
+    }
+
     Uint32 frameTime = SDL_GetTicks() - currentTime;
     if(frameDelay > frameTime)
     {
@@ -154,12 +179,20 @@ void Game::render()
     {
         enemy->draw(renderer);
     }
+    for(auto& potion : potions)
+    {
+        potion->draw(renderer);
+    }
 
     gameMap.drawCollisionTiles(renderer);
     player.drawHitbox(renderer);
     for(auto& enemy : enemies)
     {
         enemy->drawHitbox(renderer);
+    }
+    for(auto& potion : potions)
+    {
+        potion->drawHitbox(renderer);
     }
 
     SDL_RenderPresent(renderer);

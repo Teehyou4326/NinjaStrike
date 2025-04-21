@@ -36,6 +36,8 @@ public:
         return shurikens;
     }
 
+    float getX() const { return x; };
+
     void drawHitbox(SDL_Renderer* renderer);
 private:
     int offsetX = 44;

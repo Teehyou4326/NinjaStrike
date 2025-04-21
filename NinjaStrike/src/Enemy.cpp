@@ -1,8 +1,9 @@
 #include "Enemy.h"
-#include "Config.h"
-#include <cmath>
 
-Enemy::Enemy() : x(0), y(0), state(State::Idle),  dx(0), dy(0) {}
+#include <cmath>
+#include "EnemyAI.h"
+
+Enemy::Enemy() : x(0), y(0), dx(0), dy(0), state(State::Idle) {}
 
 Enemy::~Enemy() {}
 
@@ -22,6 +23,8 @@ bool Enemy::load(SDL_Renderer* renderer)
 
 void Enemy::update(float dt)
 {
+    if(ai) ai->update();
+
     if (state != State::Attack && state != State::Hurt && state != State::Dead)
     {
         if (dx != 0)
@@ -37,11 +40,11 @@ void Enemy::update(float dt)
     prevX = x;
     prevY = y;
 
-    x += dx * dt - 2;
+    x += dx * dt - 2 *0;
     SDL_Rect futureXHitbox = {static_cast<int>(x) + offsetX, static_cast<int>(y) + offsetY, enemyW, enemyH};
     if(map && map->checkCollision(futureXHitbox))
     {
-        x = prevX - 2;
+        x = prevX - 2 *0;
     }
 
     y += dy * dt;
@@ -89,22 +92,26 @@ void Enemy::update(float dt)
 
 void Enemy::draw(SDL_Renderer* renderer)
 {
+    bool flip = dx < 0;
+
+    SDL_RendererFlip flipFlag = flip ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+
     switch (state)
     {
     case State::Idle:
-        idleSheet.draw(renderer, x, y);
+        idleSheet.draw(renderer, x, y, flipFlag);
         break;
     case State::Walk:
-        walkSheet.draw(renderer, x, y);
+        walkSheet.draw(renderer, x, y, flipFlag);
         break;
     case State::Attack:
-        attackSheet.draw(renderer, x, y);
+        attackSheet.draw(renderer, x, y, flipFlag);
         break;
     case State::Hurt:
-        hurtSheet.draw(renderer, x, y);
+        hurtSheet.draw(renderer, x, y, flipFlag);
         break;
     case State::Dead:
-        deadSheet.draw(renderer, x, y);
+        deadSheet.draw(renderer, x, y, flipFlag);
         break;
     }
 }
@@ -141,6 +148,10 @@ SDL_Rect Enemy::getHitbox() const
     return SDL_Rect{static_cast<int>(x) + offsetX, static_cast<int>(y) + offsetY, enemyW, enemyH};
 }
 
+void Enemy::setAI(std::unique_ptr<EnemyAI> newAI)
+{
+    ai = std::move(newAI);
+}
 
 
 ///debug
@@ -148,7 +159,7 @@ void Enemy::drawHitbox(SDL_Renderer* renderer)
 {
     SDL_Rect enemyHitbox = getHitbox();
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 100);  // Màu xanh lá, alpha = 100 (mờ)
+    SDL_SetRenderDrawColor(renderer, 0, 100, 100, 100);  // Màu xanh lá, alpha = 100 (mờ)
     SDL_RenderFillRect(renderer, &enemyHitbox);
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
 }

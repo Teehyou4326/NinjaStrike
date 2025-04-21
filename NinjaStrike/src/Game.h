@@ -5,13 +5,13 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <vector>
+#include <memory>
 
 #include "Player.h"
-#include "Config.h"
-#include "Enemy.h"
 #include "Map.h"
-#include "Texture.h"
-#include "Collision.h"
+#include "Enemy.h"
+#include "Potion.h"
+#include "EnemyAI.h"
 
 class Game
 {
@@ -38,6 +38,7 @@ private:
     Player player;
     Map gameMap;
     std::vector<std::shared_ptr<Enemy>> enemies;
+    std::vector<std::shared_ptr<Potion>> potions;
 
 };
 

@@ -30,7 +30,7 @@ public:
     bool checkCollision(const SDL_Rect& rect);
 
     int cameraX = 0;
-    void updateCamera() { cameraX += 2 ; };
+    void updateCamera() { cameraX += 2 *0; };
 
     void drawCollisionTiles(SDL_Renderer* renderer);
 

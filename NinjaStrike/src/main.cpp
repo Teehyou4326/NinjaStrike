@@ -1,7 +1,6 @@
 #include <SDL.h>
 #include <iostream>
 
-#include "Texture.h"
 #include "Game.h"
 
 
