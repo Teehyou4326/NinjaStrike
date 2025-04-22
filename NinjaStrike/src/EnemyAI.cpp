@@ -20,15 +20,48 @@ void EnemyAI::update()
     float distanceX = std::abs(enemyX - playerX);
     float distanceY = std::abs(enemyY - playerY);
 
-    if(distanceX <= detectionRange && distanceY <= detectionRange)
+    Uint32 now = SDL_GetTicks();
+
+    if(state == EnemyState::Idle)
     {
-        state = EnemyState::Chase;
+        if(now - idleStartTime < idleDuration)
+        {
+            enemy->dx = 0;
+            return;
+        }
+        else
+        {
+            if(distanceX <= 50 && distanceY <= 40)
+            {
+                state = EnemyState::Attack;
+            }
+            else if(distanceX <= detectionRange && distanceY <= detectionRange)
+            {
+                state = EnemyState::Chase;
+            }
+            else
+            {
+                state = EnemyState::Patrol;
+            }
+        }
     }
     else
     {
-        state = EnemyState::Patrol;
+            if(distanceX <= 40 && distanceY <= 40)
+        {
+            state = EnemyState::Attack;
+        }
+        else if(distanceX <= detectionRange && distanceY <= detectionRange)
+        {
+            state = EnemyState::Chase;
+        }
+        else
+        {
+            state = EnemyState::Patrol;
+        }
     }
 
+    //Define state.
     switch(state)
     {
         case EnemyState::Patrol:
@@ -70,6 +103,35 @@ void EnemyAI::update()
                 enemy->dx = 0;
             }
 
+            break;
+        }
+        case EnemyState::Attack:
+        {
+            int nextX = enemyX + ((playerX < enemyX) ? -1 : 1) * speed;
+            int footY = enemy->getY() + enemyH;
+
+            bool wallAhead = map->isWallAt(static_cast<int>(nextX), static_cast<int>(enemy->getY()) );
+            bool noGroundAhead = !map->isGroundBelow(static_cast<int>(nextX) + 15, static_cast<int>(footY) + 1);
+
+            if(SDL_GetTicks() - lastAttackTime > attackCooldown)
+            {
+                enemy->attack();
+                lastAttackTime = SDL_GetTicks();
+
+                state = EnemyState::Idle;
+                idleStartTime = SDL_GetTicks();
+            }
+
+            if(wallAhead || noGroundAhead)
+            {
+                enemy->dx = 0;
+            }
+
+            break;
+        }
+        case EnemyState::Idle:
+        {
+            enemy->dx = 0;
             break;
         }
     }

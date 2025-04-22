@@ -11,7 +11,9 @@
 enum class EnemyState
 {
     Patrol,
-    Chase
+    Chase,
+    Attack,
+    Idle
 };
 
 class Enemy;
@@ -38,6 +40,10 @@ private:
     EnemyState state = EnemyState::Patrol;
     int direction = 1;
 
+    Uint32 lastAttackTime = 0;
+    Uint32 attackCooldown = 500;
+    Uint32 idleStartTime = 0;
+    Uint32 idleDuration = 500;
 };
 
 #endif // ENEMYAI_H

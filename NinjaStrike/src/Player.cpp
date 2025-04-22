@@ -108,11 +108,11 @@ void Player::update(double dt)
     prevX = x;
     prevY = y;
 
-    x += dx * dt - 2 *0;
+    x += dx * dt - 2;
     SDL_Rect futureXHitboxRight = {static_cast<int>(x) + offsetX, static_cast<int>(y + offsetY), playerW, playerH };
     if(map && map->checkCollision(futureXHitboxRight))
     {
-        x = prevX - 2 *0;
+        x = prevX - 2;
     }
     SDL_Rect futureXHitboxLeft = {static_cast<int>(x) + offsetX, static_cast<int>(y + offsetY), playerW, playerH };
     if(map && map->checkCollision(futureXHitboxLeft))

@@ -127,15 +127,22 @@ void Game::update()
 
     player.update(deltaTime);
 
+/// check collision ///
+
     for(auto& enemy : enemies)
     {
         enemy->update(deltaTime);
 
-        if(Collision::checkCollision(player.getHitbox(), enemy->getHitbox()))
+        //enemy attack - player
+        if(enemy->getState() == State::Attack)
         {
-            player.takeDamage();
+            if(Collision::checkCollision(player.getHitbox(), enemy->attackHitbox()))
+            {
+                player.takeDamage();
+            }
         }
 
+        //shuriken - enemy
         for(auto& shuriken : player.getShurikens())
         {
             if(Collision::checkCollision(shuriken.getHitbox(), enemy->getHitbox()))
@@ -144,6 +151,7 @@ void Game::update()
             }
         }
 
+        //player attack - enemy
         if(player.getState() == PlayerState::Attacking)
         {
             if(Collision::checkCollision(player.attackHitbox(), enemy->getHitbox()))

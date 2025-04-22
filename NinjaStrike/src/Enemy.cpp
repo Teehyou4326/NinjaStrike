@@ -40,11 +40,11 @@ void Enemy::update(float dt)
     prevX = x;
     prevY = y;
 
-    x += dx * dt - 2 *0;
+    x += dx * dt - 2;
     SDL_Rect futureXHitbox = {static_cast<int>(x) + offsetX, static_cast<int>(y) + offsetY, enemyW, enemyH};
     if(map && map->checkCollision(futureXHitbox))
     {
-        x = prevX - 2 *0;
+        x = prevX - 2;
     }
 
     y += dy * dt;
@@ -65,20 +65,20 @@ void Enemy::update(float dt)
     switch (state)
     {
         case State::Idle:
-            idleSheet.setSpeed(0.1f);
+            idleSheet.setSpeed(0.12f);
             idleSheet.update(dt);
             break;
         case State::Walk:
-            walkSheet.setSpeed(0.08f);
+            walkSheet.setSpeed(0.1f);
             walkSheet.update(dt);
             break;
         case State::Attack:
-            attackSheet.setSpeed(0.05f);
+            attackSheet.setSpeed(0.06f);
             attackSheet.update(dt);
             if (attackSheet.isAnimationFinished()) state = State::Idle;
             break;
         case State::Hurt:
-            hurtSheet.setSpeed(0.02f);
+            hurtSheet.setSpeed(0.07f);
             hurtSheet.update(dt);
             if (hurtSheet.isAnimationFinished()) state = State::Idle;
             break;
@@ -143,6 +143,26 @@ void Enemy::takeDamage()
     }
 }
 
+void Enemy::attack()
+{
+    if(state != State::Attack)
+    {
+        state = State::Attack;
+    }
+}
+
+SDL_Rect Enemy::attackHitbox() const
+{
+    bool facingRight = true;
+    if(dx > 0) facingRight = true;
+    else if(dx < 0) facingRight = false;
+
+    int attackWidth = 40;
+    int attackHeight = 70;
+    int offsetAttackX = facingRight ? 90 : 20;
+    return SDL_Rect{static_cast<int>(x + offsetAttackX), static_cast<int>(y + offsetY), attackWidth, attackHeight};
+}
+
 SDL_Rect Enemy::getHitbox() const
 {
     return SDL_Rect{static_cast<int>(x) + offsetX, static_cast<int>(y) + offsetY, enemyW, enemyH};
@@ -158,8 +178,11 @@ void Enemy::setAI(std::unique_ptr<EnemyAI> newAI)
 void Enemy::drawHitbox(SDL_Renderer* renderer)
 {
     SDL_Rect enemyHitbox = getHitbox();
+    SDL_Rect enemyAttackHitbox = attackHitbox();
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
     SDL_SetRenderDrawColor(renderer, 0, 100, 100, 100);  // Màu xanh lá, alpha = 100 (mờ)
     SDL_RenderFillRect(renderer, &enemyHitbox);
+    SDL_SetRenderDrawColor(renderer, 200, 100, 0, 100);
+    SDL_RenderFillRect(renderer, &enemyAttackHitbox);
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
 }

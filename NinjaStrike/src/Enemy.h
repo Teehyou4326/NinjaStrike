@@ -9,6 +9,8 @@
 #include "SpriteSheet.h"
 #include "Config.h"
 
+enum class State { Idle, Walk, Attack, Hurt, Dead};
+
 class EnemyAI;
 
 class Enemy
@@ -21,11 +23,14 @@ public:
     void update(float dt);
     void draw(SDL_Renderer* renderer);
     void clean();
+
     void setPosition(int x, int y);
     void setMap(Map* map) { this->map = map; };
 
     void takeDamage();
     SDL_Rect getHitbox() const;
+    State getState() const { return state; }
+
 
     float x, y, dx, dy;
 
@@ -34,12 +39,13 @@ public:
     float getX() const { return x + offsetX; }
     float getY() const { return y + offsetY; }
 
+    void attack();
+    SDL_Rect attackHitbox() const;
+
     void drawHitbox(SDL_Renderer* renderer);
 private:
     int offsetX = 52;
     int offsetY = 33;
-
-    enum class State { Idle, Walk, Attack, Hurt, Dead};
 
     SpriteSheet idleSheet;
     SpriteSheet walkSheet;
@@ -49,6 +55,8 @@ private:
 
     State state;
     int prevX, prevY;
+
+    bool facingRight = true;
 
     Map* map = nullptr;
 
