@@ -28,7 +28,7 @@ bool Player::init(const char* fileName, SDL_Renderer* renderer, int startX, int 
         !jumpSheet.load(renderer, "res/Ninja/jump.png", "res/Ninja/jump.json")       ||
         !attackSheet.load(renderer, "res/Ninja/attack.png", "res/Ninja/attack.json") ||
         !throwSheet.load(renderer, "res/Ninja/throw.png", "res/Ninja/throw.json")    ||
-        !hurtTexture.load(renderer, "res/Ninja/hurt.png"))
+        !hurtSheet.load(renderer, "res/Ninja/hurt.png", "res/Ninja/hurt.json"))
     {
         return false;
     }
@@ -182,6 +182,9 @@ void Player::update(double dt)
             throwSheet.update(dt);
             if(throwSheet.isAnimationFinished()) state = PlayerState::Idle;
             break;
+        case PlayerState::Hurt:
+            hurtSheet.setSpeed(1);
+            hurtSheet.update(dt);
         default:
             break;
     }
@@ -224,7 +227,7 @@ void Player::draw(SDL_Renderer* renderer)
             throwSheet.draw(renderer, x, y, flip);
             break;
         case PlayerState::Hurt:
-            hurtTexture.draw(renderer, x, y, playerW, playerH);
+            hurtSheet.draw(renderer, x, y, flip);
             break;
     }
 
@@ -240,12 +243,23 @@ void Player::clean()
     jumpSheet.clean();
     attackSheet.clean();
     throwSheet.clean();
-    hurtTexture.clean();
+    hurtSheet.clean();
 }
 
-void Player::takeDamage()
+void Player::takeDamage(int dmg)
 {
-    std::cout << "-- hp" << std::endl;
+    Uint32 now = SDL_GetTicks();
+    if(now - lastHitTime < damageCooldown) return;
+    lastHitTime = now;
+
+    hp -= dmg;
+    std::cout << "PLAYER HP: " << hp << " / 500" << std::endl;
+    state = PlayerState::Hurt;
+
+    if(hp <= 0)
+    {
+        std::cout << "Player died. You losed" << std::endl;
+    }
 }
 
 SDL_Rect Player::getHitbox() const

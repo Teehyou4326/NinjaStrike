@@ -4,8 +4,21 @@
 #include "SpriteSheet.h"
 #include <SDL.h>
 #include <vector>
+#include <cstdlib>
 
 #include "Map.h"
+#include "Player.h"
+#include "Enemy.h"
+#include "Config.h"
+
+enum class PotionEffect
+{
+    Heal,
+    SpeedBoost,
+    DmgBoost,
+
+    Count // phan tu de dem
+};
 
 class Potion
 {
@@ -22,6 +35,11 @@ public:
 
     SDL_Rect getHitbox() const;
 
+    void claim() { claimedFlag = true; }
+    bool claimed() const { return claimedFlag; }
+
+    void applyEffect(Player* player);
+
     void drawHitbox(SDL_Renderer* renderer);
 private:
     int offsetX = 12;
@@ -32,6 +50,10 @@ private:
     int x, y;
 
     SpriteSheet sheet;
+
+    bool claimedFlag = false;
+
+    PotionEffect effect;
 };
 
 #endif // POTION_H

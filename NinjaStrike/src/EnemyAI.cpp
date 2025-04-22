@@ -12,6 +12,8 @@ EnemyAI::EnemyAI(Enemy* enemy, Player* player,
 
 void EnemyAI::update()
 {
+    if(enemy->isDead() || enemy->isDying()) return;
+
     float enemyX = enemy->getX();
     float enemyY = enemy->getY();
     float playerX = player->getX();

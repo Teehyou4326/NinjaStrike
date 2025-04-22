@@ -127,7 +127,12 @@ void Game::update()
 
     player.update(deltaTime);
 
-/// check collision ///
+    enemies.erase(std::remove_if(enemies.begin(), enemies.end(),
+                                 [](const std::shared_ptr<Enemy>& enemy)
+                                 {
+                                     return enemy->isDead();
+                                 }),
+                  enemies.end());
 
     for(auto& enemy : enemies)
     {
@@ -138,7 +143,7 @@ void Game::update()
         {
             if(Collision::checkCollision(player.getHitbox(), enemy->attackHitbox()))
             {
-                player.takeDamage();
+                player.takeDamage(70);
             }
         }
 
@@ -147,7 +152,7 @@ void Game::update()
         {
             if(Collision::checkCollision(shuriken.getHitbox(), enemy->getHitbox()))
             {
-                enemy->takeDamage();
+                enemy->takeDamage(playerDMG / 2);
             }
         }
 
@@ -156,14 +161,27 @@ void Game::update()
         {
             if(Collision::checkCollision(player.attackHitbox(), enemy->getHitbox()))
             {
-                enemy->takeDamage();
+                enemy->takeDamage(playerDMG);
             }
         }
     }
 
+    potions.erase(std::remove_if(potions.begin(), potions.end(),
+                                 [](const std::shared_ptr<Potion>& potion)
+                                 {
+                                     return potion->claimed();
+                                 }),
+                  potions.end());
+
     for(auto& potion : potions)
     {
         potion->update(deltaTime);
+
+        if(Collision::checkCollision(player.getHitbox(), potion->getHitbox()))
+        {
+            potion->claim();
+            potion->applyEffect(&player);
+        }
     }
 
     Uint32 frameTime = SDL_GetTicks() - currentTime;

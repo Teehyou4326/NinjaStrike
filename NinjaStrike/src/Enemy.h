@@ -15,6 +15,8 @@ class EnemyAI;
 
 class Enemy
 {
+friend class Potion;
+
 public:
     Enemy();
     ~Enemy();
@@ -27,10 +29,9 @@ public:
     void setPosition(int x, int y);
     void setMap(Map* map) { this->map = map; };
 
-    void takeDamage();
+    void takeDamage(int type);
     SDL_Rect getHitbox() const;
     State getState() const { return state; }
-
 
     float x, y, dx, dy;
 
@@ -41,6 +42,9 @@ public:
 
     void attack();
     SDL_Rect attackHitbox() const;
+
+    bool isDead() const { return isDeadFlag; };
+    bool isDying() const { return isDyingFlag; };
 
     void drawHitbox(SDL_Renderer* renderer);
 private:
@@ -60,7 +64,12 @@ private:
 
     Map* map = nullptr;
 
-    int count = 0;
+    int hp = 100;
+    bool isDyingFlag = false;
+    bool isDeadFlag = false;
+
+    Uint32 lastHitTime = 0;
+    Uint32 damageCooldown = 400;
 };
 
 #endif // ENEMY_H

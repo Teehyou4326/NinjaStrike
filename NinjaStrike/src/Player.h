@@ -3,6 +3,7 @@
 
 #include <SDL.h>
 #include <vector>
+#include <map>
 
 #include "SpriteSheet.h"
 #include "Texture.h"
@@ -14,6 +15,8 @@ enum class PlayerState{Idle, Running, Jumping, Attacking, Throwing, Hurt};
 
 class Player
 {
+    friend class Potion;
+
 public:
     Player();
     ~Player();
@@ -26,7 +29,7 @@ public:
 
     SDL_Rect getHitbox() const ;
     SDL_Rect attackHitbox() const;
-    void takeDamage();
+    void takeDamage(int dmg);
     PlayerState getState() const { return state; }
 
     void setMap(Map* map) { this->map = map; };
@@ -53,8 +56,7 @@ private:
     SpriteSheet jumpSheet;
     SpriteSheet attackSheet;
     SpriteSheet throwSheet;
-
-    Texture hurtTexture;
+    SpriteSheet hurtSheet;
 
     float x, y;
     float dx, dy;
@@ -70,6 +72,10 @@ private:
     std::vector<Shuriken> shurikens;
 
     Map* map = nullptr;
+
+    Uint32 lastHitTime = 0;
+    Uint32 damageCooldown = 800;
+    int hp = 500;
 };
 
 #endif // PLAYER_H

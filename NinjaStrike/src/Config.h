@@ -16,4 +16,6 @@ const int playerH = 45;
 const int enemyW = 44;
 const int enemyH = 61;
 
+inline int playerDMG = 40;
+
 #endif // CONFIG_H

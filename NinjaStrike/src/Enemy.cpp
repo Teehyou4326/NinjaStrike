@@ -55,12 +55,7 @@ void Enemy::update(float dt)
         dy = 0;
     }
 
-    if( y < groundY ) dy += gravity * dt * 1.5f ;
-    else if(y >= groundY)
-    {
-        y = groundY;
-        dy = 0;
-    }
+    dy += gravity * dt * 1.5f ;
 
     switch (state)
     {
@@ -73,25 +68,31 @@ void Enemy::update(float dt)
             walkSheet.update(dt);
             break;
         case State::Attack:
-            attackSheet.setSpeed(0.06f);
+            attackSheet.setSpeed(0.08f);
             attackSheet.update(dt);
             if (attackSheet.isAnimationFinished()) state = State::Idle;
             break;
         case State::Hurt:
-            hurtSheet.setSpeed(0.07f);
+            hurtSheet.setSpeed(0.1f);
             hurtSheet.update(dt);
             if (hurtSheet.isAnimationFinished()) state = State::Idle;
             break;
         case State::Dead:
-            deadSheet.setSpeed(0.25f);
+            deadSheet.setSpeed(0.17f);
             deadSheet.update(dt);
-            if (deadSheet.isAnimationFinished()) state = State::Idle;
+            if (deadSheet.isAnimationFinished())
+            {
+                dx = 0;
+                isDeadFlag = true;
+            }
             break;
     }
 }
 
 void Enemy::draw(SDL_Renderer* renderer)
 {
+    if(isDead()) return;
+
     bool flip = dx < 0;
 
     SDL_RendererFlip flipFlag = flip ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
@@ -131,15 +132,24 @@ void Enemy::setPosition(int x, int y)
     this->y = y;
 }
 
-void Enemy::takeDamage()
+void Enemy::takeDamage(int dmg)
 {
-    std::cout << "enemy --hp" << std::endl;
+    Uint32 now = SDL_GetTicks();
+    if(now - lastHitTime < damageCooldown) return;
+
+    if(state == State::Dead || isDyingFlag) return;
+
+    hp -= dmg;
+    std::cout << "Enemy HP: " << hp << "/100" << std::endl;
     state = State::Hurt;
-    count ++;
-    if(count == 3)
+    lastHitTime = now;
+
+    if(hp <= 0)
     {
+        std::cout << "Enemy died" << std::endl;
         state = State::Dead;
-        count = 0;
+        isDyingFlag = true;
+        deadSheet.setFrame(0);
     }
 }
 

@@ -9,6 +9,9 @@ Potion::~Potion() {}
 
 bool Potion::load(SDL_Renderer* renderer)
 {
+    int randomIndex = rand() % static_cast<int>(PotionEffect::Count);
+    effect = static_cast<PotionEffect>(randomIndex);
+
     if(!sheet.load(renderer, "res/potion/potion.png", "res/potion/potion.json"))
     {
         std::cout << "[Potion] load potion that bai " << std::endl;
@@ -19,6 +22,8 @@ bool Potion::load(SDL_Renderer* renderer)
 
 void Potion::update(float dt)
 {
+    if(claimedFlag) return;
+
     x -= 2;
 
     sheet.setSpeed(0.25f);
@@ -27,7 +32,32 @@ void Potion::update(float dt)
 
 void Potion::draw(SDL_Renderer* renderer)
 {
+    if(claimedFlag) return;
+
     sheet.draw(renderer, x, y);
+}
+
+void Potion::applyEffect(Player* player)
+{
+    switch(effect)
+    {
+        case PotionEffect::Heal:
+        {
+            player->hp += 150;
+            if(player->hp > 500) player->hp = 500;
+
+            std::cout << "HEAL -- " << "PLAYER HP: " << player->hp << " /500" << std::endl;
+            break;
+        }
+        case PotionEffect::SpeedBoost:
+            player->speed *= 1.5;
+            std::cout << "SPEED: " << player->speed << std::endl;
+            break;
+        case PotionEffect::DmgBoost:
+            playerDMG *= 1.5;
+            std::cout << "DMG: " << playerDMG << std::endl;
+            break;
+    }
 }
 
 void Potion::clean()

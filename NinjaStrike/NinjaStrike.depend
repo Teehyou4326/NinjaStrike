@@ -884,7 +884,7 @@
 	<SDL.h>
 	<SDL_image.h>
 
-1745337694 source:c:\code\ninjastrike\ninjastrike\src\game.cpp
+1745357539 source:c:\code\ninjastrike\ninjastrike\src\game.cpp
 	"Game.h"
 
 1745208390 c:\code\ninjastrike\ninjastrike\src\game.h
@@ -899,16 +899,17 @@
 	"Potion.h"
 	"EnemyAI.h"
 
-1745216265 c:\code\ninjastrike\ninjastrike\src\player.h
+1745355775 c:\code\ninjastrike\ninjastrike\src\player.h
 	<SDL.h>
 	<vector>
+	<map>
 	"SpriteSheet.h"
 	"Texture.h"
 	"Shuriken.h"
 	"Config.h"
 	"Map.h"
 
-1745338269 source:c:\code\ninjastrike\ninjastrike\src\player.cpp
+1745357156 source:c:\code\ninjastrike\ninjastrike\src\player.cpp
 	"Player.h"
 
 1745088936 c:\code\ninjastrike\ninjastrike\src\spritesheet.h
@@ -1123,7 +1124,7 @@
 1744559669 source:c:\code\ninjastrike\ninjastrike\src\shuriken.cpp
 	"Shuriken.h"
 
-1745213014 c:\code\ninjastrike\ninjastrike\src\config.h
+1745358028 c:\code\ninjastrike\ninjastrike\src\config.h
 
 1742075148 source:c:\code\ninjastrike\ninjastrike\src\tinyxml2.cpp
 	"tinyxml2.h"
@@ -1155,10 +1156,10 @@
 1744021594 c:\code\ninjastrike\ninjastrike\src\collision.h
 	<SDL.h>
 
-1745321931 source:c:\code\ninjastrike\ninjastrike\src\enemyai.cpp
+1745344547 source:c:\code\ninjastrike\ninjastrike\src\enemyai.cpp
 	"EnemyAI.h"
 
-1745337987 c:\code\ninjastrike\ninjastrike\src\enemyai.h
+1745356860 c:\code\ninjastrike\ninjastrike\src\enemyai.h
 	<cmath>
 	"Enemy.h"
 	"Player.h"
@@ -1173,7 +1174,7 @@
 	"Texture.h"
 	"Collision.h"
 
-1745337987 c:\code\ninjastrike\ninjastrike\src\enemy.h
+1745357086 c:\code\ninjastrike\ninjastrike\src\enemy.h
 	<SDL.h>
 	<vector>
 	<memory>
@@ -1181,7 +1182,7 @@
 	"SpriteSheet.h"
 	"Config.h"
 
-1745338269 source:c:\code\ninjastrike\ninjastrike\src\enemy.cpp
+1745357539 source:c:\code\ninjastrike\ninjastrike\src\enemy.cpp
 	"Enemy.h"
 	<cmath>
 	"EnemyAI.h"
@@ -1192,12 +1193,16 @@
 	<iostream>
 	"tinyxml2.h"
 
-1745167151 source:c:\code\ninjastrike\ninjastrike\src\potion.cpp
+1745357811 source:c:\code\ninjastrike\ninjastrike\src\potion.cpp
 	"Potion.h"
 
-1745211650 c:\code\ninjastrike\ninjastrike\src\potion.h
+1745357746 c:\code\ninjastrike\ninjastrike\src\potion.h
 	"SpriteSheet.h"
 	<SDL.h>
 	<vector>
+	<cstdlib>
 	"Map.h"
+	"Player.h"
+	"Enemy.h"
+	"Config.h"
 
