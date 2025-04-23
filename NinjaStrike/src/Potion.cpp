@@ -50,12 +50,30 @@ void Potion::applyEffect(Player* player)
             break;
         }
         case PotionEffect::SpeedBoost:
+        {
             player->speed *= 1.5;
+            player->SpeedBoostTime = SDL_GetTicks() + 7000;
+            player->SpeedBoostFlag = true;
             std::cout << "SPEED: " << player->speed << std::endl;
+
             break;
+        }
         case PotionEffect::DmgBoost:
+        {
             playerDMG *= 1.5;
-            std::cout << "DMG: " << playerDMG << std::endl;
+            player->DmgBoostTime = SDL_GetTicks() + 7000;
+            player->DmgBoostFlag = true;
+            std::cout << "DAMAGE: " << playerDMG << std::endl;
+            break;
+        }
+        case PotionEffect::Invincible:
+        {
+            player->InvincibleTime = SDL_GetTicks() + 5000;
+            player->InvincibleFlag = true;
+            std::cout << "INVINCIBLE" << std::endl;
+            break;
+        }
+        case PotionEffect::Count:
             break;
     }
 }

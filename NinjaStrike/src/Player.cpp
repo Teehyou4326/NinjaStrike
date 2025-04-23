@@ -202,6 +202,25 @@ void Player::update(double dt)
     {
         shurikenCooldown--;
     }
+
+    //Potion effect
+    if(SpeedBoostFlag && SDL_GetTicks() >= SpeedBoostTime)
+    {
+        speed /= 1.5;
+        SpeedBoostFlag = false;
+        std::cout << "END speed: " << speed << std::endl;
+    }
+    if(DmgBoostFlag && SDL_GetTicks() >= DmgBoostTime)
+    {
+        playerDMG /= 1.5;
+        DmgBoostFlag = false;
+        std::cout << "END damage: " << playerDMG << std::endl;
+    }
+    if(InvincibleFlag && SDL_GetTicks() >= InvincibleTime)
+    {
+        InvincibleFlag = false;
+        std::cout << "END Invincible" << std::endl;
+    }
 }
 
 void Player::draw(SDL_Renderer* renderer)
@@ -252,7 +271,8 @@ void Player::takeDamage(int dmg)
     if(now - lastHitTime < damageCooldown) return;
     lastHitTime = now;
 
-    hp -= dmg;
+    if(!InvincibleFlag) hp -= dmg;
+    else hp -= 0;
     std::cout << "PLAYER HP: " << hp << " / 500" << std::endl;
     state = PlayerState::Hurt;
 

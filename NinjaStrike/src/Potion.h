@@ -16,6 +16,7 @@ enum class PotionEffect
     Heal,
     SpeedBoost,
     DmgBoost,
+    Invincible,
 
     Count // phan tu de dem
 };

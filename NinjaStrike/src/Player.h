@@ -76,6 +76,15 @@ private:
     Uint32 lastHitTime = 0;
     Uint32 damageCooldown = 800;
     int hp = 500;
+
+    Uint32 SpeedBoostTime = 0;
+    bool SpeedBoostFlag = false;
+
+    Uint32 DmgBoostTime = 0;
+    bool DmgBoostFlag = false;
+
+    Uint32 InvincibleTime = 0;
+    bool InvincibleFlag = false;
 };
 
 #endif // PLAYER_H
