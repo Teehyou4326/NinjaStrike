@@ -44,6 +44,8 @@ private:
     std::vector<std::shared_ptr<Enemy>> enemies;
     std::vector<std::shared_ptr<Potion>> potions;
 
+    Texture hpBar;
+
 };
 
 #endif

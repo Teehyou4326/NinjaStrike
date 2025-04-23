@@ -30,6 +30,7 @@ public:
     SDL_Rect getHitbox() const ;
     SDL_Rect attackHitbox() const;
     void takeDamage(int dmg);
+    int getHP() const { return hp; };
     PlayerState getState() const { return state; }
 
     void setMap(Map* map) { this->map = map; };

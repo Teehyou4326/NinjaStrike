@@ -46,7 +46,7 @@ bool Game::init(const char* title)
 
 
     //load map
-    if(!gameMap.loadMap(renderer, "res/map/spawn_map.tmj"))
+    if(!gameMap.loadMap(renderer, "res/map/map0.tmj"))
     {
         std::cout << "Load spawn map fail" << std::endl;
         return false;
@@ -96,6 +96,12 @@ bool Game::init(const char* title)
         potion->setMap(&gameMap);
 
         potions.push_back(potion);
+    }
+
+    if(!hpBar.load(renderer, "res/HUD/HealthBar.png"))
+    {
+        std::cout << "Load HP bar that bai" << std::endl;
+        return false;
     }
 
     running = true;
@@ -195,6 +201,7 @@ void Game::render()
     SDL_SetRenderDrawColor(renderer , 255, 255, 255, 255);
     SDL_RenderClear(renderer);
 
+    //draw map, player, enemy, potion.
     gameMap.draw(renderer);
     gameMap.updateCamera();
     player.draw(renderer);
@@ -206,6 +213,20 @@ void Game::render()
     {
         potion->draw(renderer);
     }
+
+    //draw HP bar
+    int barX = 20;
+    int barY = 20;
+    int barW = 200;
+    int barH = 30;
+
+    float hpPercent = static_cast<float>(player.getHP()) / 500;
+    int fillW = static_cast<int>(barW * hpPercent);
+
+    SDL_Rect hpFillRect = {barX + 30, barY + 7, fillW / 1.205f, barH - 10};
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    SDL_RenderFillRect(renderer, &hpFillRect);
+    hpBar.draw(renderer, barX, barY, barW, barH);
 
     gameMap.drawCollisionTiles(renderer);
     player.drawHitbox(renderer);

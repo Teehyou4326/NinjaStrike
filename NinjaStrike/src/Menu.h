@@ -27,6 +27,8 @@ private:
     bool active;
     bool startSelected;
 
+    SDL_Texture* background;
+
     SDL_Texture* renderText(const std::string& text, SDL_Color color);
     void updateItemRects();
 };

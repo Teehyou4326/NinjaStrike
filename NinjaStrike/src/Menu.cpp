@@ -2,13 +2,22 @@
 
 #include <SDL.h>
 #include <SDL_ttf.h>
+#include <SDL_image.h>
 
 Menu::Menu(SDL_Renderer* renderer)
     :renderer(renderer), hoveredIndex(-1), active(true), startSelected(false)
 {
     TTF_Init();
-    font = TTF_OpenFont("res/font/font.ttf", 28);
+    font = TTF_OpenFont("res/font/font.ttf", 40);
     items = {"START GAME", "QUIT"};
+
+    SDL_Surface* bgSurface = IMG_Load("res/menu_pic.png");
+    if(bgSurface)
+    {
+        background = SDL_CreateTextureFromSurface(renderer, bgSurface);
+        SDL_FreeSurface(bgSurface);
+    }
+
     updateItemRects();
 }
 
@@ -65,7 +74,12 @@ void Menu::draw()
 {
     if(!active) return;
 
-    int y = 200;
+    if(background)
+    {
+        SDL_RenderCopy(renderer, background, nullptr, nullptr);
+    }
+
+    int y = 385;
     itemRects.clear();
 
     for(size_t i=0; i< items.size(); i++)
@@ -75,18 +89,18 @@ void Menu::draw()
 
         int texW = 0, texH = 0;
         SDL_QueryTexture(textTex, nullptr, nullptr, &texW, &texH);
-        SDL_Rect dstRect = {400 - texW / 2, y, texW, texH};
+        SDL_Rect dstRect = {745 - texW / 2, y, texW, texH};
         SDL_RenderCopy(renderer, textTex, nullptr, &dstRect);
 
         itemRects.push_back(dstRect);
         SDL_DestroyTexture(textTex);
-        y += 60;
+        y += 50;
     }
 }
 
 void Menu::updateItemRects()
 {
-    int y = 200;
+    int y = 385;
     itemRects.clear();
 
     for(const std::string& item :items)
@@ -94,12 +108,12 @@ void Menu::updateItemRects()
         SDL_Texture* textTex = renderText(item, SDL_Color{255, 255, 255, 255});
         int texW = 0, texH = 0;
         SDL_QueryTexture(textTex, nullptr, nullptr, &texW, &texH);
-        SDL_Rect dstRect = {400 - texW / 2, y, texW, texH};
+        SDL_Rect dstRect = {745 - texW / 2, y, texW, texH};
         SDL_RenderCopy(renderer, textTex, nullptr, &dstRect);
 
         itemRects.push_back(dstRect);
         SDL_DestroyTexture(textTex);
-        y += 60;
+        y += 50;
     }
 }
 

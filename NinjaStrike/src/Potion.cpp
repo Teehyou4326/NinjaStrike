@@ -51,19 +51,26 @@ void Potion::applyEffect(Player* player)
         }
         case PotionEffect::SpeedBoost:
         {
-            player->speed *= 1.5;
+            if(!player->SpeedBoostFlag)
+            {
+                player->speed *= 1.5;
+                player->SpeedBoostFlag = true;
+            }
             player->SpeedBoostTime = SDL_GetTicks() + 7000;
-            player->SpeedBoostFlag = true;
             std::cout << "SPEED: " << player->speed << std::endl;
 
             break;
         }
         case PotionEffect::DmgBoost:
         {
-            playerDMG *= 1.5;
+            if(!player->DmgBoostFlag)
+            {
+                playerDMG *= 1.5;
+                player->DmgBoostFlag = true;
+            }
             player->DmgBoostTime = SDL_GetTicks() + 7000;
-            player->DmgBoostFlag = true;
             std::cout << "DAMAGE: " << playerDMG << std::endl;
+
             break;
         }
         case PotionEffect::Invincible:
