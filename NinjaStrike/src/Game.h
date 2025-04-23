@@ -20,12 +20,16 @@ public:
     ~Game();
 
     bool init(const char* title);
-    void handleEvent();
+    void handleEvent(SDL_Event& e);
     void update();
     void render();
     void clean();
 
     bool isRunning();
+    void present() { SDL_RenderPresent(renderer); }
+    SDL_Renderer* getRenderer() const { return renderer; }
+    void clear() { SDL_RenderClear(renderer); }
+    void quit() { running = false; }
 
 private:
     SDL_Window* window;

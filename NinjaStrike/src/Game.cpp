@@ -104,15 +104,12 @@ bool Game::init(const char* title)
     return true;
 }
 
-void Game::handleEvent()
+void Game::handleEvent(SDL_Event& event)
 {
-    SDL_Event event;
-    while (SDL_PollEvent(&event))
-    {
-        if (event.type == SDL_QUIT) running = false;
+        if (event.type == SDL_QUIT)
+            running = false;
 
         player.handleInput(event);
-    }
 }
 
 void Game::update()

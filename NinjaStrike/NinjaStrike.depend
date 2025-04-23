@@ -871,10 +871,9 @@
 	<SDL.h>
 	<SDL_image.h>
 
-1745207527 source:c:\code\ninjastrike\ninjastrike\src\main.cpp
-	<SDL.h>
-	<iostream>
+1745401418 source:c:\code\ninjastrike\ninjastrike\src\main.cpp
 	"Game.h"
+	"Menu.h"
 
 1745089710 source:c:\code\ninjastrike\ninjastrike\src\texture.cpp
 	"Texture.h"
@@ -884,10 +883,10 @@
 	<SDL.h>
 	<SDL_image.h>
 
-1745357539 source:c:\code\ninjastrike\ninjastrike\src\game.cpp
+1745401380 source:c:\code\ninjastrike\ninjastrike\src\game.cpp
 	"Game.h"
 
-1745208390 c:\code\ninjastrike\ninjastrike\src\game.h
+1745401380 c:\code\ninjastrike\ninjastrike\src\game.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -1193,7 +1192,7 @@
 	<iostream>
 	"tinyxml2.h"
 
-1745377666 source:c:\code\ninjastrike\ninjastrike\src\potion.cpp
+1745379028 source:c:\code\ninjastrike\ninjastrike\src\potion.cpp
 	"Potion.h"
 
 1745377117 c:\code\ninjastrike\ninjastrike\src\potion.h
@@ -1205,4 +1204,20 @@
 	"Player.h"
 	"Enemy.h"
 	"Config.h"
+
+1745401418 c:\code\ninjastrike\ninjastrike\src\menu.h
+	<SDL.h>
+	<SDL_ttf.h>
+	<vector>
+	<string>
+
+1741143764 c:\code\ninjastrike\sdl lib\sdl2_ttf-2.24.0\x86_64-w64-mingw32\include\sdl2\sdl_ttf.h
+	"SDL.h"
+	"begin_code.h"
+	"close_code.h"
+
+1745401418 source:c:\code\ninjastrike\ninjastrike\src\menu.cpp
+	"Menu.h"
+	<SDL.h>
+	<SDL_ttf.h>
 
