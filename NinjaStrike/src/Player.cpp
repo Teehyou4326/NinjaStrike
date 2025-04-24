@@ -39,17 +39,19 @@ bool Player::init(const char* fileName, SDL_Renderer* renderer, int startX, int 
 
 void Player::handleInput(const SDL_Event& event)
 {
+    if(StunFlag) return;
+
     if(event.type == SDL_KEYDOWN && event.key.repeat == 0)
     {
         switch (event.key.keysym.sym) // xác định phím được nhấn hoặc thả
         {
             case SDLK_LEFT:
-                dx= -speed ;
-                facingRight = false;
+                dx = ReverseControlFlag ? speed : -speed;
+                facingRight = ReverseControlFlag;
                 break;
             case SDLK_RIGHT:
-                dx= speed ;
-                facingRight = true;
+                dx = ReverseControlFlag ? -speed : speed;
+                facingRight = !ReverseControlFlag;
                 break;
             case SDLK_UP:
                 if(!isJumping)
@@ -86,16 +88,16 @@ void Player::handleInput(const SDL_Event& event)
             case SDLK_LEFT:
                 if(state[SDL_SCANCODE_RIGHT])
                 {
-                    dx= speed ;
-                    facingRight = true;
+                    dx = ReverseControlFlag ? speed : -speed;
+                    facingRight = ReverseControlFlag;
                 }
                 else dx = 0;
                 break;
             case SDLK_RIGHT:
                 if(state[SDL_SCANCODE_LEFT])
                 {
-                    dx= -speed ;
-                    facingRight = false;
+                    dx = ReverseControlFlag ? -speed : speed;
+                    facingRight = !ReverseControlFlag;
                 }
                 else dx = 0;
                 break;
@@ -145,6 +147,13 @@ void Player::update(double dt)
         dy = 0;
         isJumping = false;
         jumpSheet.setFrame(2);
+    }
+
+    if(StunFlag)
+    {
+        dx = 0;
+        dy = 0;
+        isJumping = false;
     }
 
     //animation
@@ -221,6 +230,16 @@ void Player::update(double dt)
         InvincibleFlag = false;
         std::cout << "END Invincible" << std::endl;
     }
+    if(ReverseControlFlag && SDL_GetTicks() >= ReverseControlTime)
+    {
+        ReverseControlFlag = false;
+        std::cout << "END REVERSE " << std::endl;
+    }
+    if(StunFlag && SDL_GetTicks() >= StunTime)
+    {
+        StunFlag = false;
+        std::cout << "END STUN " << std::endl;
+    }
 }
 
 void Player::draw(SDL_Renderer* renderer)
@@ -273,7 +292,7 @@ void Player::takeDamage(int dmg)
 
     if(!InvincibleFlag) hp -= dmg;
     else hp -= 0;
-    std::cout << "PLAYER HP: " << hp << " / 500" << std::endl;
+    std::cout << "PLAYER HP: " << hp << " / 600" << std::endl;
     state = PlayerState::Hurt;
 
     if(hp <= 0)

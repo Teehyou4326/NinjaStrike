@@ -16,6 +16,7 @@ enum class PlayerState{Idle, Running, Jumping, Attacking, Throwing, Hurt};
 class Player
 {
     friend class Potion;
+    friend class Game;
 
 public:
     Player();
@@ -76,7 +77,7 @@ private:
 
     Uint32 lastHitTime = 0;
     Uint32 damageCooldown = 800;
-    int hp = 500;
+    int hp = 600;
 
     Uint32 SpeedBoostTime = 0;
     bool SpeedBoostFlag = false;
@@ -86,6 +87,12 @@ private:
 
     Uint32 InvincibleTime = 0;
     bool InvincibleFlag = false;
+
+    Uint32 ReverseControlTime = 0;
+    bool ReverseControlFlag = false;
+
+    Uint32 StunTime = 0;
+    bool StunFlag = false;
 };
 
 #endif // PLAYER_H

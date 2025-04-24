@@ -5,7 +5,7 @@ const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 720;
 
 const float gravity = 2100.0f;   //Trọng lực.
-const int groundY = 600; // Giả lập mặt đất.
+const int groundY = 730; // Giả lập mặt đất.
 
 const int startX = 30;
 const int startY = 400;

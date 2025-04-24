@@ -45,6 +45,12 @@ private:
     std::vector<std::shared_ptr<Potion>> potions;
 
     Texture hpBar;
+    Texture stateBar;
+    Texture scoreBoard;
+
+    Texture DmgBoostIcon;
+    Texture ReverseControlIcon;
+    Texture InvincibleIcon;
 
 };
 

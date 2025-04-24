@@ -43,10 +43,10 @@ void Potion::applyEffect(Player* player)
     {
         case PotionEffect::Heal:
         {
-            player->hp += 150;
-            if(player->hp > 500) player->hp = 500;
+            player->hp += 200;
+            if(player->hp > 600) player->hp = 600;
 
-            std::cout << "HEAL -- " << "PLAYER HP: " << player->hp << " /500" << std::endl;
+            std::cout << "HEAL -- " << "PLAYER HP: " << player->hp << " /600" << std::endl;
             break;
         }
         case PotionEffect::SpeedBoost:
@@ -78,6 +78,21 @@ void Potion::applyEffect(Player* player)
             player->InvincibleTime = SDL_GetTicks() + 5000;
             player->InvincibleFlag = true;
             std::cout << "INVINCIBLE" << std::endl;
+            break;
+        }
+        case PotionEffect::ReverseControl:
+        {
+            player->ReverseControlTime = SDL_GetTicks() + 4000;
+            player->ReverseControlFlag = true;
+            std::cout << "REVERSE CONTROL " << std::endl;
+            break;
+        }
+        case PotionEffect::Stun:
+        {
+            player->StunTime = SDL_GetTicks() + 2500;
+            player->StunFlag = true;
+
+            std::cout << "STUN" << std::endl;
             break;
         }
         case PotionEffect::Count:

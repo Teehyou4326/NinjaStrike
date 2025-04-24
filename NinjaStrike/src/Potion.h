@@ -17,6 +17,8 @@ enum class PotionEffect
     SpeedBoost,
     DmgBoost,
     Invincible,
+    ReverseControl,
+    Stun,
 
     Count // phan tu de dem
 };

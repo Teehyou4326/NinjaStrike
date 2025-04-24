@@ -98,9 +98,28 @@ bool Game::init(const char* title)
         potions.push_back(potion);
     }
 
+    //load HUD
     if(!hpBar.load(renderer, "res/HUD/HealthBar.png"))
     {
         std::cout << "Load HP bar that bai" << std::endl;
+        return false;
+    }
+    if(!stateBar.load(renderer, "res/HUD/StateBar.png"))
+    {
+        std::cout << "Load state bar fail " << std::endl;
+        return false;
+    }
+    if(!scoreBoard.load(renderer, "res/HUD/ScoreBoard.png"))
+    {
+        std::cout << "Load score board fail" << std::endl;
+        return false;
+    }
+
+    if(!DmgBoostIcon.load(renderer, "res/HUD/Icons/DmgBoost.png") ||
+       !ReverseControlIcon.load(renderer, "res/HUD/Icons/ReverseControl.png") ||
+       !InvincibleIcon.load(renderer, "res/HUD/Icons/Invincible.png"))
+    {
+        std::cout << "load icon fail" << std::endl;
         return false;
     }
 
@@ -214,19 +233,30 @@ void Game::render()
         potion->draw(renderer);
     }
 
-    //draw HP bar
-    int barX = 20;
+    //draw HUD
+    int barX = 30;
     int barY = 20;
-    int barW = 200;
+    int barW = 220;
     int barH = 30;
 
-    float hpPercent = static_cast<float>(player.getHP()) / 500;
+    float hpPercent = static_cast<float>(player.getHP()) / 600;
     int fillW = static_cast<int>(barW * hpPercent);
 
-    SDL_Rect hpFillRect = {barX + 30, barY + 7, fillW / 1.205f, barH - 10};
+    SDL_Rect hpFillRect = {barX + 33, barY + 7, fillW / 1.2f, barH - 10};
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     SDL_RenderFillRect(renderer, &hpFillRect);
     hpBar.draw(renderer, barX, barY, barW, barH);
+
+    stateBar.draw(renderer, -12, 20, 500, 130);
+    scoreBoard.draw(renderer, 1050, 0, 250, 180);
+
+    //icon
+    if(player.DmgBoostFlag)
+        DmgBoostIcon.draw(renderer, 44, 66, 32, 32);
+    if(player.ReverseControlFlag)
+        ReverseControlIcon.draw(renderer, 74, 60, 44, 44);
+    if(player.InvincibleFlag)
+        InvincibleIcon.draw(renderer, 118, 68, 26, 33);
 
     gameMap.drawCollisionTiles(renderer);
     player.drawHitbox(renderer);
