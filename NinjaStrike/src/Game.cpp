@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "SoundManager.h"
 
 Game::Game()
 {
@@ -135,6 +136,18 @@ bool Game::init(const char* title)
         std::cout << "load icon fail" << std::endl;
         return false;
     }
+
+    //sound
+    if(Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+    {
+        std::cerr << "K mo dc audio " << Mix_GetError() << std::endl;
+    }
+
+    SoundManager::getInstance().loadSound("attack", "res/sound/attack.wav");
+    SoundManager::getInstance().loadSound("claim", "res/sound/claim.wav");
+    SoundManager::getInstance().loadSound("jump", "res/sound/jump.wav");
+    SoundManager::getInstance().loadSound("throw", "res/sound/throw.wav");
+    SoundManager::getInstance().loadSound("run", "res/sound/run.wav");
 
     running = true;
     lastTime = SDL_GetTicks();

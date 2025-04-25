@@ -1,10 +1,14 @@
 #ifndef MENU_H
 #define MENU_H
 
+#include <iostream>
 #include <SDL.h>
 #include <SDL_ttf.h>
+#include <SDL_mixer.h>
 #include <vector>
 #include <string>
+
+#include "SoundManager.h"
 
 class Menu
 {
@@ -26,6 +30,8 @@ private:
     int hoveredIndex;
     bool active;
     bool startSelected;
+
+    Mix_Music* menuMusic = nullptr;
 
     SDL_Texture* background;
 

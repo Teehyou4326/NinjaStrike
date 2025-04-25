@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "potion.tsx",
+    "activeFile": "map1.tmj",
     "expandedProjectPaths": [
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -95,6 +95,14 @@
                 "y": 367.33333333333326
             }
         },
+        "map1.tmj": {
+            "scale": 0.3955859375,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1280.3791843586453,
+                "y": 400.6714723017675
+            }
+        },
         "potion.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
@@ -139,7 +147,8 @@
         "15.tsx",
         "16.tsx",
         "enemy.tsx",
-        "potion.tsx"
+        "potion.tsx",
+        "map1.tmj"
     ],
     "project": "gameMap.tiled-project",
     "recentFiles": [

@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "SoundManager.h"
 
 Player::Player()
 {
@@ -46,32 +47,40 @@ void Player::handleInput(const SDL_Event& event)
         switch (event.key.keysym.sym) // xác định phím được nhấn hoặc thả
         {
             case SDLK_LEFT:
+                if(dy == 0)
+                    SoundManager::getInstance().playSound("run");
                 dx = ReverseControlFlag ? speed : -speed;
                 facingRight = ReverseControlFlag;
                 break;
             case SDLK_RIGHT:
+                if(dy == 0)
+                    SoundManager::getInstance().playSound("run");
                 dx = ReverseControlFlag ? -speed : speed;
                 facingRight = !ReverseControlFlag;
                 break;
             case SDLK_UP:
                 if(!isJumping)
                 {
+                    SoundManager::getInstance().playSound("jump");
                     dy = -jump;
                     isJumping = true;
                     doubleJump = true;
                 }
                 else if (doubleJump)
                 {
+                    SoundManager::getInstance().playSound("jump");
                     dy = -jump * 0.8f;
                     doubleJump = false;
                 }
                 break;
             case SDLK_z:
+                SoundManager::getInstance().playSound("attack");
                 state = PlayerState::Attacking;
                 break;
             case SDLK_x:
                 if(shurikenCooldown == 0)
                 {
+                SoundManager::getInstance().playSound("throw");
                 state = PlayerState::Throwing;
                 shurikens.emplace_back(x+(facingRight ? 50 : -10), y+20, facingRight, this->renderer);
                 shurikenCooldown = 50;
@@ -164,9 +173,17 @@ void Player::update(double dt)
             idleSheet.update(dt);
             break;
         case PlayerState::Running:
+            {
+            Uint32 now = SDL_GetTicks();
+            if(now - lastRun >= 200)
+            {
+                SoundManager::getInstance().playSound("run");
+                lastRun = now;
+            }
             runSheet.setSpeed(0.045f);
             runSheet.update(dt);
             break;
+            }
         case PlayerState::Jumping:
             if(dy < 0 && !doubleJump)
             {

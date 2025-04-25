@@ -5,6 +5,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <SDL_mixer.h>
 #include <vector>
 #include <memory>
 
@@ -45,6 +46,8 @@ private:
 
     Player player;
     Map gameMap;
+    Texture backgroundTexture;
+
     std::vector<std::shared_ptr<Enemy>> enemies;
     std::vector<std::shared_ptr<Potion>> potions;
 
@@ -52,6 +55,8 @@ private:
     int enemiesDefeated = 0;
     int potionsCollected = 0;
     int score = 0;
+
+    int cameraX = 0;
 
     Texture hpBar;
     Texture stateBar;

@@ -81,6 +81,7 @@ private:
 
     Uint32 SpeedBoostTime = 0;
     bool SpeedBoostFlag = false;
+    Uint32 lastRun = 0;
 
     Uint32 DmgBoostTime = 0;
     bool DmgBoostFlag = false;

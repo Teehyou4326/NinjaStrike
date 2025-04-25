@@ -7,6 +7,7 @@
 Menu::Menu(SDL_Renderer* renderer)
     :renderer(renderer), hoveredIndex(-1), active(true), startSelected(false)
 {
+    //display
     TTF_Init();
     font = TTF_OpenFont("res/font/font.ttf", 40);
     items = {"START GAME", "QUIT"};
@@ -18,11 +19,27 @@ Menu::Menu(SDL_Renderer* renderer)
         SDL_FreeSurface(bgSurface);
     }
 
+    //music
+    if(Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) < 0)
+    {
+        std::cerr << "K mo dc audio " << Mix_GetError() << std::endl;
+    }
+
+    menuMusic = Mix_LoadMUS("res/music/MenuMusic.ogg");
+    if(menuMusic)
+        Mix_PlayMusic(menuMusic, -1);
+    else
+        std::cout << "Load music fail " << Mix_GetError() << std::endl;
+
+    //sound
+    SoundManager::getInstance().loadSound("menu", "res/sound/menu.wav");
+
     updateItemRects();
 }
 
 Menu::~Menu()
 {
+    Mix_HaltMusic();
     TTF_CloseFont(font);
     TTF_Quit();
 }
@@ -50,11 +67,13 @@ void Menu::handleEvent(SDL_Event& event)
     {
         if(hoveredIndex == 0)
         {
+            SoundManager::getInstance().playSound("menu");
             startSelected = true;
-            active = false;
+            deactivate();
         }
         else if(hoveredIndex == 1)
         {
+            SoundManager::getInstance().playSound("menu");
             SDL_Event quitEvent;
             quitEvent.type = SDL_QUIT;
             SDL_PushEvent(&quitEvent);
@@ -125,6 +144,13 @@ bool Menu::isActive() const
 void Menu::deactivate()
 {
     active = false;
+
+    if(Mix_PlayingMusic()) Mix_HaltMusic();
+    if(menuMusic)
+    {
+        Mix_FreeMusic(menuMusic);
+        menuMusic = nullptr;
+    }
 }
 
 bool Menu::startGameSelect() const
