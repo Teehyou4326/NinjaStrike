@@ -33,6 +33,8 @@ public:
     void clear() { SDL_RenderClear(renderer); }
     void quit() { running = false; }
 
+    bool gameOver = false;
+
 private:
     SDL_Window* window;
     SDL_Renderer* renderer;
@@ -55,6 +57,7 @@ private:
     int enemiesDefeated = 0;
     int potionsCollected = 0;
     int score = 0;
+    void renderGameOver(SDL_Renderer* renderer, int score);
 
     int cameraX = 0;
 

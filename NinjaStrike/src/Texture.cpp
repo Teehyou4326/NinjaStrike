@@ -21,6 +21,11 @@ bool Texture::load(SDL_Renderer* renderer, const char* fileName)
         return false;
     }
 
+    if (strcmp(fileName, "res/shuriken.png") == 0)
+    {
+    SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 255, 255, 255));
+    }
+
     texture = SDL_CreateTextureFromSurface(renderer, surface);
     SDL_FreeSurface(surface);
     if(!texture)

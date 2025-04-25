@@ -108,20 +108,20 @@ bool Map::loadMap(SDL_Renderer* renderer, const std::string& path)
         }
     }
 
-    std::cout << "=== Object Layers ===" << std::endl;
-    for (size_t i = 0; i < objectLayers.size(); ++i)
-    {
-        std::cout << "Object Layer " << i << ": " << std::endl;
-        auto& objects = objectLayers[i]["objects"];
-        for (const auto& obj : objects)
-        {
-            std::cout << "  ID: " << obj["id"];
-            std::cout << ", Name: " << obj["name"];
-            std::cout << ", Type: " << obj["type"];
-            std::cout << ", X: " << obj["x"];
-            std::cout << ", Y: " << obj["y"] << std::endl;
-        }
-    }
+//    std::cout << "=== Object Layers ===" << std::endl;
+//    for (size_t i = 0; i < objectLayers.size(); ++i)
+//    {
+//        std::cout << "Object Layer " << i << ": " << std::endl;
+//        auto& objects = objectLayers[i]["objects"];
+//        for (const auto& obj : objects)
+//        {
+//            std::cout << "  ID: " << obj["id"];
+//            std::cout << ", Name: " << obj["name"];
+//            std::cout << ", Type: " << obj["type"];
+//            std::cout << ", X: " << obj["x"];
+//        C:\Code\NinjaStrike\NinjaStrike\src\Player.cpp    std::cout << ", Y: " << obj["y"] << std::endl;
+//        }
+//    }
 
 
     return true;
@@ -202,7 +202,7 @@ void Map::draw(SDL_Renderer* renderer)
                     std::cout << "[Map::draw] Texture null cho GID: " << gid << std::endl;
                 }
 
-                ts->texture.draw(renderer, int(x) - cameraX, int(y) - tileHeight, &srcRect);
+                //ts->texture.draw(renderer, int(x) - cameraX, int(y) - tileHeight, &srcRect);
             }
         }
     }
@@ -340,24 +340,24 @@ bool Map::isGroundBelow(int x, int y)
 
 
 ///debug
-void Map::drawCollisionTiles(SDL_Renderer* renderer)
-{
-    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-    for (size_t layerIndex = 0; layerIndex < tileData.size(); ++layerIndex)
-    {
-        const auto& layer = tileData[layerIndex];
-        for (size_t i = 0; i < layer.size(); ++i)
-        {
-            int tileID = layer[i];
-            if (collidableTileIDs.count(tileID))
-            {
-                int x = (i % mapWidth) * tileWidth;
-                int y = (i / mapWidth) * tileHeight;
-                SDL_Rect tileRect = {x - cameraX, y, tileWidth, tileHeight};
-                SDL_SetRenderDrawColor(renderer, 255, 0, 0, 100);
-                SDL_RenderFillRect(renderer, &tileRect);
-            }
-        }
-    }
-    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
-}
+//void Map::drawCollisionTiles(SDL_Renderer* renderer)
+//{
+//    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+//    for (size_t layerIndex = 0; layerIndex < tileData.size(); ++layerIndex)
+//    {
+//        const auto& layer = tileData[layerIndex];
+//        for (size_t i = 0; i < layer.size(); ++i)
+//        {
+//            int tileID = layer[i];
+//            if (collidableTileIDs.count(tileID))
+//            {
+//                int x = (i % mapWidth) * tileWidth;
+//                int y = (i / mapWidth) * tileHeight;
+//                SDL_Rect tileRect = {x - cameraX, y, tileWidth, tileHeight};
+//                SDL_SetRenderDrawColor(renderer, 255, 0, 0, 100);
+//                SDL_RenderFillRect(renderer, &tileRect);
+//            }
+//        }
+//    }
+//    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
+//}

@@ -871,11 +871,11 @@
 	<SDL.h>
 	<SDL_image.h>
 
-1745594397 source:c:\code\ninjastrike\ninjastrike\src\main.cpp
+1745599260 source:c:\code\ninjastrike\ninjastrike\src\main.cpp
 	"Game.h"
 	"Menu.h"
 
-1745594397 source:c:\code\ninjastrike\ninjastrike\src\texture.cpp
+1745606005 source:c:\code\ninjastrike\ninjastrike\src\texture.cpp
 	"Texture.h"
 
 1745594397 c:\code\ninjastrike\ninjastrike\src\texture.h
@@ -883,11 +883,11 @@
 	<SDL.h>
 	<SDL_image.h>
 
-1745595128 source:c:\code\ninjastrike\ninjastrike\src\game.cpp
+1745605929 source:c:\code\ninjastrike\ninjastrike\src\game.cpp
 	"Game.h"
 	"SoundManager.h"
 
-1745595095 c:\code\ninjastrike\ninjastrike\src\game.h
+1745601045 c:\code\ninjastrike\ninjastrike\src\game.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -901,7 +901,7 @@
 	"Potion.h"
 	"EnemyAI.h"
 
-1745595166 c:\code\ninjastrike\ninjastrike\src\player.h
+1745600768 c:\code\ninjastrike\ninjastrike\src\player.h
 	<SDL.h>
 	<vector>
 	<map>
@@ -911,8 +911,9 @@
 	"Config.h"
 	"Map.h"
 
-1745547213 source:c:\code\ninjastrike\ninjastrike\src\player.cpp
+1745605102 source:c:\code\ninjastrike\ninjastrike\src\player.cpp
 	"Player.h"
+	"SoundManager.h"
 
 1745594397 c:\code\ninjastrike\ninjastrike\src\spritesheet.h
 	<SDL.h>
@@ -1126,7 +1127,7 @@
 1745594397 source:c:\code\ninjastrike\ninjastrike\src\shuriken.cpp
 	"Shuriken.h"
 
-1745594397 c:\code\ninjastrike\ninjastrike\src\config.h
+1745605319 c:\code\ninjastrike\ninjastrike\src\config.h
 
 1745594397 source:c:\code\ninjastrike\ninjastrike\src\tinyxml2.cpp
 	"tinyxml2.h"
@@ -1189,7 +1190,7 @@
 	<cmath>
 	"EnemyAI.h"
 
-1745594397 source:c:\code\ninjastrike\ninjastrike\src\map.cpp
+1745605272 source:c:\code\ninjastrike\ninjastrike\src\map.cpp
 	"Map.h"
 	<fstream>
 	<iostream>
@@ -1208,7 +1209,7 @@
 	"Enemy.h"
 	"Config.h"
 
-1745594980 c:\code\ninjastrike\ninjastrike\src\menu.h
+1745599260 c:\code\ninjastrike\ninjastrike\src\menu.h
 	<iostream>
 	<SDL.h>
 	<SDL_ttf.h>
@@ -1222,7 +1223,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1745594980 source:c:\code\ninjastrike\ninjastrike\src\menu.cpp
+1745599278 source:c:\code\ninjastrike\ninjastrike\src\menu.cpp
 	"Menu.h"
 	<SDL.h>
 	<SDL_ttf.h>

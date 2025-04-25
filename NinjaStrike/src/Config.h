@@ -7,7 +7,7 @@ const int SCREEN_HEIGHT = 720;
 const float gravity = 2100.0f;   //Trọng lực.
 const int groundY = 730; // Giả lập mặt đất.
 
-const int startX = 30;
+const int startX = 120;
 const int startY = 400;
 
 const int playerW = 34;

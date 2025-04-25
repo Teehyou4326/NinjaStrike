@@ -58,9 +58,14 @@ bool Game::init(const char* title)
     }
 
     //load map
-    if(!gameMap.loadMap(renderer, "res/map/map0.tmj"))
+    if(!gameMap.loadMap(renderer, "res/map/map1.tmj"))
     {
         std::cout << "Load spawn map fail" << std::endl;
+        return false;
+    }
+    if(!backgroundTexture.load(renderer, "res/map/BG/BG.png"))
+    {
+        std::cout << "load bg fail" << std::endl;
         return false;
     }
 
@@ -165,6 +170,15 @@ void Game::handleEvent(SDL_Event& event)
 
 void Game::update()
 {
+    SDL_Surface* loadedSurface = IMG_Load("res/shuriken.png");
+    Uint32 colorKey = SDL_MapRGB(loadedSurface->format, 225, 255, 225);
+    SDL_SetColorKey(loadedSurface, SDL_TRUE, colorKey);
+
+    if(player.getX() < -20 || player.getY() > SCREEN_HEIGHT || player.getHP() < 0)
+    {
+        gameOver = true;
+    }
+
     const int frameDelay = 1000/60;
 
     Uint32 currentTime = SDL_GetTicks();
@@ -280,10 +294,18 @@ void Game::drawScore(SDL_Renderer* renderer, int score)
 
 void Game::render()
 {
+
+    if(gameOver)
+    {
+        renderGameOver(renderer, score);
+        return;
+    }
+
     SDL_SetRenderDrawColor(renderer , 255, 255, 255, 255);
     SDL_RenderClear(renderer);
 
     //draw map, player, enemy, potion.
+    backgroundTexture.draw(renderer, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     gameMap.draw(renderer);
     gameMap.updateCamera();
     player.draw(renderer);
@@ -305,7 +327,7 @@ void Game::render()
     float hpPercent = static_cast<float>(player.getHP()) / 600;
     int fillW = static_cast<int>(barW * hpPercent);
 
-    SDL_Rect hpFillRect = {barX + 33, barY + 7, fillW / 1.2f, barH - 10};
+    SDL_Rect hpFillRect = {barX + 33, barY + 7, static_cast<int>(fillW / 1.2f), barH - 10};
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     SDL_RenderFillRect(renderer, &hpFillRect);
     hpBar.draw(renderer, barX, barY, barW, barH);
@@ -328,16 +350,16 @@ void Game::render()
     if(player.StunFlag)
         StunIcon.draw(renderer, 172, 48, 72, 72);
 
-    gameMap.drawCollisionTiles(renderer);
-    player.drawHitbox(renderer);
-    for(auto& enemy : enemies)
-    {
-        enemy->drawHitbox(renderer);
-    }
-    for(auto& potion : potions)
-    {
-        potion->drawHitbox(renderer);
-    }
+//    gameMap.drawCollisionTiles(renderer);
+//    player.drawHitbox(renderer);
+//    for(auto& enemy : enemies)
+//    {
+//        enemy->drawHitbox(renderer);
+//    }
+//    for(auto& potion : potions)
+//    {
+//        potion->drawHitbox(renderer);
+//    }
 
     SDL_RenderPresent(renderer);
 }
@@ -358,4 +380,44 @@ void Game::clean()
 bool Game::isRunning()
 {
     return running;
+}
+
+void Game::renderGameOver(SDL_Renderer* renderer, int score) {
+
+
+    SDL_RenderClear(renderer);
+
+    // Mở font
+    TTF_Font* font = TTF_OpenFont("res/font/s_font.ttf", 78);
+    if (!font) {
+        SDL_Log("Không thể mở font: %s", TTF_GetError());
+        return;
+    }
+
+    SDL_Color white = {255, 255, 255};
+
+
+    SDL_Surface* textSurface1 = TTF_RenderText_Solid(font, "Game Over", white);
+    SDL_Texture* textTexture1 = SDL_CreateTextureFromSurface(renderer, textSurface1);
+    SDL_Rect textRect1 = {640 - textSurface1->w/2, 200, textSurface1->w, textSurface1->h};
+    SDL_FreeSurface(textSurface1);
+
+    // Tạo dòng điểm số
+    std::string scoreText = "Score      " + std::to_string(score);
+    SDL_Surface* textSurface2 = TTF_RenderText_Solid(font, scoreText.c_str(), white);
+    SDL_Texture* textTexture2 = SDL_CreateTextureFromSurface(renderer, textSurface2);
+    SDL_Rect textRect2 = {640 - textSurface2->w/2, 300, textSurface2->w, textSurface2->h};
+    SDL_FreeSurface(textSurface2);
+
+    // Vẽ cả 2 dòng
+    SDL_RenderCopy(renderer, textTexture1, nullptr, &textRect1);
+    SDL_RenderCopy(renderer, textTexture2, nullptr, &textRect2);
+
+    // Hiển thị lên màn hình
+    SDL_RenderPresent(renderer);
+
+    // Giải phóng tài nguyên
+    SDL_DestroyTexture(textTexture1);
+    SDL_DestroyTexture(textTexture2);
+    TTF_CloseFont(font);
 }
