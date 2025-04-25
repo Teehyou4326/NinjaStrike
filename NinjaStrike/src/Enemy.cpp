@@ -115,6 +115,20 @@ void Enemy::draw(SDL_Renderer* renderer)
         deadSheet.draw(renderer, x, y, flipFlag);
         break;
     }
+
+    int barW = 40;
+    int barH = 5;
+    int barX = x + 45 + (enemyW - barW) / 2;
+    int barY = y + 10;
+
+    SDL_Rect bgRect = { barX, barY, barW, barH };
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_RenderFillRect(renderer, &bgRect);
+
+    int hpW = (int)(( hp / 100.0f ) * barW);
+    SDL_Rect hpRect = { barX, barY, hpW, barH};
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    SDL_RenderFillRect(renderer, &hpRect);
 }
 
 void Enemy::clean()
@@ -140,12 +154,13 @@ void Enemy::takeDamage(int dmg)
     if(state == State::Dead || isDyingFlag) return;
 
     hp -= dmg;
-    std::cout << "Enemy HP: " << hp << "/100" << std::endl;
+    //std::cout << "Enemy HP: " << hp << "/100" << std::endl;
     state = State::Hurt;
     lastHitTime = now;
 
     if(hp <= 0)
     {
+        hp = 0;
         defeated ++;
         std::cout << "Enemy died" << std::endl;
         state = State::Dead;

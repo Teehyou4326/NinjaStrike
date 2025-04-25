@@ -883,7 +883,7 @@
 	<SDL.h>
 	<SDL_image.h>
 
-1745605929 source:c:\code\ninjastrike\ninjastrike\src\game.cpp
+1745606107 source:c:\code\ninjastrike\ninjastrike\src\game.cpp
 	"Game.h"
 	"SoundManager.h"
 
@@ -1185,7 +1185,7 @@
 	"SpriteSheet.h"
 	"Config.h"
 
-1745594397 source:c:\code\ninjastrike\ninjastrike\src\enemy.cpp
+1745607290 source:c:\code\ninjastrike\ninjastrike\src\enemy.cpp
 	"Enemy.h"
 	<cmath>
 	"EnemyAI.h"
