@@ -883,13 +883,14 @@
 	<SDL.h>
 	<SDL_image.h>
 
-1745520725 source:c:\code\ninjastrike\ninjastrike\src\game.cpp
+1745557066 source:c:\code\ninjastrike\ninjastrike\src\game.cpp
 	"Game.h"
 
-1745520119 c:\code\ninjastrike\ninjastrike\src\game.h
+1745556346 c:\code\ninjastrike\ninjastrike\src\game.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
+	<SDL_ttf.h>
 	<vector>
 	<memory>
 	"Player.h"
@@ -908,7 +909,7 @@
 	"Config.h"
 	"Map.h"
 
-1745497100 source:c:\code\ninjastrike\ninjastrike\src\player.cpp
+1745547213 source:c:\code\ninjastrike\ninjastrike\src\player.cpp
 	"Player.h"
 
 1745088936 c:\code\ninjastrike\ninjastrike\src\spritesheet.h
@@ -1173,7 +1174,7 @@
 	"Texture.h"
 	"Collision.h"
 
-1745357086 c:\code\ninjastrike\ninjastrike\src\enemy.h
+1745556346 c:\code\ninjastrike\ninjastrike\src\enemy.h
 	<SDL.h>
 	<vector>
 	<memory>
@@ -1181,7 +1182,7 @@
 	"SpriteSheet.h"
 	"Config.h"
 
-1745357539 source:c:\code\ninjastrike\ninjastrike\src\enemy.cpp
+1745552240 source:c:\code\ninjastrike\ninjastrike\src\enemy.cpp
 	"Enemy.h"
 	<cmath>
 	"EnemyAI.h"
@@ -1192,10 +1193,10 @@
 	<iostream>
 	"tinyxml2.h"
 
-1745496762 source:c:\code\ninjastrike\ninjastrike\src\potion.cpp
+1745546603 source:c:\code\ninjastrike\ninjastrike\src\potion.cpp
 	"Potion.h"
 
-1745496560 c:\code\ninjastrike\ninjastrike\src\potion.h
+1745555458 c:\code\ninjastrike\ninjastrike\src\potion.h
 	"SpriteSheet.h"
 	<SDL.h>
 	<vector>

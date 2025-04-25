@@ -6,8 +6,8 @@ Player::Player()
     y = 0;
     dx = 0;
     dy = 0;
-    speed = 400.0f;
-    jump = 800.0f;
+    speed = 430.0f;
+    jump = 850.0f;
     isJumping = false;
     doubleJump = false;
 

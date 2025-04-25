@@ -45,8 +45,11 @@ public:
 
     bool isDead() const { return isDeadFlag; };
     bool isDying() const { return isDyingFlag; };
+    bool defeatedCounter = false;
 
     void drawHitbox(SDL_Renderer* renderer);
+
+    int defeated = 0;
 private:
     int offsetX = 52;
     int offsetY = 33;

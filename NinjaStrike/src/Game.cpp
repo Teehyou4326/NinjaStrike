@@ -44,6 +44,17 @@ bool Game::init(const char* title)
         return false;
         }
 
+    //font
+    if(TTF_Init() == -1)
+    {
+        std::cout << "TTF Init failed: " << TTF_GetError() << std::endl;
+    }
+
+    font = TTF_OpenFont("res/font/s_font.ttf", 28);
+    if(!font)
+    {
+        std::cout << "Load font fail " << TTF_GetError() << std::endl;
+    }
 
     //load map
     if(!gameMap.loadMap(renderer, "res/map/map0.tmj"))
@@ -117,7 +128,9 @@ bool Game::init(const char* title)
 
     if(!DmgBoostIcon.load(renderer, "res/HUD/Icons/DmgBoost.png") ||
        !ReverseControlIcon.load(renderer, "res/HUD/Icons/ReverseControl.png") ||
-       !InvincibleIcon.load(renderer, "res/HUD/Icons/Invincible.png"))
+       !InvincibleIcon.load(renderer, "res/HUD/Icons/Invincible.png") ||
+       !StunIcon.load(renderer, "res/HUD/Icons/Stun.png") ||
+       !SpeedBoostIcon.load(renderer, "res/HUD/Icons/SpeedBoost.png"))
     {
         std::cout << "load icon fail" << std::endl;
         return false;
@@ -147,6 +160,11 @@ void Game::update()
 
     if(deltaTime > 0.1) deltaTime = 0.1;
 
+    //score
+    distanceTravelled = std::max(distanceTravelled, int(player.x) + gameMap.cameraX - startX);
+    score = distanceTravelled*0.05 + enemiesDefeated*100 + potionsCollected*50;
+
+    //object
     player.update(deltaTime);
 
     enemies.erase(std::remove_if(enemies.begin(), enemies.end(),
@@ -165,7 +183,7 @@ void Game::update()
         {
             if(Collision::checkCollision(player.getHitbox(), enemy->attackHitbox()))
             {
-                player.takeDamage(70);
+                player.takeDamage(75);
             }
         }
 
@@ -186,6 +204,12 @@ void Game::update()
                 enemy->takeDamage(playerDMG);
             }
         }
+
+        if(enemy->isDying() && !enemy->defeatedCounter)
+        {
+            enemiesDefeated ++;
+            enemy->defeatedCounter = true;
+        }
     }
 
     potions.erase(std::remove_if(potions.begin(), potions.end(),
@@ -202,8 +226,10 @@ void Game::update()
         if(Collision::checkCollision(player.getHitbox(), potion->getHitbox()))
         {
             potion->claim();
+            potionsCollected ++;
             potion->applyEffect(&player);
         }
+
     }
 
     Uint32 frameTime = SDL_GetTicks() - currentTime;
@@ -213,6 +239,30 @@ void Game::update()
     }
 
     gameMap.cameraX += static_cast<int>(10 * deltaTime);
+}
+
+void Game::drawScore(SDL_Renderer* renderer, int score)
+{
+    //labelscore
+    SDL_Color labelColor = {255, 255, 255};
+    SDL_Surface* labelSurface = TTF_RenderText_Solid(font, "Score", labelColor);
+    SDL_Texture* labelTexture = SDL_CreateTextureFromSurface(renderer, labelSurface);
+    SDL_Rect labelRect = {1139, 35, labelSurface->w, labelSurface->h};
+
+    //score
+    SDL_Color color = {255, 255, 0};
+    std::string text = std::to_string(score);
+    SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), color);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+    SDL_Rect dstRect = {1176 - surface->w/2, 63, surface->w, surface->h};
+
+    SDL_RenderCopy(renderer, labelTexture, nullptr, &labelRect);
+    SDL_RenderCopy(renderer, texture, nullptr, &dstRect);
+
+    SDL_FreeSurface(labelSurface);
+    SDL_FreeSurface(surface);
+    SDL_DestroyTexture(labelTexture);
+    SDL_DestroyTexture(texture);
 }
 
 void Game::render()
@@ -250,13 +300,20 @@ void Game::render()
     stateBar.draw(renderer, -12, 20, 500, 130);
     scoreBoard.draw(renderer, 1050, 0, 250, 180);
 
+    //score
+    drawScore(renderer, score);
+
     //icon
+    if(player.SpeedBoostFlag)
+        SpeedBoostIcon.draw(renderer, 42, 67, 44, 44);
     if(player.DmgBoostFlag)
-        DmgBoostIcon.draw(renderer, 44, 66, 32, 32);
+        DmgBoostIcon.draw(renderer, 84, 67, 32, 32);
     if(player.ReverseControlFlag)
-        ReverseControlIcon.draw(renderer, 74, 60, 44, 44);
+        ReverseControlIcon.draw(renderer, 114, 60, 44, 44);
     if(player.InvincibleFlag)
-        InvincibleIcon.draw(renderer, 118, 68, 26, 33);
+        InvincibleIcon.draw(renderer, 158, 68, 26, 33);
+    if(player.StunFlag)
+        StunIcon.draw(renderer, 172, 48, 72, 72);
 
     gameMap.drawCollisionTiles(renderer);
     player.drawHitbox(renderer);

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <vector>
 #include <memory>
 
@@ -36,6 +37,9 @@ private:
     SDL_Renderer* renderer;
     bool running;
 
+    TTF_Font* font = nullptr;
+    void drawScore(SDL_Renderer*renderer, int score);
+
     Uint32 lastTime;
     double deltaTime;
 
@@ -44,6 +48,11 @@ private:
     std::vector<std::shared_ptr<Enemy>> enemies;
     std::vector<std::shared_ptr<Potion>> potions;
 
+    int distanceTravelled = 0;
+    int enemiesDefeated = 0;
+    int potionsCollected = 0;
+    int score = 0;
+
     Texture hpBar;
     Texture stateBar;
     Texture scoreBoard;
@@ -51,6 +60,8 @@ private:
     Texture DmgBoostIcon;
     Texture ReverseControlIcon;
     Texture InvincibleIcon;
+    Texture StunIcon;
+    Texture SpeedBoostIcon;
 
 };
 

@@ -89,7 +89,7 @@ void Potion::applyEffect(Player* player)
         }
         case PotionEffect::Stun:
         {
-            player->StunTime = SDL_GetTicks() + 2500;
+            player->StunTime = SDL_GetTicks() + 1300;
             player->StunFlag = true;
 
             std::cout << "STUN" << std::endl;

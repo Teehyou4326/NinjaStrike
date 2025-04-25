@@ -146,6 +146,7 @@ void Enemy::takeDamage(int dmg)
 
     if(hp <= 0)
     {
+        defeated ++;
         std::cout << "Enemy died" << std::endl;
         state = State::Dead;
         isDyingFlag = true;
