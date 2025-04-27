@@ -871,9 +871,10 @@
 	<SDL.h>
 	<SDL_image.h>
 
-1745599260 source:c:\code\ninjastrike\ninjastrike\src\main.cpp
+1745745464 source:c:\code\ninjastrike\ninjastrike\src\main.cpp
 	"Game.h"
 	"Menu.h"
+	"GameOverScreen.h"
 
 1745606005 source:c:\code\ninjastrike\ninjastrike\src\texture.cpp
 	"Texture.h"
@@ -883,11 +884,11 @@
 	<SDL.h>
 	<SDL_image.h>
 
-1745606107 source:c:\code\ninjastrike\ninjastrike\src\game.cpp
+1745745859 source:c:\code\ninjastrike\ninjastrike\src\game.cpp
 	"Game.h"
 	"SoundManager.h"
 
-1745601045 c:\code\ninjastrike\ninjastrike\src\game.h
+1745745564 c:\code\ninjastrike\ninjastrike\src\game.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -901,7 +902,7 @@
 	"Potion.h"
 	"EnemyAI.h"
 
-1745600768 c:\code\ninjastrike\ninjastrike\src\player.h
+1745745841 c:\code\ninjastrike\ninjastrike\src\player.h
 	<SDL.h>
 	<vector>
 	<map>
@@ -911,7 +912,7 @@
 	"Config.h"
 	"Map.h"
 
-1745605102 source:c:\code\ninjastrike\ninjastrike\src\player.cpp
+1745745178 source:c:\code\ninjastrike\ninjastrike\src\player.cpp
 	"Player.h"
 	"SoundManager.h"
 
@@ -1169,7 +1170,7 @@
 	"Map.h"
 	"Config.h"
 
-1745594397 c:\code\ninjastrike\ninjastrike\src\map.h
+1745731215 c:\code\ninjastrike\ninjastrike\src\map.h
 	<vector>
 	<string>
 	<set>
@@ -1185,12 +1186,12 @@
 	"SpriteSheet.h"
 	"Config.h"
 
-1745607290 source:c:\code\ninjastrike\ninjastrike\src\enemy.cpp
+1745679751 source:c:\code\ninjastrike\ninjastrike\src\enemy.cpp
 	"Enemy.h"
 	<cmath>
 	"EnemyAI.h"
 
-1745605272 source:c:\code\ninjastrike\ninjastrike\src\map.cpp
+1745745368 source:c:\code\ninjastrike\ninjastrike\src\map.cpp
 	"Map.h"
 	<fstream>
 	<iostream>
@@ -1209,7 +1210,7 @@
 	"Enemy.h"
 	"Config.h"
 
-1745599260 c:\code\ninjastrike\ninjastrike\src\menu.h
+1745742815 c:\code\ninjastrike\ninjastrike\src\menu.h
 	<iostream>
 	<SDL.h>
 	<SDL_ttf.h>
@@ -1223,7 +1224,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1745599278 source:c:\code\ninjastrike\ninjastrike\src\menu.cpp
+1745743425 source:c:\code\ninjastrike\ninjastrike\src\menu.cpp
 	"Menu.h"
 	<SDL.h>
 	<SDL_ttf.h>
@@ -1246,4 +1247,14 @@
 1745564414 source:c:\code\ninjastrike\ninjastrike\src\soundmanager.cpp
 	"SoundManager.h"
 	<iostream>
+
+1745731551 source:c:\code\ninjastrike\ninjastrike\src\gameoverscreen.cpp
+	"GameOverScreen.h"
+	<SDL.h>
+	<SDL_ttf.h>
+
+1745725370 c:\code\ninjastrike\ninjastrike\src\gameoverscreen.h
+	<SDL.h>
+	<SDL_ttf.h>
+	<string>
 

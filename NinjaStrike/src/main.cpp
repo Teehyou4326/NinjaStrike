@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Menu.h"
+#include "GameOverScreen.h"
 
 Game game;
 
@@ -9,6 +10,7 @@ int main(int argc, char* argv[])
 
     SDL_Event event;
     Menu menu(game.getRenderer());
+    GameOverScreen gameOverScreen(game.getRenderer());
 
     while(game.isRunning())
     {
@@ -16,6 +18,8 @@ int main(int argc, char* argv[])
         {
             if(menu.isActive())
                 menu.handleEvent(event);
+            else if(gameOverScreen.isActive())
+                gameOverScreen.handleEvent(event);
             else
                 game.handleEvent(event);
 
@@ -25,16 +29,35 @@ int main(int argc, char* argv[])
 
         game.clear();
 
-        if(menu.isActive()) menu.draw();
+        if(menu.isActive())
+            menu.draw();
+        else if(gameOverScreen.isActive())
+        {
+            game.reset();
+            gameOverScreen.draw();
+        }
         else
         {
             game.update();
             game.render();
+
+            if(game.isGameOver())
+                gameOverScreen.show(game.getScore());
         }
 
         game.present();
 
+        if(gameOverScreen.toGame())
+        {
+            gameOverScreen.resetFlags();
+        }
+        else if(gameOverScreen.toMenu())
+        {
+            gameOverScreen.resetFlags();
+            menu.activate();
+        }
     }
+
     game.clean();
 
     return 0;

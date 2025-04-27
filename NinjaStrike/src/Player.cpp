@@ -3,6 +3,7 @@
 
 Player::Player()
 {
+    hp = 600;
     x = 0;
     y = 0;
     dx = 0;
@@ -331,13 +332,13 @@ SDL_Rect Player::attackHitbox() const
     return SDL_Rect{static_cast<int>(x + offsetAttackX), static_cast<int>(y + offsetY), attackWidth, attackHeight};
 }
 
-/////debug
+//ve tam danh ra
 //void Player::drawHitbox(SDL_Renderer* renderer)
 //{
 //    SDL_Rect playerHitbox = getHitbox();
 //    SDL_Rect playerAttackHitbox = attackHitbox();
 //    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-//    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 100);  // Màu xanh lá, alpha = 100 (mờ)
+//    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 100);
 //    SDL_RenderFillRect(renderer, &playerHitbox);
 //    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 100);
 //    SDL_RenderFillRect(renderer, &playerAttackHitbox);

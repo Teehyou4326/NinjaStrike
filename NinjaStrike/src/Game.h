@@ -33,7 +33,9 @@ public:
     void clear() { SDL_RenderClear(renderer); }
     void quit() { running = false; }
 
-    bool gameOver = false;
+    bool isGameOver() const { return gameOver; }
+    int getScore() const { return score; }
+    void reset();
 
 private:
     SDL_Window* window;
@@ -53,13 +55,14 @@ private:
     std::vector<std::shared_ptr<Enemy>> enemies;
     std::vector<std::shared_ptr<Potion>> potions;
 
+    bool spawnEnemies();
+    bool spawnPotions();
+
     int distanceTravelled = 0;
     int enemiesDefeated = 0;
     int potionsCollected = 0;
     int score = 0;
-    void renderGameOver(SDL_Renderer* renderer, int score);
-
-    int cameraX = 0;
+    bool gameOver = false;
 
     Texture hpBar;
     Texture stateBar;

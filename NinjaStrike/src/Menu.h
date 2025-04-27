@@ -19,6 +19,7 @@ public:
     void handleEvent(SDL_Event& event);
     void draw();
     bool isActive() const;
+    void activate();
     void deactivate();
     bool startGameSelect() const;
 

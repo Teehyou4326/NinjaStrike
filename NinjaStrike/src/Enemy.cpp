@@ -116,6 +116,7 @@ void Enemy::draw(SDL_Renderer* renderer)
         break;
     }
 
+    //draw HP bar
     int barW = 40;
     int barH = 5;
     int barX = x + 45 + (enemyW - barW) / 2;

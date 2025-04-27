@@ -31,7 +31,6 @@ public:
     SDL_Rect getHitbox() const ;
     SDL_Rect attackHitbox() const;
     void takeDamage(int dmg);
-    int getHP() const { return hp; };
     PlayerState getState() const { return state; }
 
     void setMap(Map* map) { this->map = map; };
@@ -60,6 +59,7 @@ private:
     SpriteSheet throwSheet;
     SpriteSheet hurtSheet;
 
+    int hp;
     float x, y;
     float dx, dy;
     float prevX, prevY;
@@ -75,13 +75,14 @@ private:
 
     Map* map = nullptr;
 
+    //to play sound effect.
+    Uint32 lastRun = 0;
+
     Uint32 lastHitTime = 0;
     Uint32 damageCooldown = 800;
-    int hp = 600;
 
     Uint32 SpeedBoostTime = 0;
     bool SpeedBoostFlag = false;
-    Uint32 lastRun = 0;
 
     Uint32 DmgBoostTime = 0;
     bool DmgBoostFlag = false;

@@ -78,42 +78,8 @@ bool Game::init(const char* title)
         return false;
     }
 
-    //spawn enemy
-    std::vector<SDL_Point> spawnPoints = gameMap.getEnemySpawnPoints();
-    for(const auto& pos : spawnPoints)
-    {
-        auto enemy = std::make_shared<Enemy>();
-
-        if(!enemy->load(renderer))
-        {
-            std::cout << "Enemy load that bai" <<std::endl;
-            return false;
-        }
-
-        enemy->setPosition(pos.x, pos.y);
-        enemy->setMap(&gameMap);
-        enemy->setAI(std::make_unique<EnemyAI>(enemy.get(), &player, 600, 600, 25, 250.0f, &gameMap));
-
-        enemies.push_back(enemy);
-    }
-
-    //spawn potion
-    std::vector<SDL_Point> spawnPotionPoints = gameMap.getPotionSpawnPoints();
-    for(const auto& pos : spawnPotionPoints)
-    {
-        auto potion = std::make_shared<Potion>();
-
-        if(!potion->load(renderer))
-        {
-            std::cout << "Potion load that bai" << std::endl;
-            return false;
-        }
-
-        potion->setPosition(pos.x, pos.y);
-        potion->setMap(&gameMap);
-
-        potions.push_back(potion);
-    }
+    spawnEnemies();
+    spawnPotions();
 
     //load HUD
     if(!hpBar.load(renderer, "res/HUD/HealthBar.png"))
@@ -132,6 +98,7 @@ bool Game::init(const char* title)
         return false;
     }
 
+    //Icon
     if(!DmgBoostIcon.load(renderer, "res/HUD/Icons/DmgBoost.png") ||
        !ReverseControlIcon.load(renderer, "res/HUD/Icons/ReverseControl.png") ||
        !InvincibleIcon.load(renderer, "res/HUD/Icons/Invincible.png") ||
@@ -143,7 +110,7 @@ bool Game::init(const char* title)
     }
 
     //sound
-    if(Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+    if(Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) < 0)
     {
         std::cerr << "K mo dc audio " << Mix_GetError() << std::endl;
     }
@@ -170,11 +137,7 @@ void Game::handleEvent(SDL_Event& event)
 
 void Game::update()
 {
-    SDL_Surface* loadedSurface = IMG_Load("res/shuriken.png");
-    Uint32 colorKey = SDL_MapRGB(loadedSurface->format, 225, 255, 225);
-    SDL_SetColorKey(loadedSurface, SDL_TRUE, colorKey);
-
-    if(player.getX() < -20 || player.getY() > SCREEN_HEIGHT || player.getHP() < 0)
+    if(player.getX() < -35 || player.getY() > SCREEN_HEIGHT || player.hp < 0)
     {
         gameOver = true;
     }
@@ -294,13 +257,6 @@ void Game::drawScore(SDL_Renderer* renderer, int score)
 
 void Game::render()
 {
-
-    if(gameOver)
-    {
-        renderGameOver(renderer, score);
-        return;
-    }
-
     SDL_SetRenderDrawColor(renderer , 255, 255, 255, 255);
     SDL_RenderClear(renderer);
 
@@ -324,7 +280,7 @@ void Game::render()
     int barW = 220;
     int barH = 30;
 
-    float hpPercent = static_cast<float>(player.getHP()) / 600;
+    float hpPercent = static_cast<float>(player.hp) / 600;
     int fillW = static_cast<int>(barW * hpPercent);
 
     SDL_Rect hpFillRect = {barX + 33, barY + 7, static_cast<int>(fillW / 1.2f), barH - 10};
@@ -382,42 +338,76 @@ bool Game::isRunning()
     return running;
 }
 
-void Game::renderGameOver(SDL_Renderer* renderer, int score) {
+bool Game::spawnEnemies()
+{
+    std::vector<SDL_Point> spawnPoints = gameMap.getEnemySpawnPoints();
+    for(const auto& pos : spawnPoints)
+    {
+        auto enemy = std::make_shared<Enemy>();
 
+        if(!enemy->load(renderer))
+        {
+            std::cout << "Enemy load that bai" <<std::endl;
+            return false;
+        }
 
-    SDL_RenderClear(renderer);
+        enemy->setPosition(pos.x, pos.y);
+        enemy->setMap(&gameMap);
+        enemy->setAI(std::make_unique<EnemyAI>(enemy.get(), &player, 600, 600, 25, 250.0f, &gameMap));
 
-    // Mở font
-    TTF_Font* font = TTF_OpenFont("res/font/s_font.ttf", 78);
-    if (!font) {
-        SDL_Log("Không thể mở font: %s", TTF_GetError());
-        return;
+        enemies.push_back(enemy);
     }
+    return true;
+}
 
-    SDL_Color white = {255, 255, 255};
+bool Game::spawnPotions()
+{
+    std::vector<SDL_Point> spawnPotionPoints = gameMap.getPotionSpawnPoints();
+    for(const auto& pos : spawnPotionPoints)
+    {
+        auto potion = std::make_shared<Potion>();
 
+        if(!potion->load(renderer))
+        {
+            std::cout << "Potion load that bai" << std::endl;
+            return false;
+        }
 
-    SDL_Surface* textSurface1 = TTF_RenderText_Solid(font, "Game Over", white);
-    SDL_Texture* textTexture1 = SDL_CreateTextureFromSurface(renderer, textSurface1);
-    SDL_Rect textRect1 = {640 - textSurface1->w/2, 200, textSurface1->w, textSurface1->h};
-    SDL_FreeSurface(textSurface1);
+        potion->setPosition(pos.x, pos.y);
+        potion->setMap(&gameMap);
 
-    // Tạo dòng điểm số
-    std::string scoreText = "Score      " + std::to_string(score);
-    SDL_Surface* textSurface2 = TTF_RenderText_Solid(font, scoreText.c_str(), white);
-    SDL_Texture* textTexture2 = SDL_CreateTextureFromSurface(renderer, textSurface2);
-    SDL_Rect textRect2 = {640 - textSurface2->w/2, 300, textSurface2->w, textSurface2->h};
-    SDL_FreeSurface(textSurface2);
+        potions.push_back(potion);
+    }
+    return true;
+}
 
-    // Vẽ cả 2 dòng
-    SDL_RenderCopy(renderer, textTexture1, nullptr, &textRect1);
-    SDL_RenderCopy(renderer, textTexture2, nullptr, &textRect2);
+void Game::reset()
+{
+    distanceTravelled = 0;
+    enemiesDefeated = 0;
+    potionsCollected = 0;
+    gameOver = false;
 
-    // Hiển thị lên màn hình
-    SDL_RenderPresent(renderer);
+    player.hp = 600;
+    player.x = startX;
+    player.y = startY;
+    player.dx = 0;
+    player.dy = 0;
+    player.isJumping = false;
+    player.doubleJump = false;
+    player.state = PlayerState::Idle;
+    player.shurikenCooldown = 0;
 
-    // Giải phóng tài nguyên
-    SDL_DestroyTexture(textTexture1);
-    SDL_DestroyTexture(textTexture2);
-    TTF_CloseFont(font);
+    player.SpeedBoostFlag = false;
+    player.DmgBoostFlag = false;
+    player.InvincibleFlag = false;
+    player.ReverseControlFlag = false;
+    player.StunFlag = false;
+
+    enemies.clear();
+    potions.clear();
+
+    gameMap.setCameraX();
+    spawnEnemies();
+    spawnPotions();
 }

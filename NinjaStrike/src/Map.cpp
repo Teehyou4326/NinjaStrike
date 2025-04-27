@@ -337,9 +337,15 @@ bool Map::isGroundBelow(int x, int y)
     return false;
 }
 
+void Map::clear()
+{
+    tileData.clear();
+    tileSets.clear();
+    collidableTileIDs.clear();
+}
 
 
-///debug
+///vẽ vùng va chạm
 //void Map::drawCollisionTiles(SDL_Renderer* renderer)
 //{
 //    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);

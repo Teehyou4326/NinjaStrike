@@ -141,16 +141,20 @@ bool Menu::isActive() const
     return active;
 }
 
+void Menu::activate()
+{
+    active = true;
+
+    if(menuMusic && !Mix_PlayingMusic())
+    {
+        Mix_PlayMusic(menuMusic, -1);
+    }
+}
+
 void Menu::deactivate()
 {
     active = false;
-
     if(Mix_PlayingMusic()) Mix_HaltMusic();
-    if(menuMusic)
-    {
-        Mix_FreeMusic(menuMusic);
-        menuMusic = nullptr;
-    }
 }
 
 bool Menu::startGameSelect() const
