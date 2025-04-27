@@ -33,7 +33,10 @@ int main(int argc, char* argv[])
             menu.draw();
         else if(gameOverScreen.isActive())
         {
-            game.reset();
+            if(!isResetDone)
+            {
+                game.reset();
+            }
             gameOverScreen.draw();
         }
         else

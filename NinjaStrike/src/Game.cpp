@@ -63,7 +63,7 @@ bool Game::init(const char* title)
         std::cout << "Load spawn map fail" << std::endl;
         return false;
     }
-    if(!backgroundTexture.load(renderer, "res/map/BG/BG.png"))
+    if(!backgroundTexture.load(renderer, "res/map/BG/BG3.png"))
     {
         std::cout << "load bg fail" << std::endl;
         return false;
@@ -410,4 +410,6 @@ void Game::reset()
     gameMap.setCameraX();
     spawnEnemies();
     spawnPotions();
+
+    isResetDone = true;
 }

@@ -18,4 +18,6 @@ const int enemyH = 61;
 
 inline int playerDMG = 40;
 
+inline bool isResetDone = false;
+
 #endif // CONFIG_H

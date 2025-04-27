@@ -1,15 +1,14 @@
 #include "GameOverScreen.h"
 #include <SDL.h>
 #include <SDL_ttf.h>
+#include <iostream>
+#include <SDL_image.h>
 
 GameOverScreen::GameOverScreen(SDL_Renderer* renderer)
     : renderer(renderer), font(nullptr), active(false), restart(false), backToMenu(false), finalScore(0)
 {
     TTF_Init();
-    font = TTF_OpenFont("res/font/s_font.ttf", 36);
-
-    restartButton = {500, 300, 200, 50};
-    menuButton = {500, 600, 200, 50};
+    font = TTF_OpenFont("res/font/s_font.ttf", 64);
 }
 
 GameOverScreen::~GameOverScreen()
@@ -33,65 +32,109 @@ void GameOverScreen::handleEvent(SDL_Event& event)
 
         SDL_Point mousePos = {x,y};
 
-        if(SDL_PointInRect(&mousePos, &restartButton))
+        if(SDL_PointInRect(&mousePos, &restartTextRect))
         {
             restart = true;
             active = false;
+            isResetDone = false;
         }
-        else if(SDL_PointInRect(&mousePos, &menuButton))
+        else if(SDL_PointInRect(&mousePos, &menuTextRect))
         {
             backToMenu = true;
             active = false;
+            isResetDone = false;
         }
-
     }
 }
 
 void GameOverScreen::draw()
 {
-    //Game over
+
+    int mouseX, mouseY;
+    SDL_GetMouseState(&mouseX, &mouseY);
+    SDL_Point mousePos = {mouseX, mouseY};
+
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
 
-    SDL_Color white = {255, 255, 255, 255};
+    SDL_Color color = {255, 255, 255, 255};
+    SDL_Color hoverColor = {255, 240, 0, 255};
     SDL_Surface* surface = nullptr;
     SDL_Texture* texture = nullptr;
     SDL_Rect dstRect;
 
-    surface = TTF_RenderText_Solid(font, "GAME OVER !!!", white);
+    surface = IMG_Load("res/map/BG/GameOverBG.png");
     texture = SDL_CreateTextureFromSurface(renderer, surface);
-    dstRect = {200, 100, surface->w, surface->h};
+    SDL_FreeSurface(surface);
+    SDL_RenderCopy(renderer, texture, nullptr, nullptr);
+    SDL_DestroyTexture(texture);
+
+    //Game over
+    font = TTF_OpenFont("res/font/s_font.ttf", 120);
+    SDL_Color titleColor = {200, 0, 0, 255};
+    surface = TTF_RenderText_Solid(font, "GAME OVER", titleColor);
+    texture = SDL_CreateTextureFromSurface(renderer, surface);
+    dstRect = {640 - surface->w / 2, 100, surface->w, surface->h};
+    SDL_RenderCopy(renderer, texture, nullptr, &dstRect);
+    SDL_FreeSurface(surface);
+    SDL_DestroyTexture(texture);
+
+    //Score
+    font = TTF_OpenFont("res/font/s_font.ttf", 88);
+
+    std::string scoreText = "Score   " + std::to_string(finalScore);
+    surface = TTF_RenderText_Solid(font, scoreText.c_str(), color);
+    texture = SDL_CreateTextureFromSurface(renderer, surface);
+    dstRect = {640 - surface->w / 2, 300, surface->w, surface->h};
     SDL_RenderCopy(renderer, texture, nullptr, &dstRect);
     SDL_FreeSurface(surface);
     SDL_DestroyTexture(texture);
 
     //Restart
-    std::string scoreText = "Score " + std::to_string(finalScore);
-    surface = TTF_RenderText_Solid(font, scoreText.c_str(), white);
+    bool hoverRestart = false;
+    font = TTF_OpenFont("res/font/s_font.ttf", 48);
+
+    surface = TTF_RenderText_Solid(font, "RESTART", color);
+    restartTextRect = {640 - surface->w / 2, 540, surface->w, surface->h};
+    if(SDL_PointInRect(&mousePos, &restartTextRect))
+        hoverRestart = true;
+    SDL_FreeSurface(surface);
+
+    if (hoverRestart)
+        font = TTF_OpenFont("res/font/s_font.ttf", 54);
+    else
+        font = TTF_OpenFont("res/font/s_font.ttf", 48);
+
+    SDL_Color restartColor = hoverRestart ? hoverColor : color;
+    surface = TTF_RenderText_Solid(font, "RESTART", restartColor);
     texture = SDL_CreateTextureFromSurface(renderer, surface);
-    dstRect = {200, 200, surface->w, surface->h};
-    SDL_RenderCopy(renderer, texture, nullptr, &dstRect);
+    restartTextRect = {640 - surface->w / 2, 540, surface->w, surface->h};
+    SDL_RenderCopy(renderer, texture, nullptr, &restartTextRect);
     SDL_FreeSurface(surface);
     SDL_DestroyTexture(texture);
 
-    SDL_SetRenderDrawColor(renderer, 100, 100, 255, 255);
-    SDL_RenderFillRect(renderer, &restartButton);
-    surface = TTF_RenderText_Solid(font, "RESTART", white);
+    //Menu
+    bool hoverMenu = false;
+    font = TTF_OpenFont("res/font/s_font.ttf", 48);
+    surface = TTF_RenderText_Solid(font, "Back  to  menu", color);
+    menuTextRect = {640 - surface->w / 2, 600, surface->w, surface->h};
+    if (SDL_PointInRect(&mousePos, &menuTextRect))
+        hoverMenu = true;
+    SDL_FreeSurface(surface);
+
+    if (hoverMenu)
+        font = TTF_OpenFont("res/font/s_font.ttf", 54);
+    else
+        font = TTF_OpenFont("res/font/s_font.ttf", 48);
+
+    SDL_Color menuColor = hoverMenu ? hoverColor : color;
+    surface = TTF_RenderText_Solid(font, "Back  to  menu", menuColor);
     texture = SDL_CreateTextureFromSurface(renderer, surface);
-    dstRect = {restartButton.x + 50, restartButton.y + 10, surface->w, surface->h};
-    SDL_RenderCopy(renderer, texture, nullptr, &dstRect);
+    menuTextRect = {640 - surface->w / 2, 600, surface->w, surface->h};
+    SDL_RenderCopy(renderer, texture, nullptr, &menuTextRect);
     SDL_FreeSurface(surface);
     SDL_DestroyTexture(texture);
 
-    //Return to menu
-    SDL_SetRenderDrawColor(renderer, 100, 255, 100, 255);
-    SDL_RenderFillRect(renderer, &menuButton);
-    surface = TTF_RenderText_Solid(font, "Back to menu", white);
-    texture = SDL_CreateTextureFromSurface(renderer, surface);
-    dstRect = {menuButton.x + 30, menuButton.y + 10, surface->w, surface->h};
-    SDL_RenderCopy(renderer, texture, nullptr, &dstRect);
-    SDL_FreeSurface(surface);
-    SDL_DestroyTexture(texture);
 }
 
 void GameOverScreen::resetFlags()

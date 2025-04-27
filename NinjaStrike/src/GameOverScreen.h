@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <string>
+#include "Config.h"
 
 class GameOverScreen
 {
@@ -27,8 +28,8 @@ private:
     bool backToMenu;
     int finalScore;
 
-    SDL_Rect restartButton;
-    SDL_Rect menuButton;
+    SDL_Rect restartTextRect;
+    SDL_Rect menuTextRect;
 
 };
 

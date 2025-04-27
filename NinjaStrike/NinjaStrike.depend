@@ -871,7 +871,7 @@
 	<SDL.h>
 	<SDL_image.h>
 
-1745745464 source:c:\code\ninjastrike\ninjastrike\src\main.cpp
+1745749447 source:c:\code\ninjastrike\ninjastrike\src\main.cpp
 	"Game.h"
 	"Menu.h"
 	"GameOverScreen.h"
@@ -884,11 +884,11 @@
 	<SDL.h>
 	<SDL_image.h>
 
-1745745859 source:c:\code\ninjastrike\ninjastrike\src\game.cpp
+1745755386 source:c:\code\ninjastrike\ninjastrike\src\game.cpp
 	"Game.h"
 	"SoundManager.h"
 
-1745745564 c:\code\ninjastrike\ninjastrike\src\game.h
+1745749447 c:\code\ninjastrike\ninjastrike\src\game.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -1128,7 +1128,7 @@
 1745594397 source:c:\code\ninjastrike\ninjastrike\src\shuriken.cpp
 	"Shuriken.h"
 
-1745605319 c:\code\ninjastrike\ninjastrike\src\config.h
+1745749505 c:\code\ninjastrike\ninjastrike\src\config.h
 
 1745594397 source:c:\code\ninjastrike\ninjastrike\src\tinyxml2.cpp
 	"tinyxml2.h"
@@ -1224,7 +1224,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1745743425 source:c:\code\ninjastrike\ninjastrike\src\menu.cpp
+1745751751 source:c:\code\ninjastrike\ninjastrike\src\menu.cpp
 	"Menu.h"
 	<SDL.h>
 	<SDL_ttf.h>
@@ -1248,13 +1248,16 @@
 	"SoundManager.h"
 	<iostream>
 
-1745731551 source:c:\code\ninjastrike\ninjastrike\src\gameoverscreen.cpp
+1745752850 source:c:\code\ninjastrike\ninjastrike\src\gameoverscreen.cpp
 	"GameOverScreen.h"
 	<SDL.h>
 	<SDL_ttf.h>
+	<iostream>
+	<SDL_image.h>
 
-1745725370 c:\code\ninjastrike\ninjastrike\src\gameoverscreen.h
+1745749505 c:\code\ninjastrike\ninjastrike\src\gameoverscreen.h
 	<SDL.h>
 	<SDL_ttf.h>
 	<string>
+	"Config.h"
 

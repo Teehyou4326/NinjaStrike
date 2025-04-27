@@ -53,6 +53,8 @@
 		<Unit filename="src/EnemyAI.h" />
 		<Unit filename="src/Game.cpp" />
 		<Unit filename="src/Game.h" />
+		<Unit filename="src/GameOverScreen.cpp" />
+		<Unit filename="src/GameOverScreen.h" />
 		<Unit filename="src/Map.cpp" />
 		<Unit filename="src/Map.h" />
 		<Unit filename="src/Menu.cpp" />
