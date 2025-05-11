@@ -1,7 +1,7 @@
 # Ninja Strike
 ## Demo game
 - Link demo:
-https://drive.google.com/file/d/134card_hx7m832Cyod9HjoiZfKS_wErD/view?usp=drive_link
+  https://drive.google.com/file/d/1gCqr72bsh8_9M7vwbyks4kOyxiP5GPST/view?usp=sharing
 ## Cách tải game
 ### Không bao gồm code
   - Chọn Ninja Strike 1.0.0 trong phần Releases của github, tải và giải nén file Ninja.Strike.1.0.0.zip . Chạy file exe để khởi động game.
